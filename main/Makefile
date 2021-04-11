@@ -6,7 +6,7 @@
 #    By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 21:44:53 by skim              #+#    #+#              #
-#    Updated: 2021/04/10 17:24:55 by spark            ###   ########.fr        #
+#    Updated: 2021/04/11 16:20:33 by spark            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS_DIR = ./srcs
 
 SRCS = $(addprefix $(SRCS_DIR)/,)
 
-TEST_SRCS = $(wildcard test*_*.c)
+TEST_SRCS = $(wildcard *.c)
 
 
 all : $(NAME)

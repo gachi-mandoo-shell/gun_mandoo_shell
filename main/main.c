@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 19:40:27 by skim              #+#    #+#             */
-/*   Updated: 2021/04/10 17:22:23 by spark            ###   ########.fr       */
+/*   Created: 2021/04/11 16:19:11 by spark             #+#    #+#             */
+/*   Updated: 2021/04/11 16:19:55 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include "libft/includes/libft.h"
-# include <string.h>
+void	init_env(char ***env, char *en[])
+{
+	int		i;
+	int		j;
 
-# define BLT_NUM 2
+	i = 0;
+	while (en[i])
+		i++;
+	if (!(*env = (char **)malloc(sizeof(char *) * (i + 1))))
+		return ;
+	(*env)[i] = 0;
+	j = -1;
+	while (++j < i)
+		(*env)[j] = ft_strdup(en[j]);
+}
 
-int		start_shell(char **en, char *av);
-char	**make_tok(char *str, char *charset);
-int		run(char **run_com, char **en, char *av);
+int		main(int ac, char *av[], char *en[])
+{
+	char	**env;
+	char	rt;
 
-int		cmd_exit(char **run_com, char **en, char *name);
-int		cmd_env(char **run_com, char **en, char *av);
-
-#endif
+	init_env(&env, en);
+	rt = start_shell(env, av[0]);
+}

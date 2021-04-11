@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 19:40:27 by skim              #+#    #+#             */
-/*   Updated: 2021/04/10 17:22:23 by spark            ###   ########.fr       */
+/*   Created: 2020/10/04 09:27:34 by spark             #+#    #+#             */
+/*   Updated: 2020/11/09 15:54:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#include "libft.h"
 
-# include <stdio.h>
-# include "libft/includes/libft.h"
-# include <string.h>
-
-# define BLT_NUM 2
-
-int		start_shell(char **en, char *av);
-char	**make_tok(char *str, char *charset);
-int		run(char **run_com, char **en, char *av);
-
-int		cmd_exit(char **run_com, char **en, char *name);
-int		cmd_env(char **run_com, char **en, char *av);
-
-#endif
+int	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return (0);
+	return (write(fd, s, ft_strlen(s)));
+}
