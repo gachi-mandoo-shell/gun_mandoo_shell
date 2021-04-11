@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 19:40:27 by skim              #+#    #+#             */
-/*   Updated: 2021/04/10 17:22:23 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/11 17:10:43 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,19 @@
 
 # define BLT_NUM 2
 
+typedef struct 	s_nd
+{
+	struct s_nd		*child;
+	struct s_nd		*sible;
+	char			*val;
+	int				dep;
+}				t_nd;
+
 int		start_shell(char **en, char *av);
 char	**make_tok(char *str, char *charset);
+t_nd	*pharse(char *str, char *charset);
 int		run(char **run_com, char **en, char *av);
+
 
 int		cmd_exit(char **run_com, char **en, char *name);
 int		cmd_env(char **run_com, char **en, char *av);
