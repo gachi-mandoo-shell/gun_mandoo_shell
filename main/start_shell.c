@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:18:53 by spark             #+#    #+#             */
-/*   Updated: 2021/04/11 16:19:47 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/11 17:12:49 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ int		start_shell(char **en, char *av)
 {
 	int		status;
 	char	*line;
-	char	**coms;
+	t_nd	*coms;
 
 	status = 1;
 	while (status)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
-		coms = make_tok(line, ";");
-		status = run_cmd(coms, en, av);
+		coms = pharse(line, ";");
+		// status = run_cmd(coms, en, av);
 	}
 	return (0);
 }
