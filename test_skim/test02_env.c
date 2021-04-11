@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   test5_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/28 16:01:45 by spark             #+#    #+#             */
-/*   Updated: 2021/04/11 21:13:32 by skim             ###   ########.fr       */
+/*   Created: 2021/04/08 21:04:18 by skim              #+#    #+#             */
+/*   Updated: 2021/04/08 21:05:17 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "test.h"
 
-void	ft_bzero(void *p, size_t n)
+int		cmd_env(char **run_com, char **en, char *av)
 {
-	size_t	i;
+	int		i;
 
-	i = 0;
-	while (i < n)
-	{
-		*(char *)p++ = 0;
-		i++;
-	}
+	i = -1;
+	while (en[++i])
+		printf("%s\n", en[i]);
+	return (1);
 }

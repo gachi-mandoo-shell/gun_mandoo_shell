@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   test4_find_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/28 16:01:45 by spark             #+#    #+#             */
-/*   Updated: 2021/04/11 21:13:32 by skim             ###   ########.fr       */
+/*   Created: 2021/04/11 16:58:59 by skim              #+#    #+#             */
+/*   Updated: 2021/04/11 17:42:13 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "test.h"
 
-void	ft_bzero(void *p, size_t n)
+char	*find_env(char *key, char **en)
 {
-	size_t	i;
+	int		i;
 
-	i = 0;
-	while (i < n)
+	i = -1;
+	while (en[++i])
 	{
-		*(char *)p++ = 0;
-		i++;
+		if (!strncmp(key, en[i], ft_strlen(key)))
+			return (en[i]);
 	}
+	return (0);
 }

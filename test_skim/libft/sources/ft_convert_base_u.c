@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_convert_base_u.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 06:08:16 by spark             #+#    #+#             */
-/*   Updated: 2020/11/20 03:34:45 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/11 21:17:38 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static t_ui		nbr_divide(unsigned long long nbr, int base_len)
+static t_ui	nbr_divide(unsigned long long nbr, int base_len)
 {
-	int cnt;
+	int	cnt;
 
 	if (!nbr)
 		return (1);
@@ -29,7 +29,7 @@ static t_ui		nbr_divide(unsigned long long nbr, int base_len)
 	return (cnt);
 }
 
-static int		str_check(char *str, int *len)
+static int	str_check(char *str, int *len)
 {
 	int		idx;
 	int		checker[256];
@@ -83,7 +83,7 @@ static t_ull	atoi_base_from(char *str, char *base, int base_len)
 	return (ret);
 }
 
-static char		*convert_to(t_ull nbr, char *base, int base_len)
+static char	*convert_to(t_ull nbr, char *base, int base_len)
 {
 	unsigned long long	tmp;
 	char				*ret;
@@ -91,24 +91,26 @@ static char		*convert_to(t_ull nbr, char *base, int base_len)
 
 	if (nbr == 0)
 	{
-		ret = (char*)malloc(2);
+		ret = (char *)malloc(2);
 		ret[0] = base[0];
 		ret[1] = 0;
 		return (ret);
 	}
 	tmp = nbr;
 	size = nbr_divide(tmp, base_len);
-	if (!(ret = (char*)malloc(size + 2)))
+	ret = (char *)malloc(size + 2);
+	if (!ret)
 		return (0);
 	ret[size] = 0;
 	ret[size + 1] = 0;
-	tmp = (tmp < 0) ? (tmp * -1) : tmp;
+	if (tmp < 0)
+		tmp = tmp * -1;
 	while (tmp)
 	{
 		ret[--size] = base[tmp % base_len];
 		tmp = tmp / base_len;
 	}
-	ret[0] = nbr < 0 ? '-' : ret[0];
+	if = nbr < 0 ? '-' : ret[0];
 	return (ret);
 }
 
