@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyunja <hyunja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 18:27:00 by spark             #+#    #+#             */
-/*   Updated: 2020/10/11 15:45:22 by hyunja           ###   ########.fr       */
+/*   Updated: 2021/04/11 21:12:50 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_atoi(const char *str)
 {
-	int rt;
-	int indic;
-	int repeat;
+	int	rt;
+	int	indic;
+	int	repeat;
 
 	rt = 0;
 	repeat = 0;
