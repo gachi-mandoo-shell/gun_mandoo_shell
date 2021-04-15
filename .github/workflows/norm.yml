@@ -1,0 +1,17 @@
+name: norminette@v3
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  norminette_job:
+    runs-on: ubuntu-20.04
+    name: norminette
+    steps:
+      - uses: actions/checkout@v2
+      - uses: alexandregv/norminette-action@v3
+        with:
+          flags: '.'
