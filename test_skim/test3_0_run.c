@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test3_run.c                                        :+:      :+:    :+:   */
+/*   test3_0_run.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 18:19:42 by skim              #+#    #+#             */
-/*   Updated: 2021/04/11 17:44:34 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/16 20:04:10 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ int		execute_ps(char *run_com, char **av, char **en, char *name)
 	pid = fork();
 	if (pid == 0)
 	{
+		// pipe 의 dup2 부분이 들어가야함
+		if (cmd->type == TYPE_PIPE || (cmd->prev && cmd->prev->type == TYPE_PIPE))
+			pipe_run(run_com)
 		if (execve(run_com, av, en) == -1)
 			write(1, "permission denied", ft_strlen("permission denied"));
 	}
@@ -76,21 +79,69 @@ void	find_cmd(char **run_com, char **en, char *av)
 	free(bash_path);
 }
 
-int		run(char **run_com, char **en, char *av)
+int		normal_run(t_list cmd, char **en, char *av)
 {
-	int		i;
-	int		rt;
 
-	rt = 1;
-	i = -1;
-	if (!run_com || !*run_com || !**run_com)
-		return (rt);
 	while (++i < BLT_NUM)
-		if (!(strcmp(run_com[0], blt_str(i))))
-			return ((*blt_func(i))(run_com, en, av));
-	if (access(run_com[0], F_OK) != -1)
+		if (!(strcmp(cmd->arg[0], blt_str(i))))
+		{
+
+			return ((*blt_func(i))(cmd->arg, en, av));
+		}
+
+	// ㅈㅏ르기
+
+	if (access(cmd->arg[0], F_OK) != -1)
 		execute_ps(run_com[0], run_com, en, av);
 	else
-		find_cmd(run_com, en, av);
+		find_cmd(cmd->arg, en, av);
+	return (rt);
+}
+
+int		pipe_run(t_list cmd, char **en, char *av)
+{
+	int	error_check;
+
+	error_check = pipe(cmd->pipes));
+	if (error_check)
+		return (EXIT_FAILURE);
+	error_check = dup2(cmd->pipes[SIND_IN], STDOUT);
+	if (error_check < 0)
+		return (EXIT_FILURE);
+}
+
+int		prev_pipe_run(t_list cmd, char **en, char *av)
+{
+	int	error_check;
+
+	error_check = pipe(cmd->pipes));
+	if (error_check)
+		return (EXIT_FAILURE);
+	error_check = dup2(cmd->prev->pipes[SIDE_OUT], STDIN);
+	if (error_check < 0)
+		return (EXIT_FAILURE);
+}
+
+int		pipe_run(t_list cmd)
+{
+	int		error_check;
+
+	if (cmd->type == TYPE_PIPE)
+		error_check = dup2(cmd->pipes[SIDE_IN], STDOUT);
+}
+
+// 실행 단위로 분리된 t_list
+int		run(t_list cmd, char **en, char *av)
+{
+	int		rt;
+
+	while (cmd->sibling)
+	{
+		if (cmd->type == TYPE_PIPE || (cmd->prev && cmd->prev->type == TYPE_PIPE))
+			pipe(cmd->pipes);
+		rt = normal_run(cmd, en, av);
+		// close를 일괄적으로 해주기
+		cmd = cmd->sibling;
+	}
 	return (rt);
 }

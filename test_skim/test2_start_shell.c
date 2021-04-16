@@ -6,37 +6,11 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:48:47 by skim              #+#    #+#             */
-/*   Updated: 2021/04/16 16:26:24 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/16 17:15:17 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
-#include <wchar.h>
-#include <locale.h>
-
-void	start_write(void)
-{
-	setlocale(LC_ALL, "");
-	char *str = ft_strdup("\n
- #####                      #     #\n
-#     # #    # #    #       ##   ##   ##   #    # #####   ###    ###\n
-#       #    # ##   #       # # # #  #  #  ##   # #    # #    # #    #\n
-#  #### #    # # #  # ##### #  #  # #    # # #  # #    # #    # #    #\n
-#     # #    # #  # #       #     # ###### #  # # #    # #    # #    #\n
-#     # #    # #   ##       #     # #    # #   ## #    # #    # #    #\n
- #####   ####  #    #       #     # #    # #   ## #####   ####   ####\n
-\n
- #####\n
-#     # #    # ###### #      #\n
-#       #    # #      #      #\n
- #####  ###### #####  #      #\n
-      # #    # #      #      #\n
-#     # #    # #      #      #\n
- #####  #    # ###### ###### ######\n
- ");
-
-	printf("%s", str);
-}
 
 char	*read_line(void)
 {
@@ -59,6 +33,8 @@ int		run_cmd(char **coms, char **en, char *av)
 	while (coms[++i])
 	{
 		run_com = make_tok(coms[i], " ");
+		// 트리구조의 헤드를 넘겨줄 예정
+		read_run(coms);
 		rt = run(run_com, en, av);
 		free(coms[i]);
 		j = -1;
@@ -77,6 +53,7 @@ int		start_shell(char **en, char *av)
 	char	**coms;
 
 	status = 1;
+	//start_write();
 	while (status)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
