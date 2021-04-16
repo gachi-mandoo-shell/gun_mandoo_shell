@@ -6,11 +6,11 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:48:47 by skim              #+#    #+#             */
-/*   Updated: 2021/04/16 21:38:07 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/16 21:56:53 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-parpar4parparpar:09par#include "test.h"
+parpar9parparpar1:2par41parpar8parparpar1parparpar5parparpar5par4parpar9parparpar1parparpar7parparpar52parparpar3par223parpar50parparpar9parparpar5parparpar8parparpar11parparpar9parparpar5parparpar4parparpar:09par#include "test.h"
 
 char	*read_line(void)
 {
@@ -46,19 +46,26 @@ int		run_cmd(char **coms, char **en, char *av)
 	return (rt);
 }
 
-t_nd	*new_nd(int depth)
+t_nd	*new_nd(char *name)
 {
-	t_nd*	tmp_nd;
+	t_nd	*tmp_nd;
 
 	tmp_nd = malloc(sizeof(t_nd) * 1);
+	if (!tmp_nd)
+		return (NULL);
+	tmp_nd->args = (char **)malloc(sizeof(char *) * 2);
+	if (!tmp_nd->args)
+		return (NULL);
+	tmp_nd->args[0] = ft_strdup(name);
+	tmp_nd->args[1] = 0;
 	tmp_nd->child = 0;
 	tmp_nd->sible = 0;
 	tmp_nd->prev = 0;
 	tmp_nd->type = -1;
-
-	tmp_nd->val = 0;
-	tmp_nd->dep = depth;
-
+	tmp_nd->pos->head = 0;
+	tmp_nd->pos->tail = 0;
+	tmp_nd->re->rdrt_yn = 0;
+	tmp_nd->re->rdrt_fd = 0;
 	return (tmp_nd);
 }
 
@@ -70,26 +77,31 @@ t_nd	*parse(char *str, char *charset)
 	t_nd	*tmp_nd;
 	t_nd	*tmp_nd2;
 
-	i = 0;
+	i = -1;
 	tmp = make_tok(str, charset);
 	// 빅 토큰라인들이 들어있는 tmp
-	mother = new_nd(0);
-	mother->val = ft_strdup(str);
-	mother->dep = 0;
-	if (tmp[0])
+	mother = new_nd(str);
+	mother->pos->head = mother;
+	mother->pos->tail = mother;
+	while (tmp[++i])
 	{
-		mother->child = new_nd(1);
-		mother->child->val = ft_strdup(tmp[0]);
-		tmp_nd = mother->child;
+		if (i == 0)
+		{
+			mother->child = new_nd(tmp[i]);
+			mother->child->prev = mother;
+			tmp_nd = mother->child;
+		}
+		else
+		{
+			tmp_nd->sible = new_nd(tmp[i]);
+			tmp_nd->sible->prev = tmp_nd;
+			tmp_nd = tmp_nd->sible;
+		}
 	}
-	while(tmp[++i])
-	{
-		tmp_nd->sible = new_nd(1);
-		tmp_nd->sible->val = ft_strdup(tmp[i]);
-		tmp_nd = tmp_nd->sible;
-	}
+
+
 	tmp_nd = mother;
-	printf("{ %s }", tmp_nd->val);
+	printf("{ %s }", tmp_nd->args[0]);
 	while(tmp_nd->child)
 	{
 		printf("\n|\n -> { %s }",tmp_nd->child->val);
