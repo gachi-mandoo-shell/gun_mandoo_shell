@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyunja <hyunja@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/29 23:10:23 by spark             #+#    #+#             */
-/*   Updated: 2021/04/11 21:14:54 by skim             ###   ########.fr       */
+/*   Created: 2020/09/28 16:01:45 by spark             #+#    #+#             */
+/*   Updated: 2020/10/15 18:45:54 by hyunja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t many, size_t size)
+void	ft_bzero(void *p, size_t n)
 {
-	void	*rt;
+	size_t	i;
 
-	rt = NULL;
-	rt = malloc((size) *many);
-	if (rt == 0)
-		return (0);
-	ft_bzero(rt, size * many);
-	return (rt);
+	i = 0;
+	while (i < n)
+	{
+		*(char*)p++ = 0;
+		i++;
+	}
 }

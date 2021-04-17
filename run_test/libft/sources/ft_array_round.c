@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_array_round.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:22:41 by hyunja            #+#    #+#             */
-/*   Updated: 2021/04/11 21:12:40 by skim             ###   ########.fr       */
+/*   Updated: 2021/02/17 17:21:53 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_array_round_2(t_libset *set, char *str, int pre, int i)
 		ft_array_round_3(str, i);
 }
 
-char	ft_array_round(t_libset *set, char *str, int pre)
+char		ft_array_round(t_libset *set, char *str, int pre)
 {
 	int	len;
 	int	i;
@@ -58,8 +58,7 @@ char	ft_array_round(t_libset *set, char *str, int pre)
 		str[--i] = '\0';
 	len = ft_strlen(str);
 	i = len - 1;
-	if (i < 0)
-		i = 0;
+	i = (i < 0) ? 0 : i;
 	ft_array_round_2(set, str, pre, i--);
 	while (i > 0)
 	{

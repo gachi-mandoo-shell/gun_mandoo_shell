@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:19:02 by spark             #+#    #+#             */
-/*   Updated: 2021/04/11 21:22:06 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/17 22:02:33 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	find_cmd(char **run_com, char **en, char *av)
 			break ;
 		}
 	}
-	write(1, "error", 5);
 	i = -1;
 	while (bash_path[++i])
 		free(bash_path[i]);
