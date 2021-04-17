@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test11_exit.c                                      :+:      :+:    :+:   */
+/*   test13_pwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 19:58:03 by skim              #+#    #+#             */
-/*   Updated: 2021/04/17 16:14:04 by skim             ###   ########.fr       */
+/*   Created: 2021/04/17 15:48:34 by skim              #+#    #+#             */
+/*   Updated: 2021/04/17 16:07:15 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-int		cmd_exit(t_nd run_com, char **en, char *name)
+int		cmd_pwd(t_nd run_cum, char **en, char *av)
 {
-	int		i;
+	char	pwd[PATH_MAX];
 
-	i = 0;
-	while (run_com->args[i])
-		i++;
-	printf("exit\n");
-	if (i > 2)
-	{
-		printf("exit: too many arguments\n");
-		return (1);
-	}
-	else
-		return (0);
+	getcwd(pwd, PATH_MAX);
+	write(1, pwd, strlen(pwd));
+	return (1);
 }
+
+// int		main()
+// {
+// 	char	buf[PATH_MAX];
+
+// 	 getcwd(buf, PATH_MAX);
+// 	printf("%s\n", buf);
+// }
