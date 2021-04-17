@@ -6,11 +6,11 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:48:47 by skim              #+#    #+#             */
-/*   Updated: 2021/04/16 21:56:53 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/17 15:25:18 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-parpar9parparpar1:2par41parpar8parparpar1parparpar5parparpar5par4parpar9parparpar1parparpar7parparpar52parparpar3par223parpar50parparpar9parparpar5parparpar8parparpar11parparpar9parparpar5parparpar4parparpar:09par#include "test.h"
+#include "test.h"
 
 char	*read_line(void)
 {
