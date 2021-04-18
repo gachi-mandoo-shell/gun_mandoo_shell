@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:18:53 by spark             #+#    #+#             */
-/*   Updated: 2021/04/18 15:10:36 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/18 17:37:12 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_args(char **args)
+{
+	int i;
+	
+	i = -1;
+	while (args[++i])
+		printf("{%s},", args[i]);
+}
+
+void	print_list(t_nd *com)
+{
+	t_nd *tmp_nd;
+	t_nd *tmp_nd2;
+	
+	tmp_nd = com;
+	tmp_nd2 = com;
+	print_args(tmp_nd->args);
+	printf("\n");
+	if (tmp_nd2->child)
+	{
+		tmp_nd2 = tmp_nd2->child;
+		tmp_nd = tmp_nd2;
+		print_list(tmp_nd2);
+		printf("\n====================\n");
+	}
+	while(tmp_nd->sible)
+	{
+		tmp_nd = tmp_nd->sible;
+		print_list(tmp_nd);
+	}
+}
 
 char	*read_line(void)
 {
@@ -26,19 +58,16 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	char	**run_com;
 	int		rt;
 	int		i;
-	int		j;
 
 	i = -1;
 	rt = 1;
-	while (coms)
-	{
-		run_com = make_tok(coms->args[0], " ");
-		// 트리구조의 헤드를 넘겨줄 예정
-		//ready_run(coms);
-		rt = run(run_com, en, av);
-		j = -1;
-		coms = coms->sible;
-	}
+	ready_run(coms);
+	print_list(coms);
+	// while (coms)
+	// {
+	// 	rt = run(run_com, en, av);
+	// 	coms = coms->sible;
+	// }
 	return (rt);
 }
 
@@ -49,11 +78,14 @@ t_nd	*new_nd(char *name)
 	tmp_nd = malloc(sizeof(t_nd) * 1);
 	if (!tmp_nd)
 		return (NULL);
-	tmp_nd->args = (char **)malloc(sizeof(char *) * 2);
-	if (!tmp_nd->args)
-		return (NULL);
-	tmp_nd->args[0] = ft_strdup(name);
-	tmp_nd->args[1] = 0;
+	if (name != NULL)
+	{
+		tmp_nd->args = (char **)malloc(sizeof(char *) * 2);
+		if (!tmp_nd->args)
+			return (NULL);
+		tmp_nd->args[0] = ft_strdup(name);
+		tmp_nd->args[1] = 0;
+	}
 	tmp_nd->child = 0;
 	tmp_nd->sible = 0;
 	tmp_nd->prev = 0;
@@ -99,18 +131,18 @@ t_nd	*parse(char *str, char *charset)
 		}
 	}
 	tmp_nd = mother;
-	printf("{ %s }\n", tmp_nd->args[0]);
-	while(tmp_nd->child)
-	{
-		tmp_nd = tmp_nd->child;
-		while(tmp_nd->sible)
-		{
-			printf(" -> { %s }",tmp_nd->args[0]);
-			tmp_nd = tmp_nd->sible;
-		}
-		printf(" -> { %s }",tmp_nd->args[0]);
-	}
-	printf("\n");
+	// printf("{ %s }\n", tmp_nd->args[0]);
+	// while(tmp_nd->child)
+	// {
+	// 	tmp_nd = tmp_nd->child;
+	// 	while(tmp_nd->sible)
+	// 	{
+	// 		printf(" -> { %s }",tmp_nd->args[0]);
+	// 		tmp_nd = tmp_nd->sible;
+	// 	}
+	// 	printf(" -> { %s }",tmp_nd->args[0]);
+	// }
+	// printf("\n");
 	return (mother);
 }
 
@@ -127,7 +159,7 @@ int		start_shell(char **en, char *av)
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
 		coms = parse(line, ";");
-		coms = coms->child;
+		// coms = coms->child;
 		status = run_cmd(coms, en, av);
 	}
 	return (0);
