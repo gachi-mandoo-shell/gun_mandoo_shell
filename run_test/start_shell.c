@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:18:53 by spark             #+#    #+#             */
-/*   Updated: 2021/04/18 17:37:12 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/18 21:07:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,15 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	rt = 1;
 	ready_run(coms);
 	print_list(coms);
-	// while (coms)
-	// {
-	// 	rt = run(run_com, en, av);
-	// 	coms = coms->sible;
-	// }
+	coms = coms->child;
+	while (coms)
+	{
+		rt = run(coms, en, av);
+		if (coms->sible)
+			coms = coms->sible;
+		else
+			break ;
+	}
 	return (rt);
 }
 
