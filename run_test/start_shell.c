@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:18:53 by spark             #+#    #+#             */
-/*   Updated: 2021/04/18 21:07:52 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/18 22:37:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,9 @@ int		start_shell(char **en, char *av)
 	char	*line;
 	t_nd	*coms;
 
-	status = 1;
+	status = EXIT_SUCCESS;
 	//start_write();
-	while (status)
+	while (status == EXIT_SUCCESS)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
