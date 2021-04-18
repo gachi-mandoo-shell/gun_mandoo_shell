@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:18:53 by spark             #+#    #+#             */
-/*   Updated: 2021/04/17 22:00:43 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/18 15:10:36 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,7 @@ t_nd	*parse(char *str, char *charset)
 		printf(" -> { %s }",tmp_nd->args[0]);
 	}
 	printf("\n");
-
-	return	mother;
+	return (mother);
 }
 
 int		start_shell(char **en, char *av)
