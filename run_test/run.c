@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:19:02 by spark             #+#    #+#             */
-/*   Updated: 2021/04/17 23:20:18 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/17 23:25:04 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	(*blt_func(int i))(char **run_com, char **en, char *av)
 	blt_fuck[0] = &cmd_exit;
 	blt_fuck[1] = &cmd_env;
 	blt_fuck[2] = &cmd_pwd;
-	blt_fuck[3] = &cmd_cd ;
+	blt_fuck[3] = &cmd_cd;
 	return (blt_fuck[i]);
 }
 
