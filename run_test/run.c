@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:19:02 by spark             #+#    #+#             */
-/*   Updated: 2021/04/18 21:50:23 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/18 22:36:33 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	find_cmd(t_nd *com, char **en, char *av)
 			break ;
 		}
 	}
-	write(1, "error", 5);
+	if (bash_path[i] == NULL)
+		printf("%s: command not found\n", com->args[0]);
 	i = -1;
 	while (bash_path[++i])
 		free(bash_path[i]);
@@ -161,7 +162,7 @@ int		run_div(t_nd *cmd, char **en, char *av)
 	rt = EXIT_SUCCESS;
 	while (++i < BLT_NUM)
 		if (!(strcmp(cmd->args[0], blt_str(i))))
-			builtin_run(cmd, en, av, i);
+			return (builtin_run(cmd, en, av, i));
 	if (access(cmd->args[0], F_OK) != -1)
 		execute_ps(cmd->args[0], cmd, en, av);
 	else
@@ -175,7 +176,7 @@ int		run(t_nd *cmd, char **en, char *av)
 
 	rt = EXIT_SUCCESS;
 	cmd = cmd->child;
-	printf("run : %s\n", cmd->args[0]);
+	// printf("run : %s\n", cmd->args[0]);
 	while (cmd)
 	{
 		rt = run_div(cmd, en, av);

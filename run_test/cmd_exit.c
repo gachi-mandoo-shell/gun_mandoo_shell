@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 19:58:03 by skim              #+#    #+#             */
-/*   Updated: 2021/04/18 21:31:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/18 22:37:41 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int		cmd_exit(t_nd *com, char **en, char *name)
 	if (i > 2)
 	{
 		printf("exit: too many arguments\n");
-		return (1);
+		return (EXIT_SUCCESS);
 	}
 	else
-		return (0);
+		return (EXIT_FAILURE);
 }
