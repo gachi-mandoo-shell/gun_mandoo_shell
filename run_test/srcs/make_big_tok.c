@@ -6,6 +6,7 @@ int		count_size(char *str, char c)
 	int		i;
 	int		qq_f;
 	int		q_f;
+	int		flag;
 
 	count = 1;
 	i = -1;
@@ -80,7 +81,7 @@ t_nd	*make_big_tok(char *str)
 	t_nd	*tmp_nd2;
 
 	i = -1;
-	tmp = make_big_tok(str, c);
+	tmp = split_qoute(str, ';');
 
 	// while (tmp[++i])
 	// 	printf("%d : %s\n", i, tmp[i]);
