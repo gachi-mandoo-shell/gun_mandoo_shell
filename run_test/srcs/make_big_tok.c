@@ -16,7 +16,7 @@ int		count_size(char *str)
 		if (str[i] == '\"')
 			qq_f *= -1;
 		else if (str[i] == '\'')
-			q_f *= 1;
+			q_f *= -1;
 		else if (str[i] == ';' && qq_f > 0 && q_f > 0)
 			count++;
 	}
@@ -33,15 +33,22 @@ char	*sep(char **str)
 	i = -1;
 	qq_f = 1;
 	q_f = 1;
-	while ((*str)[++i] == ';' && qq_f > 0 && q_f > 0)
+	while ((*str)[++i])
 	{
 		if ((*str)[i] == '\"')
 			qq_f *= -1;
 		else if ((*str)[i] == '\'')
-			q_f *= 1;
+			q_f *= -1;
+		if ((*str)[i] == ';' && qq_f > 0 && q_f > 0)
+			break;
 	}
-	rt = ft_strndup(*str, i);
-	(*str) += i;
+	if (!(*str)[i])
+		rt = ft_strndup(*str, i);
+	else
+	{
+		rt = ft_strndup(*str, i);
+		(*str) += i + 1;
+	}
 	return (rt);
 }
 
@@ -74,11 +81,11 @@ t_nd	*big_parse(char *str)
 
 	i = -1;
 	tmp = make_big_tok(str);
-	// while (tmp[++i])
-	// 	printf(" -> %s\n", tmp[i]);
 
+	// while (tmp[++i])
+	// 	printf("%d : %s\n", i, tmp[i]);
 	// i = -1;
-	// 빅 토큰라인들이 들어있는 tmp
+
 	mother = new_nd(str);
 	mother->pos.head = mother;
 	mother->pos.tail = mother;
