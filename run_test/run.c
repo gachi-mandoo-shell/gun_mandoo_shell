@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:19:02 by spark             #+#    #+#             */
-/*   Updated: 2021/04/18 22:36:33 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/19 14:31:22 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,10 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 
 void	find_cmd(t_nd *com, char **en, char *av)
 {
-	char	**bash_path;
-	char	temp_path[PATH_MAX];
-	int		i;
+	struct stat	test;
+	char		**bash_path;
+	char		temp_path[PATH_MAX];
+	int			i;
 
 	i = -1;
 	bash_path = make_tok(find_env("PATH", en), ":");
@@ -79,7 +80,7 @@ void	find_cmd(t_nd *com, char **en, char *av)
 		if (com->args[0][0] != '/')
 			strcat(temp_path, "/");
 		strcat(temp_path, com->args[0]);
-		if (access(temp_path, F_OK) != -1)
+		if (stat(temp_path, &test) != -1)
 		{
 			execute_ps(temp_path, com, en, av);
 			break ;
@@ -155,6 +156,7 @@ int		builtin_run(t_nd *cmd, char **en, char *av, int i)
 
 int		run_div(t_nd *cmd, char **en, char *av)
 {
+	struct stat	test;
 	int i;
 	int rt;
 
@@ -163,7 +165,7 @@ int		run_div(t_nd *cmd, char **en, char *av)
 	while (++i < BLT_NUM)
 		if (!(strcmp(cmd->args[0], blt_str(i))))
 			return (builtin_run(cmd, en, av, i));
-	if (access(cmd->args[0], F_OK) != -1)
+	if (stat(cmd->args[0], &test) != -1)
 		execute_ps(cmd->args[0], cmd, en, av);
 	else
 		find_cmd(cmd, en, av);
@@ -184,6 +186,6 @@ int		run(t_nd *cmd, char **en, char *av)
 			cmd = cmd->sible;
 		else
 			break ;
-	}	
+	}
 	return (rt);
 }
