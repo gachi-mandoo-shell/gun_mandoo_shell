@@ -19,14 +19,11 @@ void	ready_run(t_nd *coms)
 	anc = child_rewind(coms);
 	while (anc)
 	{
-		new = new_nd(0);
-		lexer(new, anc->args[0]);
-		new->pos.head = coms;
-		new->prev = anc;
-		anc->child = new;
-		anc = anc->sible;
+		lexer(anc, anc->args[0]);
+		if (anc->sible)
+			anc = anc->sible;
 	}
-	
+	//mini tok 해야하는 부분
 	while (anc)
 	{
 		new = new_nd(0);

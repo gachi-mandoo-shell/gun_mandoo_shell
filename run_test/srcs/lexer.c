@@ -12,13 +12,18 @@ int		lexer(t_nd *new, char *args)
 	anc = new;
 	while (tok_pipe[++i])
 	{
-		lexer_new = new_nd(tok_pipe[i]);
-		lexer_new->prev = anc;
 		if (i == 0)
-			anc->child = lexer_new;
+		{
+			anc->child = new_nd(tok_pipe[i]);
+			anc = anc->child;
+		}
 		else
-			anc->sible = lexer_new;
-		anc = lexer_new;
+		{
+			anc->sible = new_nd(tok_pipe[i]);
+			anc = anc->sible;
+		}
+		anc->type = TYPE_PIPE_C_P
 	}
 
+	return (EXIT_SUCCESS);
 }
