@@ -6,15 +6,15 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 19:40:27 by skim              #+#    #+#             */
-/*   Updated: 2021/04/19 14:28:14 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/19 19:06:02 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft.h"
 # include <stdio.h>
-# include "libft/includes/libft.h"
 # include <string.h>
 # include <unistd.h>
 # include <limits.h>
@@ -61,7 +61,11 @@ typedef struct 	s_nd
 }				t_nd;
 
 int		start_shell(char **en, char *av);
+
+t_nd	*big_parse(char *str);
 char	**make_tok(char *str, char *charset);
+
+void	ready_run(t_nd *coms);
 int		run(t_nd *cmd, char **en, char *av);
 
 int		cmd_exit(t_nd *com, char **en, char *name);
@@ -70,7 +74,9 @@ int		cmd_cd(t_nd *com, char **en, char *av);
 int		cmd_pwd(t_nd *com, char **en, char *av);
 char	*find_env(char *key, char **en);
 char	*find_env_val(char *key, char **en);
-void	ready_run(t_nd *coms);
+
 t_nd	*new_nd(char *name);
+void	print_list(t_nd *com);
+int		matrix_line_num(char **matrix);
 
 #endif
