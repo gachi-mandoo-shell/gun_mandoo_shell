@@ -64,10 +64,10 @@ char	**make_big_tok(char *str)
 	rt = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!rt)
 		return (NULL);
-	rt[size] = 0;
 	i = -1;
 	while (++i < size)
 		rt[i] = sep(&str);
+	rt[i] = 0;
 	return (rt);
 }
 
