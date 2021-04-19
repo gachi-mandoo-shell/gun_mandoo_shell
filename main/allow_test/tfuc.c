@@ -11,5 +11,6 @@ int		main(void)
 	// char	*ap = buf2;
 	// char	*clearstr, *gotostr, *standstr, *stendstr;
 
+	// ㅇㅏ직 실행안됨 
 	tgetent(buf, getenv("TERM"));
 }
