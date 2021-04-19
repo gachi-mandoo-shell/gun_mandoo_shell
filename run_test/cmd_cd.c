@@ -10,7 +10,7 @@ int		cmd_cd(t_nd *com, char **en, char *av)
 	getcwd(tmp, PATH_MAX);
 	rt = ft_strncmp(com->args[1], "~", ft_strlen(com->args[1]));
 	if (rt == 0 || !com->args[1])
-		rt = chdir(find_env_val("HOME", en));
+		rt = chdir(getenv("HOME")); // HOME 환경변수가 없어졌을때도 동작하게 할 것인가
 	// 예외 처리에 대해 더 연구하고 좀 더 정확하게 수정할 것
 	else if (ft_strnstr(com->args[1], tmp, ft_strlen(tmp)))
 	{
@@ -37,6 +37,6 @@ int		cmd_cd(t_nd *com, char **en, char *av)
 	// 	getcwd(tmp, 1024);
 	// 	ft_export(PWD, tmp);
 	// }
-	return (1);
+	return (EXIT_SUCCESS);
 }
 

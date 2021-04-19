@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:18:40 by spark             #+#    #+#             */
-/*   Updated: 2021/04/18 21:30:27 by spark            ###   ########.fr       */
+/*   Updated: 2021/04/19 15:14:23 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ int		cmd_env(t_nd *com, char **en, char *av)
 	i = -1;
 	while (en[++i])
 		printf("%s\n", en[i]);
-	return (1);
+	return (EXIT_SUCCESS);
 }
