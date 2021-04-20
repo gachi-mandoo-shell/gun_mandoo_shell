@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 19:40:27 by skim              #+#    #+#             */
-/*   Updated: 2021/04/20 14:38:50 by spark            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -63,7 +51,7 @@ typedef struct 	s_nd
 
 int		start_shell(char **en, char *av);
 
-t_nd	*make_big_tok(char *str);
+char	**split_qoute(char *str, char c);
 char	**make_tok(char *str, char *charset);
 char	**split_qoute(char *str, char *set);
 int		lexer(t_nd *new, char *args);
