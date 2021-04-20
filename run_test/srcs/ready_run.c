@@ -20,18 +20,8 @@ void	ready_run(t_nd *coms)
 	while (anc)
 	{
 		lexer(anc, anc->args[0]);
+		make_mini_tok(anc->child);
 		if (anc->sible)
 			anc = anc->sible;
-	}
-	//mini tok 해야하는 부분
-	while (anc)
-	{
-		new = new_nd(0);
-		// mini_tok;
-		new->args = make_tok(anc->args[0], SEP);
-		new->pos.head = coms;
-		new->prev = anc;
-		anc->child = new;
-		anc = anc->sible;
 	}
 }

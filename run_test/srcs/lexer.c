@@ -32,7 +32,7 @@ int		lexer(t_nd *new, char *args)
 	char	**tok_pipe;
 	int		i;
 
-	tok_pipe = split_qoute(args, '|');
+	tok_pipe = split_qoute(args, "|");
 	i = -1;
 	anc = new;
 	while (tok_pipe[++i])

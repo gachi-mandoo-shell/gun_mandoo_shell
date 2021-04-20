@@ -14,8 +14,9 @@
 
 # define TYPE_NONE	-1
 # define TYPE_C_P 	1
-# define TYPE_P_C 	2
-# define TYPE_RE  	3
+
+# define RE_TYPE_OUT  	1
+# define RE_TYPE_IN  	2
 
 # define SIDE_IN	0
 # define SIDE_OUT	1
@@ -25,7 +26,7 @@
 
 typedef struct s_red
 {
-	int		rdrt_yn;
+	int		rdrt_type;
 	int		rdrt_fd;
 } t_red;
 
@@ -33,7 +34,7 @@ typedef struct 	s_info
 {
 	struct s_nd		*head;
 	struct s_nd		*tail;
-}				t_info;
+} t_info;
 
 typedef struct 	s_nd
 {
@@ -50,9 +51,10 @@ typedef struct 	s_nd
 
 int		start_shell(char **en, char *av);
 
-t_nd	*make_big_tok(char *str);
 char	**split_qoute(char *str, char c);
 char	**make_tok(char *str, char *charset);
+char	**split_qoute(char *str, char *set);
+int		lexer(t_nd *new, char *args);
 
 void	ready_run(t_nd *coms);
 int		run(t_nd *cmd, char **en, char *av);
