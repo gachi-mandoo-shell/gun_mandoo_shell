@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 16:18:53 by spark             #+#    #+#             */
-/*   Updated: 2021/04/19 19:48:39 by skim             ###   ########.fr       */
+/*   Updated: 2021/04/20 15:21:03 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 
 	i = -1;
 	rt = 1;
-	ready_run(coms);
 	print_list(coms);
 	coms = coms->child;
 	while (coms)
 	{
+		// 환경변수 바꿔주기
+		ready_run(coms);
 		rt = run(coms, en, av);
 		if (coms->sible)
 			coms = coms->sible;
@@ -88,7 +89,7 @@ int		start_shell(char **en, char *av)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
-		coms = big_parse(line);
+		coms = make_big_tok(line);
 		status = run_cmd(coms, en, av);
 	}
 	return (0);

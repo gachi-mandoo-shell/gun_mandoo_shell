@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		count_size(char *str, char c)
+int		count_size(char *str, char *set)
 {
 	int		count;
 	int		i;
@@ -18,13 +18,13 @@ int		count_size(char *str, char c)
 			qq_f *= -1;
 		else if (str[i] == '\'')
 			q_f *= -1;
-		else if (str[i] == c && qq_f > 0 && q_f > 0)
+		else if (ft_strchr(set, str[i]) && qq_f > 0 && q_f > 0)
 			count++;
 	}
 	return (count);
 }
 
-char	*sep(char **str, char c)
+char	*sep(char **str, char *set)
 {
 	char	*rt;
 	int		i;
@@ -40,7 +40,7 @@ char	*sep(char **str, char c)
 			qq_f *= -1;
 		else if ((*str)[i] == '\'')
 			q_f *= -1;
-		if ((*str)[i] == c && qq_f > 0 && q_f > 0)
+		if (ft_strchr(set, (*str)[i]) && qq_f > 0 && q_f > 0)
 			break;
 	}
 	if (!(*str)[i])
@@ -53,7 +53,7 @@ char	*sep(char **str, char c)
 	return (rt);
 }
 
-char	**split_qoute(char *str, char c)
+char	**split_qoute(char *str, char *set)
 {
 	char	**rt;
 	int		size;
@@ -61,13 +61,13 @@ char	**split_qoute(char *str, char c)
 
 	if (!str)
 		return (NULL);
-	size = count_size(str, c);
+	size = count_size(str, set);
 	rt = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!rt)
 		return (NULL);
 	i = -1;
 	while (++i < size)
-		rt[i] = sep(&str, c);
+		rt[i] = sep(&str, set);
 	rt[i] = 0;
 	return (rt);
 }
@@ -81,7 +81,7 @@ t_nd	*make_big_tok(char *str)
 	t_nd	*tmp_nd2;
 
 	i = -1;
-	tmp = split_qoute(str, ';');
+	tmp = split_qoute(str, ";");
 
 	// while (tmp[++i])
 	// 	printf("%d : %s\n", i, tmp[i]);
