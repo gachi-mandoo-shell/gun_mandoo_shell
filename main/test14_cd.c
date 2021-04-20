@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test14_cd.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 16:27:42 by skim              #+#    #+#             */
-/*   Updated: 2021/04/17 20:52:51 by skim             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "test.h"
 
 int		cmd_cd(t_nd run_com, char **en, char *av)
@@ -40,7 +28,7 @@ int		cmd_cd(t_nd run_com, char **en, char *av)
 			free(tmp2);
 		}
 	}
-	
+
 	if (rt < 0)
 		printf("%s: %s: %s\n",run_com->args[0], run_com->args[1], strerror(errno));
 	else
