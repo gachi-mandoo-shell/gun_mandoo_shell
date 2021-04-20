@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 19:40:27 by skim              #+#    #+#             */
-/*   Updated: 2021/04/19 19:06:02 by skim             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -62,7 +50,8 @@ typedef struct 	s_nd
 
 int		start_shell(char **en, char *av);
 
-t_nd	*big_parse(char *str);
+t_nd	*make_big_tok(char *str);
+char	**split_qoute(char *str, char c);
 char	**make_tok(char *str, char *charset);
 
 void	ready_run(t_nd *coms);

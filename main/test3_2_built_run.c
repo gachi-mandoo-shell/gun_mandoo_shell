@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test3_2_built_run.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 20:08:43 by skim              #+#    #+#             */
-/*   Updated: 2021/04/16 21:02:17 by skim             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-parpar3parparpar3parparpar7par6parpar3par41parpar9parparpar30parparpar4par51parpar51parparpar5parparpar1parparpar8parparpar6parparpar4par1:0parpar4parparpar5par31parpar9parparpar6parparpar4parparpar50parparpar7parparpar3parparpar2parparpar31par80parpar7par3parpar6parparpar1par30parpar3parparpar20parparpar8par6parpar3par1parpar4par43parpar6par
 #include "test.h"
 
 void	pipe_dup(t_list cmd)
