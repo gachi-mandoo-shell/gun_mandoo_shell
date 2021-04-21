@@ -48,8 +48,9 @@ void	print_list(t_nd *com)
 	{
 		tmp_nd2 = tmp_nd2->child;
 		tmp_nd = tmp_nd2;
+		printf("->");
 		print_list(tmp_nd2);
-		printf("\n====================\n");
+		// printf("\n====================\n");
 	}
 	while(tmp_nd->sible)
 	{

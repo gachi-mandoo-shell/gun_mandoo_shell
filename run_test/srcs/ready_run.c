@@ -23,5 +23,8 @@ void	ready_run(t_nd *coms)
 		make_mini_tok(anc->child);
 		if (anc->sible)
 			anc = anc->sible;
+		else
+			break;
+		print_list(coms);
 	}
 }

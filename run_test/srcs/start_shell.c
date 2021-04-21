@@ -44,21 +44,25 @@ char	*read_line(void)
 
 int		run_cmd(t_nd *coms, char **en, char *av)
 {
+	t_nd	*anc;
 	char	**run_com;
 	int		rt;
 	int		i;
 
 	i = -1;
 	rt = 1;
-	print_list(coms);
-	coms = coms->child;
-	while (coms)
+	// print_list(coms);
+	// coms = coms->child;
+	anc = child_rewind(coms);
+	while (anc)
 	{
 		// 환경변수 바꿔주기
-		ready_run(coms);
-		rt = run(coms, en, av);
-		if (coms->sible)
-			coms = coms->sible;
+		// ready_run(coms);
+		lexer(anc, anc->args[0]);
+		make_mini_tok(anc->child);
+		rt = run(anc->child, en, av);
+		if (anc->sible)
+			anc = anc->sible;
 		else
 			break ;
 	}
@@ -72,11 +76,11 @@ int		start_shell(char **en, char *av)
 	t_nd	*coms;
 
 	status = EXIT_SUCCESS;
-	start_write();
+	// start_write();
 	while (status == EXIT_SUCCESS)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
-		line = read_line();
+		line = ft_strdup("ls;pwd");
 		coms = make_big_tok(line);
 		status = run_cmd(coms, en, av);
 	}

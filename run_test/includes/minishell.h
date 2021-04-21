@@ -51,7 +51,6 @@ typedef struct 	s_nd
 
 int		start_shell(char **en, char *av);
 
-char	**split_qoute(char *str, char c);
 char	**make_tok(char *str, char *charset);
 char	**split_qoute(char *str, char *set);
 int		lexer(t_nd *new, char *args);
@@ -69,5 +68,12 @@ char	*find_env_val(char *key, char **en);
 t_nd	*new_nd(char *name);
 void	print_list(t_nd *com);
 int		matrix_line_num(char **matrix);
+
+int		make_mini_tok(t_nd *nd);
+t_nd	*make_big_tok(char *str);
+
+int		env_controller(t_nd *nd, char **en);
+int		env_changer(char *args, int *arg_i, char *cpy_arg, char **en);
+t_nd	*child_rewind(t_nd *coms);
 
 #endif
