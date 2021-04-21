@@ -80,8 +80,8 @@ int		start_shell(char **en, char *av)
 	while (status == EXIT_SUCCESS)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
-		// line = read_line();
-		line = ft_strdup("echo \"$HOME\'\"");
+		line = read_line();
+		// line = ft_strdup("echo \"$HOME\'\"");
 		coms = make_big_tok(line);
 		status = run_cmd(coms, en, av);
 	}
