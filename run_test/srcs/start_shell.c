@@ -50,16 +50,16 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	int		i;
 
 	i = -1;
-	rt = 1;
+	rt = EXIT_SUCCESS;
 	// print_list(coms);
 	// coms = coms->child;
 	anc = child_rewind(coms);
-	while (anc)
+	while (anc && rt == EXIT_SUCCESS)
 	{
 		// 환경변수 바꿔주기
 		// ready_run(coms);
 		lexer(anc, anc->args[0]);
-		make_mini_tok(anc->child);
+		make_mini_tok(anc->child, en);
 		rt = run(anc->child, en, av);
 		if (anc->sible)
 			anc = anc->sible;
@@ -76,11 +76,12 @@ int		start_shell(char **en, char *av)
 	t_nd	*coms;
 
 	status = EXIT_SUCCESS;
-	// start_write();
+	start_write();
 	while (status == EXIT_SUCCESS)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
-		line = ft_strdup("ls;pwd");
+		// line = read_line();
+		line = ft_strdup("echo \"$HOME\'\"");
 		coms = make_big_tok(line);
 		status = run_cmd(coms, en, av);
 	}
