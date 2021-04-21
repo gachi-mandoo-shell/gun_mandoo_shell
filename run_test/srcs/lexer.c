@@ -37,6 +37,7 @@ int		lexer(t_nd *new, char *args)
 	anc = new;
 	while (tok_pipe[++i])
 	{
+		// printf("->%s, i is %d\n",tok_pipe[i], i);
 		if (i == 0)
 		{
 			anc->child = new_nd(tok_pipe[i]);

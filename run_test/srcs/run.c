@@ -165,7 +165,6 @@ int		run(t_nd *cmd, char **en, char *av)
 	int rt;
 
 	rt = EXIT_SUCCESS;
-	cmd = cmd->child;
 	// printf("run : %s\n", cmd->args[0]);
 	while (cmd)
 	{

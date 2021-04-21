@@ -1,97 +1,65 @@
 #include "minishell.h"
 
-
-// int		env_changer(t_nd *nd)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		k;
-// 	int		qq_f;
-// 	int		q_f;
-// 	char	key_tmp[PATH_MAX];
-
-// 	qq_f = 1;
-// 	q_f = 1;
-// 	i = -1;
-// 	k = 0;
-// 	while(nd->args[++i])
-// 	{
-// 		j = -1;
-// 		while (nd->args[i][++j])
-// 		{
-// 			if (nd->args[i][j] == '\'')
-// 				q_f *= -1;
-// 			else if (nd->args[i][j] == '\"')
-// 				qq_f *= -1;
-// 			if (q_f > 0 && (nd->args[i][j] == '$'))
-// 			{
-// 				while(!ft_strchr(" \t\n\r\a\"\'$", nd->args[i][++j]))
-// 					key_tmp[k++] = nd_args[i][j];
-// 				key_tmp[k] = 0;
-
-// 			}
-// 			else if
-
-// 		}
-// 	}
-// }
-
-int		env_changer(t_nd *nd)
+int	env_changer(char *args, int *arg_i, char *cpy_arg, char **en)
 {
-	char	cpy_arg[PATH_MAX];
 	char	key_tmp[PATH_MAX];
 	char	*key_val;
+	int		k;
+	int		cpy_i;
+
+	arg_i = 0;
+	cpy_i = 0;
+	ft_memset(key_tmp, 0, PATH_MAX);
+	k = 0;
+	while (!ft_strchr(" \t\n\r\a\"\'$", args[++(*arg_i)]))
+		key_tmp[k++] = args[(*arg_i)];
+	key_val = find_env_val(key_tmp, en);
+	strcat(cpy_arg, key_val);
+	cpy_i += ft_strlen(key_val);
+	free(key_val);
+	return (cpy_i);
+}
+
+int	env_controller(t_nd *nd, char **en)
+{
+	char	cpy_arg[PATH_MAX];
 	int		cpy_i;
 	int		arg_i;
 	int		arg_count;
 
 	arg_count = -1;
-	ft_memset(cpy_arg, 0, PATH_MAX);
 	while (nd->args[++arg_count])
 	{
 		arg_i = -1;
 		cpy_i = 0;
-		while (nd->nd_args[arg_count][++arg_i])
+		ft_memset(cpy_arg, 0, PATH_MAX);
+		while (nd->args[arg_count][++arg_i])
 		{
 			if (nd->args[arg_count][arg_i] == '\'')
-			{
 				while (nd->args[arg_count][++arg_i] == '\'')
 					cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
-			}
 			if (nd->args[arg_count][arg_i] == '\"')
 			{
 				while (nd->args[arg_count][++arg_i] == '\"')
 				{
 					if (nd->args[arg_count][arg_i] == '$')
-					{
-						while (!ft_strchr(" \t\n\r\a\"\'$", nd->args[arg_count][++arg_i]))
-							key_tmp[k++] = nd->args[arg_count][arg_i];
-						key_tmp[k++] = 0;
-						key_val = find_env_val(key_tmp, en);
-						strcat(cpy_arg, key_val);
-						cpy_i += ft_strlen(key_val);
-						free(key_val);
-					}
-					if (nd->args[arg_count][arg_i] != "\"")
-						cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
+						cpy_i += env_changer(nd->args[arg_count], \
+						&arg_i, cpy_arg + cpy_i, en);
+					cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
 				}
 			}
 			if (nd->args[arg_count][arg_i] == '$')
-			{
-				while (!ft_strchr(" \t\n\r\a\"\'$", nd->args[arg_count][++arg_i]))
-					key_tmp[k++] = nd->args[arg_count][arg_i];
-				key_tmp[k++] = 0;
-				key_val = find_env_val(key_tmp, en);
-				strcat(cpy_arg, key_val);
-				cpy_i += ft_strlen(key_val);
-				free(key_val);
-				arg_i--;
-			}
+				cpy_i += env_changer(nd->args[arg_count], \
+				&arg_i, cpy_arg + cpy_i, en);
+			if (!ft_strchr("\'\"$", nd->args[arg_count][arg_i]))
+				cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
 		}
+		nd->args[arg_count] = ft_strdup(cpy_arg);
 	}
+	return (EXIT_SUCCESS);
 }
 
-char	**make_mini_tok(t_nd *nd)
+int		make_mini_tok(t_nd *nd)
 {
 	char	*tmp;
 	t_nd	*tmp_nd;
@@ -111,6 +79,6 @@ char	**make_mini_tok(t_nd *nd)
 		else 
 			break;
 	}
-	env_changer(nd);
-
+	// env_changer(nd);
+	return (EXIT_SUCCESS);
 }

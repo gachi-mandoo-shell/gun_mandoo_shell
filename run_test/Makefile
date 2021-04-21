@@ -18,8 +18,8 @@ TEST_SRCS = $(wildcard $(SRCS_DIR)/*.c) $(wildcard $(BLT_DIR)/*.c)
 all : $(NAME)
 
 $(NAME) : $(LIBFT)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) \
-	-L ./ -lft -o $(NAME) $(SRCS)
+	@$(CC) -I$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) \
+	-L ./ -lft -o $(NAME) $(TEST_SRCS)
 
 $(LIBFT) :
 	@make -C $(LIB_DIR)
