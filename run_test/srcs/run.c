@@ -166,7 +166,7 @@ int		run(t_nd *cmd, char **en, char *av)
 
 	rt = EXIT_SUCCESS;
 	// printf("run : %s\n", cmd->args[0]);
-	while (cmd)
+	while (cmd && rt == EXIT_SUCCESS)
 	{
 		rt = run_div(cmd, en, av);
 		if (cmd->sible)

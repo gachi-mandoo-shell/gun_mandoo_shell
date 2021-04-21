@@ -24,6 +24,6 @@ char	*find_env_val(char *key, char **en)
 	if (!tmp)
 		return (0);
 	rt = ft_strdup(tmp + ft_strlen(key) + 1);
-	free(tmp);
+	// free(tmp);
 	return (rt);
 }

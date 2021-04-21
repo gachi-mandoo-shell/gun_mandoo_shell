@@ -69,7 +69,7 @@ t_nd	*new_nd(char *name);
 void	print_list(t_nd *com);
 int		matrix_line_num(char **matrix);
 
-int		make_mini_tok(t_nd *nd);
+int		make_mini_tok(t_nd *nd, char **en);
 t_nd	*make_big_tok(char *str);
 
 int		env_controller(t_nd *nd, char **en);

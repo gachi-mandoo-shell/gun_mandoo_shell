@@ -7,15 +7,13 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char **en)
 	int		k;
 	int		cpy_i;
 
-	arg_i = 0;
-	cpy_i = 0;
 	ft_memset(key_tmp, 0, PATH_MAX);
 	k = 0;
 	while (!ft_strchr(" \t\n\r\a\"\'$", args[++(*arg_i)]))
 		key_tmp[k++] = args[(*arg_i)];
 	key_val = find_env_val(key_tmp, en);
 	strcat(cpy_arg, key_val);
-	cpy_i += ft_strlen(key_val);
+	cpy_i = ft_strlen(key_val);
 	free(key_val);
 	return (cpy_i);
 }
@@ -36,11 +34,11 @@ int	env_controller(t_nd *nd, char **en)
 		while (nd->args[arg_count][++arg_i])
 		{
 			if (nd->args[arg_count][arg_i] == '\'')
-				while (nd->args[arg_count][++arg_i] == '\'')
+				while (nd->args[arg_count][++arg_i] != '\'')
 					cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
 			if (nd->args[arg_count][arg_i] == '\"')
 			{
-				while (nd->args[arg_count][++arg_i] == '\"')
+				while (nd->args[arg_count][++arg_i] != '\"')
 				{
 					if (nd->args[arg_count][arg_i] == '$')
 						cpy_i += env_changer(nd->args[arg_count], \
@@ -59,7 +57,7 @@ int	env_controller(t_nd *nd, char **en)
 	return (EXIT_SUCCESS);
 }
 
-int		make_mini_tok(t_nd *nd)
+int		make_mini_tok(t_nd *nd, char **en)
 {
 	char	*tmp;
 	t_nd	*tmp_nd;
@@ -79,6 +77,6 @@ int		make_mini_tok(t_nd *nd)
 		else 
 			break;
 	}
-	// env_changer(nd);
+	env_controller(nd, en);
 	return (EXIT_SUCCESS);
 }
