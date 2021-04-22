@@ -81,6 +81,7 @@ t_nd	*make_big_tok(char *str)
 	t_nd	*tmp_nd2;
 
 	i = -1;
+	
 	tmp = split_qoute(str, ";");
 
 	// while (tmp[++i])

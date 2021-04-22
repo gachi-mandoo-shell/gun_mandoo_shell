@@ -29,12 +29,9 @@ int		syntax_check(t_nd *nd)
 	int		i;
 
 	i = -1;
-	anc = child_rewind(coms);
 	tmp_nd = nd;
 	while (nd)
 	{
-		if(lexer(nd, nd->args[0]))
-			return (EXIT_FAILURE);
 		tmp = ft_strdup(tmp_nd->args[0]);
 		free(tmp_nd->args[0]);
 		free(tmp_nd->args);
@@ -47,4 +44,6 @@ int		syntax_check(t_nd *nd)
 		else 
 			break;
 	}
+	return (EXIT_SUCCESS);
 }
+
