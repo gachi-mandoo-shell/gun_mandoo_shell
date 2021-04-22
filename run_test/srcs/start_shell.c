@@ -45,22 +45,25 @@ char	*read_line(void)
 int		run_cmd(t_nd *coms, char **en, char *av)
 {
 	t_nd	*anc;
-	char	**run_com;
 	int		rt;
 	int		i;
 
 	i = -1;
 	rt = EXIT_SUCCESS;
-	// print_list(coms);
-	// coms = coms->child;
-	anc = child_rewind(coms);
-	// if (syntax_check(coms))
-	// 	return (EXIT_FAILURE);
+	anc = coms;
+	while (coms)
+	{
+		if(lexer(coms, coms->args[0]) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (syntax_check(coms->child) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (coms->sible)
+			coms = coms->sible;
+		else
+			break ;
+	}
 	while (anc && rt == EXIT_SUCCESS)
 	{
-		// 환경변수 바꿔주기
-		// ready_run(coms);
-		// lexer(anc, anc->args[0]);
 		make_mini_tok(anc->child, en);
 		rt = run(anc->child, en, av);
 		if (anc->sible)
@@ -84,8 +87,10 @@ int		start_shell(char **en, char *av)
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
 		// line = ft_strdup("echo \"$HOME\'\"");
+		if (synerror_checker(line, ';'))
+			return (EXIT_FAILURE);
 		coms = make_big_tok(line);
-		status = run_cmd(coms, en, av);
+		status = run_cmd(coms->child, en, av);
 	}
 	return (0);
 }

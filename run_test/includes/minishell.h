@@ -4,6 +4,7 @@
 # include "libft.h"
 # include <stdio.h>
 # include <string.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
 # include <errno.h>
@@ -18,8 +19,8 @@
 # define RE_TYPE_OUT  	1
 # define RE_TYPE_IN  	2
 
-# define SIDE_IN	0
-# define SIDE_OUT	1
+#define SIDE_OUT	0
+#define SIDE_IN		1
 
 # define STDOUT		1
 # define STDIN		0
@@ -72,9 +73,11 @@ int		matrix_line_num(char **matrix);
 int		make_mini_tok(t_nd *nd, char **en);
 t_nd	*make_big_tok(char *str);
 
-int		env_controller(char *args), char **en);
+char	*env_controller(char *args, char **en);
 int		env_changer(char *args, int *arg_i, char *cpy_arg, char **en);
 t_nd	*child_rewind(t_nd *coms);
 int		call_env(t_nd *nd, char **en);
+int		synerror_checker(char *args, char a);
+int		syntax_check(t_nd *nd);
 
 #endif

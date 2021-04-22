@@ -12,6 +12,7 @@ int		pipe_dup(t_nd *cmd)
 		err_check = dup2(cmd->prev->pipes[SIDE_OUT], STDIN);
 	if (err_check < 0)
 		return (EXIT_FAILURE);
+	printf("\n!!!!!HoH\n");
 	return (EXIT_SUCCESS);
 }
 
@@ -40,12 +41,12 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
 		if (execve(run_com, com->args, en) == -1)
-			write(1, "permission denied", ft_strlen("permission denied"));
+			printf("%s: %s\n",run_com, strerror(errno));
 	}
 	else if (pid > 0)
 	{
 		wait(&pid);
-		// close(run_com);
+		pipe_close(com);
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
@@ -68,6 +69,7 @@ void	find_cmd(t_nd *com, char **en, char *av)
 		if (com->args[0][0] != '/')
 			strcat(temp_path, "/");
 		strcat(temp_path, com->args[0]);
+		// printf("find : %s\n", temp_path);
 		if (stat(temp_path, &test) != -1)
 		{
 			execute_ps(temp_path, com, en, av);
@@ -75,7 +77,7 @@ void	find_cmd(t_nd *com, char **en, char *av)
 		}
 	}
 	if (bash_path[i] == NULL)
-		printf("%s: command not found\n", com->args[0]);
+		printf("%s: %s\n", temp_path, strerror(errno));
 	i = -1;
 	while (bash_path[++i])
 		free(bash_path[i]);
