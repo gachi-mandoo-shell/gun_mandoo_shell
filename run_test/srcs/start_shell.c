@@ -90,6 +90,7 @@ int		start_shell(char **en, char *av)
 		if (synerror_checker(line, ';'))
 			return (EXIT_FAILURE);
 		coms = make_big_tok(line);
+		free(line);
 		status = run_cmd(coms->child, en, av);
 	}
 	return (0);
