@@ -25,6 +25,23 @@ int		get_red(t_nd *nd, int len)
 	return (EXIT_SUCCESS);
 }
 
+int		pipe_checker(char *args)
+{
+	int		len;
+	int		i;
+
+	len = ft_strlen(args);
+	while (args[--len] == ' ')
+		;
+	if (args[len] == '|')
+		return (EXIT_FAILURE);
+	// else if (args[len] == '>')
+	// 	return (EXIT_FAILURE);
+	// else if (args[len] == '<')
+	// 	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
 int		lexer(t_nd *new, char *args)
 {
 	t_nd	*lexer_new;
@@ -32,6 +49,8 @@ int		lexer(t_nd *new, char *args)
 	char	**tok_pipe;
 	int		i;
 
+	if (pipe_checker(args) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	tok_pipe = split_qoute(args, "|");
 	i = -1;
 	anc = new;

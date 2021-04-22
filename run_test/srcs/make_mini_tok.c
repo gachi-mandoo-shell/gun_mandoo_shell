@@ -18,65 +18,75 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char **en)
 	return (cpy_i);
 }
 
-int	env_controller(t_nd *nd, char **en)
+char	*env_controller(char *args, char **en)
 {
 	char	cpy_arg[PATH_MAX];
 	int		cpy_i;
 	int		arg_i;
+
+	arg_i = -1;
+	cpy_i = 0;
+	ft_memset(cpy_arg, 0, PATH_MAX);
+	while (args[++arg_i])
+	{
+		if (args[arg_i] == '\'')
+			while (args[++arg_i] != '\'')
+				cpy_arg[cpy_i++] = args[arg_i];
+		if (args[arg_i] == '\"')
+		{
+			while (args[++arg_i] != '\"')
+			{
+				if (args[arg_i] == '$')
+					cpy_i += env_changer(args, \
+					&arg_i, cpy_arg + cpy_i, en);
+				cpy_arg[cpy_i++] = args[arg_i];
+			}
+		}
+		if (args[arg_i] == '$')
+			cpy_i += env_changer(args, \
+			&arg_i, cpy_arg + cpy_i, en);
+		if (!ft_strchr("\'\"$", args[arg_i]))
+			cpy_arg[cpy_i++] = args[arg_i];
+	}
+	return (ft_strdup(cpy_arg));
+}
+
+int		call_env(t_nd *nd, char **en)
+{
+	char 	*tmp;
 	int		arg_count;
 
 	arg_count = -1;
 	while (nd->args[++arg_count])
 	{
-		arg_i = -1;
-		cpy_i = 0;
-		ft_memset(cpy_arg, 0, PATH_MAX);
-		while (nd->args[arg_count][++arg_i])
-		{
-			if (nd->args[arg_count][arg_i] == '\'')
-				while (nd->args[arg_count][++arg_i] != '\'')
-					cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
-			if (nd->args[arg_count][arg_i] == '\"')
-			{
-				while (nd->args[arg_count][++arg_i] != '\"')
-				{
-					if (nd->args[arg_count][arg_i] == '$')
-						cpy_i += env_changer(nd->args[arg_count], \
-						&arg_i, cpy_arg + cpy_i, en);
-					cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
-				}
-			}
-			if (nd->args[arg_count][arg_i] == '$')
-				cpy_i += env_changer(nd->args[arg_count], \
-				&arg_i, cpy_arg + cpy_i, en);
-			if (!ft_strchr("\'\"$", nd->args[arg_count][arg_i]))
-				cpy_arg[cpy_i++] = nd->args[arg_count][arg_i];
-		}
-		nd->args[arg_count] = ft_strdup(cpy_arg);
+		tmp = env_controller(nd->args[arg_count], en);
+		free(nd->args[arg_count]);
+		nd->args[arg_count] = ft_strdup(tmp);
+		free(tmp);
 	}
 	return (EXIT_SUCCESS);
 }
 
 int		make_mini_tok(t_nd *nd, char **en)
 {
-	char	*tmp;
-	t_nd	*tmp_nd;
-	int		i;
+	// char	*tmp;
+	// t_nd	*tmp_nd;
+	// int		i;
 
-	i = -1;
-	tmp_nd = nd;
-	while (nd)
-	{
-		tmp = ft_strdup(tmp_nd->args[0]);
-		free(tmp_nd->args[0]);
-		free(tmp_nd->args);
-		tmp_nd->args = split_qoute(tmp, SEP);
-		free(tmp);
-		if (tmp_nd->sible)
-			tmp_nd = tmp_nd->sible;
-		else 
-			break;
-	}
-	env_controller(nd, en);
+	// i = -1;
+	// tmp_nd = nd;
+	// while (nd)
+	// {
+	// 	tmp = ft_strdup(tmp_nd->args[0]);
+	// 	free(tmp_nd->args[0]);
+	// 	free(tmp_nd->args);
+	// 	tmp_nd->args = split_qoute(tmp, SEP);
+	// 	free(tmp);
+	// 	if (tmp_nd->sible)
+	// 		tmp_nd = tmp_nd->sible;
+	// 	else 
+	// 		break;
+	// }
+	call_env(nd, en);
 	return (EXIT_SUCCESS);
 }

@@ -54,11 +54,13 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	// print_list(coms);
 	// coms = coms->child;
 	anc = child_rewind(coms);
+	// if (syntax_check(coms))
+	// 	return (EXIT_FAILURE);
 	while (anc && rt == EXIT_SUCCESS)
 	{
 		// 환경변수 바꿔주기
 		// ready_run(coms);
-		lexer(anc, anc->args[0]);
+		// lexer(anc, anc->args[0]);
 		make_mini_tok(anc->child, en);
 		rt = run(anc->child, en, av);
 		if (anc->sible)
