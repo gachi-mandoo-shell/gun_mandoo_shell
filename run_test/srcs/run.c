@@ -9,10 +9,15 @@ int		pipe_dup(t_nd *cmd)
 	if (err_check < 0)
 		return (EXIT_FAILURE);
 	if (cmd->prev && cmd->prev->type == TYPE_C_P)
+	{
+		// printf("here : %s\n", cmd->args[0]);
+		// char buf[1000];
+		// read(cmd->prev->pipes[SIDE_OUT], buf, 1000);
+		// printf(">>%s\n", buf);
 		err_check = dup2(cmd->prev->pipes[SIDE_OUT], STDIN);
+	}
 	if (err_check < 0)
 		return (EXIT_FAILURE);
-	printf("\n!!!!!HoH\n");
 	return (EXIT_SUCCESS);
 }
 
@@ -32,6 +37,7 @@ void	pipe_close(t_nd *cmd)
 int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 {
 	pid_t	pid;
+	int		rt;
 
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe(com->pipes);
@@ -40,13 +46,20 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	{
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
-		if (execve(run_com, com->args, en) == -1)
+		// printf("%s\n", run_com);
+		// int a = 0;
+		// while (com->args[a])
+		// 	printf("%s\n", com->args[a++]);
+		rt = execve(run_com, com->args, en);
+		if (rt == -1)
 			printf("%s: %s\n",run_com, strerror(errno));
+		exit(rt);
 	}
 	else if (pid > 0)
 	{
 		wait(&pid);
-		pipe_close(com);
+		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
+			pipe_close(com);
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
@@ -61,7 +74,7 @@ void	find_cmd(t_nd *com, char **en, char *av)
 	int			i;
 
 	i = -1;
-	bash_path = make_tok(find_env("PATH", en), ":");
+	bash_path = make_tok(find_env_val("PATH", en), ":");
 	while (bash_path[++i])
 	{
 		ft_memset(temp_path, '\0', PATH_MAX);
@@ -128,7 +141,7 @@ int		builtin_run(t_nd *cmd, char **en, char *av, int i)
 		else if (pid > 0)
 		{
 			wait(&pid);
-			pipe_close(cmd);
+			// pipe_close(cmd);
 		}
 		else
 			write(1, "failed to fork", ft_strlen("failed to fork"));
@@ -167,9 +180,11 @@ int		run(t_nd *cmd, char **en, char *av)
 	int rt;
 
 	rt = EXIT_SUCCESS;
-	// printf("run : %s\n", cmd->args[0]);
 	while (cmd && rt == EXIT_SUCCESS)
 	{
+		// int a = 0;
+		// while (cmd->args[a])
+		// 	printf("%d : %s\n", a, cmd->args[a++]);
 		rt = run_div(cmd, en, av);
 		if (cmd->sible)
 			cmd = cmd->sible;
