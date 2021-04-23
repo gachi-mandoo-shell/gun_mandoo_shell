@@ -74,16 +74,25 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	return (rt);
 }
 
+
 int		start_shell(char **en, char *av)
 {
 	int		status;
 	char	*line;
+	char	hist[PATH_MAX][PATH_MAX];
 	t_nd	*coms;
-
+	// int		i;
+	// i = -1;
+	// while (++i < PATH_MAX)
+	// 	ft_memset(hist[i], 0, PATH_MAX);
 	status = EXIT_SUCCESS;
 	start_write();
+	// i = 0;
+	signal(SIGINT, (void*)signal_ctlc);
+	signal(SIGTERM, (void*)signal_ctld);
+	signal(SIGQUIT, (void*)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
-	{
+	{		
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
 		// line = ft_strdup("echo \"$HOME\'\"");
