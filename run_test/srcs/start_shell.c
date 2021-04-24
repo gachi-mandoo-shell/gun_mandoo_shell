@@ -89,19 +89,21 @@ int		start_shell(char **en, char *av)
 	start_write();
 	// i = 0;
 	signal(SIGINT, (void*)signal_ctlc);
-	signal(SIGTERM, (void*)signal_ctld);
-	signal(SIGQUIT, (void*)signal_ctlslash);
+	// signal(SIGTERM, (void*)signal_ctld);
+	// signal(SIGQUIT, (void*)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
 	{		
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
 		// line = ft_strdup("echo \"$HOME\'\"");
-		
-		if (synerror_checker(line, ';'))
-			return (EXIT_FAILURE);
-		coms = make_big_tok(line);
-		free(line);
-		status = run_cmd(coms->child, en, av);
+		if (ft_strlen(line))
+		{
+			if (synerror_checker(line, ';'))
+				return (EXIT_FAILURE);
+			coms = make_big_tok(line);
+			free(line);
+			status = run_cmd(coms->child, en, av);
+		}
 	}
 	return (0);
 }

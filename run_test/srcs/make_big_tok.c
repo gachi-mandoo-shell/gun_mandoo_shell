@@ -9,17 +9,25 @@ int		count_size(char *str, char *set)
 	int		flag;
 
 	count = 1;
-	i = -1;
+	i = 0;
 	qq_f = 1;
 	q_f = 1;
-	while (str[++i])
+	while (ft_strchr(set, str[i]))
+		i++;
+	while (str[i])
 	{
 		if (str[i] == '\"')
 			qq_f *= -1;
 		else if (str[i] == '\'')
 			q_f *= -1;
 		else if (ft_strchr(set, str[i]) && qq_f > 0 && q_f > 0)
-			count++;
+		{
+			if (ft_strchr(set, str[i + 1]))
+				;
+			else
+				count++;
+		}
+		i++;
 	}
 	return (count);
 }
@@ -31,22 +39,36 @@ char	*sep(char **str, char *set)
 	int		qq_f;
 	int		q_f;
 
-	i = -1;
+	i = 0;
 	qq_f = 1;
 	q_f = 1;
-	while ((*str)[++i])
+	while (ft_strchr(set, (*str)[i]))
+		(*str) += ++i;
+	while ((*str)[i])
 	{
 		if ((*str)[i] == '\"')
 			qq_f *= -1;
 		else if ((*str)[i] == '\'')
 			q_f *= -1;
 		if (ft_strchr(set, (*str)[i]) && qq_f > 0 && q_f > 0)
-			break;
+		{
+			if (ft_strchr(set, (*str)[i + 1]))
+				;
+			else
+				break;
+		}
+		i++;
 	}
 	if (!(*str)[i])
+	{
+		if (ft_strchr(set, (*str)[i - 1]))
+			i--;
 		rt = ft_strndup(*str, i);
+	}
 	else
 	{
+		// if (ft_strchr(SEP, (*str)[i]))
+		// 	i++;
 		rt = ft_strndup(*str, i);
 		(*str) += i + 1;
 	}

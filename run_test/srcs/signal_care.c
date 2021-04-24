@@ -3,8 +3,8 @@
 
 void	*signal_ctlc(int	signo)
 {
-	printf("\b\b  \n");
-	return (0);
+	write(1, "\b\b  \nminishell test> ", ft_strlen("\b\b  \nminishell test> "));
+	// kill(0, SIGINT);
 }
 
 void	*signal_ctld(int	signo)
@@ -21,8 +21,7 @@ void	*signal_ctlslash(int	signo)
 
 void	*signal_child_ctlc(int	signo)
 {
-	printf("\b\b  \n");
-	exit(EXIT_SUCCESS);
+	 
 }
 
 void	*signal_child_ctld(int	signo)
