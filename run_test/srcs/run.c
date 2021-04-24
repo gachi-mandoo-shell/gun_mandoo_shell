@@ -136,6 +136,9 @@ int		builtin_run(t_nd *cmd, char **en, char *av, int i)
 		if (pid == 0)
 		{
 			pipe_dup(cmd);
+			signal(SIGINT, (void*)signal_child_ctlc);
+			signal(SIGTERM, (void*)signal_child_ctld);
+			signal(SIGQUIT, (void*)signal_child_ctlslash);
 			rt = (*blt_func(i))(cmd, en, av);
 		}
 		else if (pid > 0)
