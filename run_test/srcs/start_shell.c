@@ -96,6 +96,7 @@ int		start_shell(char **en, char *av)
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
 		// line = ft_strdup("echo \"$HOME\'\"");
+		
 		if (synerror_checker(line, ';'))
 			return (EXIT_FAILURE);
 		coms = make_big_tok(line);
