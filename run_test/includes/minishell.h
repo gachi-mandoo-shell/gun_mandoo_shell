@@ -17,7 +17,8 @@
 # define TYPE_C_P 	1
 
 # define RE_TYPE_OUT  	1
-# define RE_TYPE_IN  	2
+# define RE_TYPE_OOUT	2
+# define RE_TYPE_IN  	3
 
 #define SIDE_OUT	0
 #define SIDE_IN		1
@@ -28,6 +29,7 @@
 typedef struct s_red
 {
 	int		rdrt_type;
+	char	*rdrt_name;
 	int		rdrt_fd;
 } t_red;
 
@@ -53,8 +55,19 @@ typedef struct 	s_nd
 int		start_shell(char **en, char *av);
 
 char	**make_tok(char *str, char *charset);
+t_nd	*make_big_tok(char *str);
 char	**split_qoute(char *str, char *set);
+
 int		lexer(t_nd *new, char *args);
+int		make_mini_tok(t_nd *nd, char **en);
+char	*env_controller(char *args, char **en);
+int		env_changer(char *args, int *arg_i, char *cpy_arg, char **en);
+
+int		get_redirect(t_nd *nd, char **en);
+
+int		call_env(t_nd *nd, char **en);
+int		synerror_checker(char *args, char a);
+int		syntax_check(t_nd *nd);
 
 void	ready_run(t_nd *coms);
 int		run(t_nd *cmd, char **en, char *av);
@@ -70,14 +83,5 @@ t_nd	*new_nd(char *name);
 void	print_list(t_nd *com);
 int		matrix_line_num(char **matrix);
 
-int		make_mini_tok(t_nd *nd, char **en);
-t_nd	*make_big_tok(char *str);
-
-char	*env_controller(char *args, char **en);
-int		env_changer(char *args, int *arg_i, char *cpy_arg, char **en);
 t_nd	*child_rewind(t_nd *coms);
-int		call_env(t_nd *nd, char **en);
-int		synerror_checker(char *args, char a);
-int		syntax_check(t_nd *nd);
-
 #endif
