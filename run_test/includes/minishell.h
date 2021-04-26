@@ -9,6 +9,7 @@
 # include <limits.h>
 # include <errno.h>
 # include <sys/stat.h>
+# include <signal.h>
 
 # define BLT_NUM 4
 # define SEP " \t\n\r\a\""
@@ -87,4 +88,13 @@ void	print_list(t_nd *com);
 int		matrix_line_num(char **matrix);
 
 t_nd	*child_rewind(t_nd *coms);
+
+void	*signal_ctlc(int	signo);
+void	*signal_ctld(int	signo);
+void	*signal_ctlslash(int	signo);
+void	*signal_child_ctld(int	signo);
+void	*signal_child_ctlslash(int	signo);
+void	*signal_child_ctlc(int signo);
+
+
 #endif
