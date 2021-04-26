@@ -34,6 +34,6 @@ fclean : clean
 	@make -C $(LIB_DIR) fclean
 
 test : $(LIBFT)
-	$(CC) -I$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) -L ./ -lft $(TEST_SRCS)
-	./a.out
-	rm a.out
+	@$(CC) -I$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) -L ./ -lft $(TEST_SRCS)
+	@./a.out
+	@rm a.out
