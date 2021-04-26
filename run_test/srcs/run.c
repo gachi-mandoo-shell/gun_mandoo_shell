@@ -42,7 +42,8 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	pid = fork();
 	if (pid == 0)
 	{
-		// signal(SIGINT, (void*)signal_child_ctlc(SIGINT, pid));
+		// kill(pid, SIGINT);
+			// signal(SIGQUIT, (void*)signal_child_ctlslash);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
 		else
@@ -141,9 +142,10 @@ int		builtin_run(t_nd *cmd, char **en, char *av, int i)
 		pid = fork();
 		if (pid == 0)
 		{
+			// if (signal(SIGTERM, (void*)signal_child_ctld))
+
 			pipe_dup(cmd);
 			// kill(pid, SIGINT);
-			// signal(SIGTERM, (void*)signal_child_ctld);
 			// signal(SIGQUIT, (void*)signal_child_ctlslash);
 			rt = (*blt_func(i))(cmd, en, av);
 		}
@@ -207,12 +209,12 @@ int		run(t_nd *cmd, char **en, char *av)
 		// if (cmd->prev->re.rdrt_in_type > 0 && cmd->prev->type == TYPE_C_P)
 		// 	close(cmd->prev->re.rdrt_in_fd);
 
-		printf("fd : %d\n", cmd->re.rdrt_fd);
-		printf("type : %d\n", cmd->re.rdrt_type);
-		printf("name : %s\n", cmd->re.rdrt_name);
-		printf("fd : %d\n", cmd->re.rdrt_in_fd);
-		printf("type : %d\n", cmd->re.rdrt_in_type);
-		printf("name : %s\n", cmd->re.rdrt_in_name);
+		// printf("fd : %d\n", cmd->re.rdrt_fd);
+		// printf("type : %d\n", cmd->re.rdrt_type);
+		// printf("name : %s\n", cmd->re.rdrt_name);
+		// printf("fd : %d\n", cmd->re.rdrt_in_fd);
+		// printf("type : %d\n", cmd->re.rdrt_in_type);
+		// printf("name : %s\n", cmd->re.rdrt_in_name);
 
 		if (cmd->sible)
 			cmd = cmd->sible;

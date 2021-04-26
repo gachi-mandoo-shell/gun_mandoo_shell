@@ -90,11 +90,14 @@ int		start_shell(char **en, char *av)
 	status = EXIT_SUCCESS;
 	start_write();
 	// i = 0;
-	signal(SIGINT, (void*)signal_ctlc);
-	signal(SIGTERM, (void*)signal_ctld);
-	signal(SIGQUIT, (void*)signal_ctlslash);
+
+	// signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, (void*)signal_ctlc);
+	// signal(SIGTERM, (void*)signal_ctld);
+	// signal(SIGQUIT, (void*)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
 	{
+		
 		write(1, "minishell test>!! ", ft_strlen("minishell test>!! "));
 		line = read_line();
 		// printf("line : %s\n", line);
