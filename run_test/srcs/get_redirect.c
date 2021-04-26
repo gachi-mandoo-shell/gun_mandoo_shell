@@ -21,11 +21,11 @@ void	get_redirect_type(t_nd *nd, int arg_count)
 int	get_redirect_fd(t_nd *nd, char **en)
 {
 	if (nd->re.rdrt_type == RE_TYPE_OUT)
-		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT | O_TRUNC);
+		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
 	else if (nd->re.rdrt_type == RE_TYPE_OOUT)
-		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT | O_APPEND);
+		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
 	else if (nd->re.rdrt_type == RE_TYPE_IN)
-		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDONLY);
+		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDONLY, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
 	if (nd->re.rdrt_fd < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

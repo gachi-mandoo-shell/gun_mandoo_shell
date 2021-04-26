@@ -165,6 +165,8 @@ int		run_div(t_nd *cmd, char **en, char *av)
 
 	i = -1;
 	rt = EXIT_SUCCESS;
+	if (cmd->re.rdrt_type > 0 && cmd->re.rdrt_type < 3)
+		dup2(cmd->re.rdrt_fd, cmd->fd[SIDE_IN]);
 	while (++i < BLT_NUM)
 		if (!(strcmp(cmd->args[0], blt_str(i))))
 			return (builtin_run(cmd, en, av, i));
