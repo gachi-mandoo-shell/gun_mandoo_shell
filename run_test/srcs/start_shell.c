@@ -66,7 +66,7 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	{
 		make_mini_tok(anc->child, en);
 		get_redirect(anc->child, en);
-		exit(1); // 영원히 실행됨!!! 조심!!!!
+		// exit(1); // 영원히 실행됨!!! 조심!!!!
 		rt = run(anc->child, en, av);
 		if (anc->sible)
 			anc = anc->sible;
@@ -97,7 +97,8 @@ int		start_shell(char **en, char *av)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
 		line = read_line();
-		// line = ft_strdup("echo \"$HOME\'\"");
+		// printf("line : %s\n", line);
+		// line = ft_strdup("ls > test");
 		if (ft_strlen(line))
 		{
 			if (synerror_checker(line, ';'))
@@ -106,6 +107,7 @@ int		start_shell(char **en, char *av)
 			free(line);
 			status = run_cmd(coms->child, en, av);
 		}
+		printf("status : %d\n", status);
 	}
 	return (0);
 }

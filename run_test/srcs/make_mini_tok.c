@@ -84,7 +84,7 @@ int		make_mini_tok(t_nd *nd, char **en)
 	// 	free(tmp);
 	// 	if (tmp_nd->sible)
 	// 		tmp_nd = tmp_nd->sible;
-	// 	else 
+	// 	else
 	// 		break;
 	// }
 	call_env(nd, en);

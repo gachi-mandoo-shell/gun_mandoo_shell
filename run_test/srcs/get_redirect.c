@@ -104,5 +104,6 @@ int	get_redirect(t_nd *nd, char **en)
 		else
 			break ;
 	}
+	printf("?\n");
 	return (EXIT_SUCCESS);
 }

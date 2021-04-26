@@ -41,15 +41,22 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe(com->pipes);
+	if (com->re.rdrt_type > 0 && com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
+		dup2(com->re.rdrt_fd, com->pipes[SIDE_IN]);
 	pid = fork();
 	if (pid == 0)
 	{
 		// signal(SIGINT, (void*)signal_child_ctlc);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
+		else
+		{
+			if (com->re.rdrt_type > 0)
+				dup2(com->re.rdrt_fd, STDOUT);
+		}
 		rt = execve(run_com, com->args, en);
 		if (rt == -1)
-			printf("%s: %s\n",run_com, strerror(errno));
+			printf("%s: %s\n", run_com, strerror(errno));
 		exit(rt);
 	}
 	else if (pid > 0)
@@ -129,6 +136,8 @@ int		builtin_run(t_nd *cmd, char **en, char *av, int i)
 	if (cmd->type == TYPE_C_P || (cmd->prev && cmd->prev->type == TYPE_C_P))
 	{
 		pipe(cmd->pipes);
+		if (cmd->re.rdrt_type > 0)
+			dup2(cmd->re.rdrt_fd, cmd->pipes[SIDE_IN]);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -147,7 +156,11 @@ int		builtin_run(t_nd *cmd, char **en, char *av, int i)
 			write(1, "failed to fork", ft_strlen("failed to fork"));
 	}
 	else
+	{
+		if (cmd->re.rdrt_type > 0)
+			dup2(cmd->re.rdrt_fd, STDOUT);
 		rt = (*blt_func(i))(cmd, en, av);
+	}
 	return (rt);
 }
 
@@ -166,7 +179,7 @@ int		run_div(t_nd *cmd, char **en, char *av)
 	i = -1;
 	rt = EXIT_SUCCESS;
 	if (cmd->re.rdrt_type > 0 && cmd->re.rdrt_type < 3)
-		dup2(cmd->re.rdrt_fd, cmd->fd[SIDE_IN]);
+		dup2(cmd->re.rdrt_fd, cmd->pipes[SIDE_IN]);
 	while (++i < BLT_NUM)
 		if (!(strcmp(cmd->args[0], blt_str(i))))
 			return (builtin_run(cmd, en, av, i));
@@ -188,6 +201,8 @@ int		run(t_nd *cmd, char **en, char *av)
 		// while (cmd->args[a])
 		// 	printf("%d : %s\n", a, cmd->args[a++]);
 		rt = run_div(cmd, en, av);
+		if (cmd->re.rdrt_type > 0)
+			close(cmd->re.rdrt_fd);
 		if (cmd->sible)
 			cmd = cmd->sible;
 		else
