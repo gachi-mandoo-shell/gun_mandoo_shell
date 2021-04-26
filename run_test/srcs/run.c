@@ -67,7 +67,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 void	find_cmd(t_nd *com, char **en, char *av)
@@ -178,8 +178,6 @@ int		run_div(t_nd *cmd, char **en, char *av)
 
 	i = -1;
 	rt = EXIT_SUCCESS;
-	if (cmd->re.rdrt_type > 0 && cmd->re.rdrt_type < 3)
-		dup2(cmd->re.rdrt_fd, cmd->pipes[SIDE_IN]);
 	while (++i < BLT_NUM)
 		if (!(strcmp(cmd->args[0], blt_str(i))))
 			return (builtin_run(cmd, en, av, i));

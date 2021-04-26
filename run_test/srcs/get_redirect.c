@@ -15,7 +15,7 @@ void	get_redirect_type(t_nd *nd, int arg_count)
 	else if (nd->args[arg_count][0] == '>')
 		nd->re.rdrt_type = RE_TYPE_OUT;
 	else if (nd->args[arg_count][0] == '<')
-		nd->re.rdrt_type = RE_TYPE_IN;
+		nd->re.rdrt_in_type = RE_TYPE_IN;
 }
 
 int	get_redirect_fd(t_nd *nd, char **en)
@@ -24,8 +24,8 @@ int	get_redirect_fd(t_nd *nd, char **en)
 		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
 	else if (nd->re.rdrt_type == RE_TYPE_OOUT)
 		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
-	else if (nd->re.rdrt_type == RE_TYPE_IN)
-		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDONLY, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
+	else if (nd->re.rdrt_in_type == RE_TYPE_IN)
+		nd->re.rdrt_in_fd = open(nd->re.rdrt_name, O_RDONLY, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
 	if (nd->re.rdrt_fd < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -38,10 +38,15 @@ int	get_redirect_info(t_nd *nd, int arg_count, char **en)
 		close(nd->re.rdrt_fd);
 		free(nd->re.rdrt_name);
 	}
+	if (nd->re.rdrt_in_type > 0)
+	{
+		close(nd->re.rdrt_in_fd);
+		free(nd->re.rdrt_in_name);
+	}
 	get_redirect_type(nd, arg_count);
 	free(nd->args[arg_count]);
 	nd->args[arg_count] = 0;
-	nd->re.rdrt_name = env_controller(nd->args[arg_count + 1], en);
+	nd->re.rdrt_name = ft_strdup(nd->args[arg_count + 1]);
 	free(nd->args[arg_count + 1]);
 	nd->args[arg_count + 1] = 0;
 	if (get_redirect_fd(nd, en) == EXIT_FAILURE)
@@ -104,6 +109,5 @@ int	get_redirect(t_nd *nd, char **en)
 		else
 			break ;
 	}
-	printf("?\n");
 	return (EXIT_SUCCESS);
 }
