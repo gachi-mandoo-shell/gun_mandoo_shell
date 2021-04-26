@@ -23,6 +23,10 @@ t_nd	*new_nd(char *name)
 	tmp_nd->pos.tail = 0;
 	tmp_nd->re.rdrt_type = 0;
 	tmp_nd->re.rdrt_fd = 0;
+	tmp_nd->re.rdrt_name = 0;
+	tmp_nd->re.rdrt_in_type = 0;
+	tmp_nd->re.rdrt_in_fd = 0;
+	tmp_nd->re.rdrt_in_name = 0;
 	return (tmp_nd);
 }
 
