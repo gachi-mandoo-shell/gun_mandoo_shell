@@ -42,7 +42,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	pid = fork();
 	if (pid == 0)
 	{
-		// signal(SIGINT, (void*)signal_child_ctlc);
+		// signal(SIGINT, (void*)signal_child_ctlc(SIGINT, pid));
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
 		else
