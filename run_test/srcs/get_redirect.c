@@ -4,8 +4,6 @@ int	is_redirect(char *str)
 {
 	if (!strcmp(str, ">") || !strcmp(str, ">>") || !strcmp(str, "<"))
 		return (1);
-	else if (!strcmp(str, "<"))
-		return (2);
 	else
 		return (0);
 }
@@ -47,17 +45,17 @@ int	get_redirect_info(t_nd *nd, int arg_count, char **en)
 {
 	int	type;
 
-	if (nd->re.rdrt_type > 0)
+	type = get_redirect_type(nd, arg_count);
+	if (type != RE_TYPE_IN && nd->re.rdrt_fd > 0)
 	{
 		close(nd->re.rdrt_fd);
 		free(nd->re.rdrt_name);
 	}
-	if (nd->re.rdrt_in_type > 0)
+	if (type == RE_TYPE_IN && nd->re.rdrt_in_fd > 0)
 	{
 		close(nd->re.rdrt_in_fd);
 		free(nd->re.rdrt_in_name);
 	}
-	type = get_redirect_type(nd, arg_count);
 	free(nd->args[arg_count]);
 	nd->args[arg_count] = 0;
 	if (type == RE_TYPE_IN)
@@ -116,7 +114,7 @@ int	get_redirect(t_nd *nd, char **en)
 		arg_count = -1;
 		while (anc->args[++arg_count])
 		{
-			if (is_redirect(anc->args[arg_count]) == 1)
+			if (is_redirect(anc->args[arg_count]))
 				get_redirect_info(anc, arg_count++, en);
 		}
 		if (change_arg(anc, arg_count) == EXIT_FAILURE)
