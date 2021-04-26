@@ -44,7 +44,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, (void*)signal_child_ctlc);
+		// signal(SIGINT, (void*)signal_child_ctlc);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
 		rt = execve(run_com, com->args, en);
@@ -133,9 +133,9 @@ int		builtin_run(t_nd *cmd, char **en, char *av, int i)
 		if (pid == 0)
 		{
 			pipe_dup(cmd);
-			kill(pid, SIGINT);
-			signal(SIGTERM, (void*)signal_child_ctld);
-			signal(SIGQUIT, (void*)signal_child_ctlslash);
+			// kill(pid, SIGINT);
+			// signal(SIGTERM, (void*)signal_child_ctld);
+			// signal(SIGQUIT, (void*)signal_child_ctlslash);
 			rt = (*blt_func(i))(cmd, en, av);
 		}
 		else if (pid > 0)

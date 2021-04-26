@@ -80,14 +80,12 @@ int		lexer(t_nd *new, char *args)
 		if (i == 0)
 		{
 			anc->child = new_nd(tok_pipe[i]);
-			get_red(anc->child, ft_strlen(tok_pipe[i]));
 			anc->child->prev = anc;
 			anc = anc->child;
 		}
 		else
 		{
 			anc->sible = new_nd(tok_pipe[i]);
-			get_red(anc->sible, ft_strlen(tok_pipe[i]));
 			anc->sible->prev = anc;
 			anc = anc->sible;
 		}
