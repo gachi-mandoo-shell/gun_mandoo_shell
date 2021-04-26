@@ -88,7 +88,7 @@ int		start_shell(char **en, char *av)
 	// while (++i < PATH_MAX)
 	// 	ft_memset(hist[i], 0, PATH_MAX);
 	status = EXIT_SUCCESS;
-	// start_write();
+	start_write();
 	// i = 0;
 	// signal(SIGINT, (void*)signal_ctlc);
 	// signal(SIGTERM, (void*)signal_ctld);

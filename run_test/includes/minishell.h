@@ -29,8 +29,11 @@
 typedef struct s_red
 {
 	int		rdrt_type;
+	int		rdrt_in_type;
 	char	*rdrt_name;
+	char	*rdrt_in_name;
 	int		rdrt_fd;
+	int		rdrt_in_fd;
 } t_red;
 
 typedef struct 	s_info
