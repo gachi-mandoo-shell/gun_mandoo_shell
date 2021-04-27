@@ -55,7 +55,7 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	{
 		if(lexer(coms, coms->args[0]) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (syntax_check(coms->child) == EXIT_FAILURE)
+		if (tokenizer(coms->child) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (coms->sible)
 			coms = coms->sible;
@@ -64,7 +64,7 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	}
 	while (anc && rt == EXIT_SUCCESS)
 	{
-		make_mini_tok(anc->child, en);
+		token_changer(anc->child, en);
 		get_redirect(anc->child, en);
 		rt = run(anc->child, en, av);
 		if (anc->sible)
@@ -96,16 +96,16 @@ int		start_shell(char **en, char *av)
 	// signal(SIGQUIT, (void*)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
 	{
-		
+
 		write(1, "minishell test>!! ", ft_strlen("minishell test>!! "));
 		line = read_line();
 		// printf("line : %s\n", line);
-		line = ft_strdup("> test | echo 123");
+		//line = ft_strdup("> test | echo 123");
 		if (ft_strlen(line))
 		{
 			if (synerror_checker(line, ';'))
 				return (EXIT_FAILURE);
-			coms = make_big_tok(line);
+			coms = big_cutter(line);
 			free(line);
 			status = run_cmd(coms->child, en, av);
 		}

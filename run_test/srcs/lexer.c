@@ -1,68 +1,37 @@
 #include "minishell.h"
 
-int		get_red(t_nd *nd, int len)
+int	tokenizer(t_nd *nd)
 {
+	char	*tmp;
+	t_nd	*tmp_nd;
+	char	**before_arg;
 	int		i;
-	char	tmp[len];
-	int		qq_f;
-	int		q_f;
 
 	i = -1;
-	qq_f = 1;
-	q_f = 1;
-	while(nd->args[0][++i])
+	if (synerror_redirect(nd->args[0]))
+		return (EXIT_FAILURE);
+	tmp_nd = nd;
+	while (tmp_nd)
 	{
-
-		if (nd->args[0][i] == '\'')
-			q_f *= -1;
-		else if (nd->args[0][i] == '\"')
-			qq_f *= -1;
-		if (q_f > 0 && qq_f > 0 && (nd->args[0][i] == '>' || (nd->args[0][i] == '>' && nd->args[0][i + 1] == '>')))
-			nd->re.rdrt_type = RE_TYPE_OUT;
-		else if (q_f > 0 && qq_f > 0 && nd->args[0][i] == '<')
-			nd->re.rdrt_type = RE_TYPE_IN;
+		tmp = ft_strdup(tmp_nd->args[0]);
+		free(tmp_nd->args[0]);
+		free(tmp_nd->args);
+		before_arg = split_quote(tmp, SEP);
+		tmp_nd->args = split_redirect(before_arg);
+		free(tmp);
+		if (tmp_nd->sible)
+			tmp_nd = tmp_nd->sible;
+		else
+			break ;
 	}
+	i = 0;
+	while (before_arg[i])
+		free(before_arg[i++]);
+	free(before_arg);
 	return (EXIT_SUCCESS);
 }
 
-int		synerror_checker(char *args, char a)
-{
-	int		len;
-	int		i;
-	int		q_f;
-	int		qq_f;
-
-	q_f = 1;
-	qq_f = 1;
-	// len = ft_strlen(args);
-	// while (args[--len] == ' ')
-	// 	;
-	// if (args[len] == '|')
-	// 	return (EXIT_FAILURE);
-	i = -1;
-	while (args[++i])
-	{
-		if (args[i] == '\"')
-			qq_f *= -1;
-		else if (args[i] == '\'')
-			q_f *= -1;
-		else if ((args[i] == a) && qq_f > 0 && q_f > 0)
-		{
-			i++;
-			while (args[i] == ' ')
-				i++;
-			if (args[i] == a || (!args[i] && a == '|'))
-				return (EXIT_FAILURE);
-		}
-	}
-	// else if (args[len] == '>')
-	// 	return (EXIT_FAILURE);
-	// else if (args[len] == '<')
-	// 	return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-int		lexer(t_nd *new, char *args)
+int	lexer(t_nd *new, char *args)
 {
 	t_nd	*lexer_new;
 	t_nd	*anc;
@@ -71,7 +40,7 @@ int		lexer(t_nd *new, char *args)
 
 	if (synerror_checker(args, '|') == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	tok_pipe = split_qoute(args, "|");
+	tok_pipe = split_quote(args, "|");
 	i = -1;
 	anc = new;
 	while (tok_pipe[++i])

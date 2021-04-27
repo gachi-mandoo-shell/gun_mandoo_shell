@@ -30,6 +30,16 @@ t_nd	*new_nd(char *name)
 	return (tmp_nd);
 }
 
+t_nd	*child_rewind(t_nd *coms)
+{
+	t_nd	*tmp;
+
+	tmp = coms;
+	while (tmp->child)
+		tmp = tmp->child;
+	return (tmp);
+}
+
 void	print_args(char **args)
 {
 	int i;
