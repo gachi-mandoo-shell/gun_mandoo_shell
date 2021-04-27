@@ -12,8 +12,10 @@ int		count_size(char *str, char *set)
 	i = 0;
 	qq_f = 1;
 	q_f = 1;
-	while (ft_strchr(set, str[i]))
+	while (str[i] && ft_strchr(set, str[i]))
 		i++;
+	if (!str[i])
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\"')
@@ -81,7 +83,7 @@ char	**split_quote(char *str, char *set)
 	int		size;
 	int		i;
 
-	if (!str)
+	if (!str || !*str)
 		return (NULL);
 	size = count_size(str, set);
 	rt = (char **)malloc(sizeof(char *) * (size + 1));

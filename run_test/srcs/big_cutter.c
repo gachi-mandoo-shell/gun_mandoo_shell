@@ -11,11 +11,8 @@ t_nd	*big_cutter(char *str)
 	i = -1;
 
 	tmp = split_quote(str, ";");
-
-	// while (tmp[++i])
-	// 	printf("%d : %s\n", i, tmp[i]);
-	// i = -1;
-
+	if (!tmp)
+		return (NULL);
 	mother = new_nd(str);
 	mother->pos.head = mother;
 	mother->pos.tail = mother;

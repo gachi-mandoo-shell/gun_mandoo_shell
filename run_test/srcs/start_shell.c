@@ -99,12 +99,9 @@ int		start_shell(char **en, char *av)
 
 		write(1, "minishell test>!! ", ft_strlen("minishell test>!! "));
 		line = read_line();
-		// printf("line : %s\n", line);
-		//line = ft_strdup("> test | echo 123");
-		if (ft_strlen(line))
+		//line = ft_strdup("");
+		if (synerror_checker(line, ';') >= 0)
 		{
-			if (synerror_checker(line, ';'))
-				return (EXIT_FAILURE);
 			coms = big_cutter(line);
 			free(line);
 			status = run_cmd(coms->child, en, av);
