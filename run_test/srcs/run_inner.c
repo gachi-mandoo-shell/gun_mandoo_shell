@@ -14,8 +14,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	pid = fork();
 	if (pid == 0)
 	{
-		// kill(pid, SIGINT);
-			// signal(SIGQUIT, (void*)signal_child_ctlslash);
+		// signal(SIGINT, (void*)signal_child_ctlc);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
 		if (com->type != TYPE_C_P)
@@ -26,15 +25,17 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 				dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
 		}
 		rt = execve(run_com, com->args, en);
+		// printf("\nexceve rt is %d!\n\n",rt);
 		if (rt == -1)
 			printf("%s: %s\n", run_com, strerror(errno));
 		exit(rt);
 	}
 	else if (pid > 0)
 	{
-		wait(&pid);
+		wait(&exit_code);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_close(com);
+		// printf("\n<<mother's exit_code is %d!>>\n\n",exit_code);
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));

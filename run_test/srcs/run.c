@@ -30,6 +30,7 @@ int		run_div(t_nd *cmd, char **en, char *av)
 	int i;
 	int rt;
 
+	// signal(SIGINT, SIG_DFL);
 	i = -1;
 	rt = EXIT_SUCCESS;
 	while (++i < BLT_NUM)

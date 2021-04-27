@@ -90,14 +90,17 @@ int		start_shell(char **en, char *av)
 	start_write();
 	// i = 0;
 
+	signal(SIGINT, (void*)signal_ctlc);
 	// signal(SIGINT, SIG_IGN);
-	// signal(SIGINT, (void*)signal_ctlc);
 	// signal(SIGTERM, (void*)signal_ctld);
 	// signal(SIGQUIT, (void*)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
 	{
-
-		write(1, "minishell test>!! ", ft_strlen("minishell test>!! "));
+		// signal(SIGINT, (void*)signal_ctlc);
+		if (exit_code == 0)
+			write(1, "minishell test> ", ft_strlen("minishell test> "));
+		else
+			exit_code = 0;
 		line = read_line();
 		//line = ft_strdup("");
 		if (synerror_checker(line, ';') >= 0)
