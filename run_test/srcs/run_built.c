@@ -30,6 +30,7 @@ int	builtin_run(t_nd *cmd, char **en, char *av, int i)
 	int		cpy_in;
 	pid_t	pid;
 
+	rt = EXIT_SUCCESS;
 	if (cmd->type == TYPE_C_P || (cmd->prev && cmd->prev->type == TYPE_C_P))
 	{
 		pipe(cmd->pipes);
@@ -46,11 +47,12 @@ int	builtin_run(t_nd *cmd, char **en, char *av, int i)
 			// kill(pid, SIGINT);
 			// signal(SIGQUIT, (void*)signal_child_ctlslash);
 			rt = (*blt_func(i))(cmd, en, av);
+			exit(rt);
 		}
 		else if (pid > 0)
 		{
 			wait(&pid);
-			// pipe_close(cmd);
+			pipe_close(cmd);
 		}
 		else
 			write(1, "failed to fork", ft_strlen("failed to fork"));
