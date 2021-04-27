@@ -37,7 +37,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		wait(&exit_code);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_close(com);
-		printf("\n<<mother's exit_code is %d!>>\n\n",exit_code);
+		// printf("\n<<mother's exit_code is %d!>>\n\n",exit_code);
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
