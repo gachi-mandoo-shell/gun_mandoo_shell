@@ -27,6 +27,7 @@
 # define STDOUT		1
 # define STDIN		0
 
+int 			exit_code;
 typedef struct s_red
 {
 	int		rdrt_type;
