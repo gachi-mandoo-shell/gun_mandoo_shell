@@ -10,6 +10,7 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include <termios.h>
 
 # define BLT_NUM 4
 # define SEP " \t\n\r\a\""

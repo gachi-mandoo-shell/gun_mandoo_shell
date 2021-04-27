@@ -87,6 +87,42 @@ int	line_check(char *line)
 	return (1);
 }
 
+char	*get_ch()
+{
+	char	c[2];
+	char	*tmp;
+	char	*rt;
+	struct termios term;
+	// tmp	= (char *)malloc(sizeof(char) * 1);
+	// tmp[0] = 0;
+	c[1] = 0;
+	rt = 0;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ICANON;    
+	term.c_lflag &= ~ECHO;      
+	term.c_cc[VMIN] = 1; 
+	term.c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
+	while (read(0, c, 1) > 0)
+	{
+		if (!rt)
+			rt = ft_strdup(c);
+		else
+		{
+			tmp = ft_strdup(rt);
+			free(rt);
+			rt = ft_strjoin(tmp, c);
+			free(tmp);
+		}
+		write(1, c, 1);
+		if (c[0] == '\n')
+			break ;
+	}
+	return (rt);
+}
+
 int	start_shell(char **en, char *av)
 {
 	int		status;
@@ -102,17 +138,17 @@ int	start_shell(char **en, char *av)
 	// i = 0;
 
 	signal(SIGINT, (void*)signal_ctlc);
-	// signal(SIGINT, SIG_IGN);
 	// signal(SIGTERM, (void*)signal_ctld);
-	// signal(SIGQUIT, (void*)signal_ctlslash);
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGQUIT, (void*)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
 	{
-		// signal(SIGINT, (void*)signal_ctlc);
 		if (exit_code == 0)
 			write(1, "minishell test> ", ft_strlen("minishell test> "));
 		else
 			exit_code = 0;
-		line = read_line();
+		// line = read_line();
+		line = get_ch();
 		//line = ft_strdup("");
 		if (*line && line_check(line) && synerror_checker(line, ';') >= 0)
 		{
