@@ -21,6 +21,8 @@ int	synerror_redirect(char *arg)
 	qq_f = 1;
 	q_f = 1;
 	i = -1;
+	if (!arg || !*arg)
+		return (EXIT_SUCCESS);
 	while (arg[++i])
 	{
 		if (arg[i] == '\'')
@@ -47,6 +49,16 @@ int	synerror_checker(char *args, char a)
 
 	q_f = 1;
 	qq_f = 1;
+	i = 0;
+	if (!args)
+		return (EXIT_SUCCESS);
+	while (args[i] && ft_strchr(SEP, args[i]))
+		i++;
+	if (args[i] == a)
+	{
+		printf("%c : syntax error\n", a);
+		return (-1);
+	}
 	i = -1;
 	while (args[++i])
 	{
@@ -60,7 +72,10 @@ int	synerror_checker(char *args, char a)
 			while (args[i] == ' ')
 				i++;
 			if (args[i] == a || (!args[i] && a == '|'))
-				return (EXIT_FAILURE);
+			{
+				printf("%c : syntax error\n", a);
+				return (-1);
+			}
 		}
 	}
 	// else if (args[len] == '>')
