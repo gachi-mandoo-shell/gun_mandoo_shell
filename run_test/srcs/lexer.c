@@ -38,7 +38,7 @@ int	lexer(t_nd *new, char *args)
 	char	**tok_pipe;
 	int		i;
 
-	if (synerror_checker(args, '|') == EXIT_FAILURE)
+	if (synerror_checker(args, '|') < 0)
 		return (EXIT_FAILURE);
 	tok_pipe = split_quote(args, "|");
 	i = -1;
