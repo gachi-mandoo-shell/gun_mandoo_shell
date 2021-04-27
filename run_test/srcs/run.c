@@ -50,24 +50,13 @@ int		run(t_nd *cmd, char **en, char *av)
 	rt = EXIT_SUCCESS;
 	while (cmd && rt == EXIT_SUCCESS)
 	{
-		if (cmd->args[0])
-			rt = run_div(cmd, en, av);
+		rt = run_div(cmd, en, av);
 		if (cmd->re.rdrt_type > 0)
 			close(cmd->re.rdrt_fd);
 		if (cmd->type != TYPE_C_P && cmd->re.rdrt_in_type > 0)
 			close(cmd->re.rdrt_in_fd);
 		if (cmd->prev && cmd->prev->type == TYPE_C_P && cmd->prev->re.rdrt_in_type > 0)
 			close(cmd->prev->re.rdrt_in_fd);
-		// if (cmd->prev->re.rdrt_in_type > 0 && cmd->prev->type == TYPE_C_P)
-		// 	close(cmd->prev->re.rdrt_in_fd);
-
-		// printf("fd : %d\n", cmd->re.rdrt_fd);
-		// printf("type : %d\n", cmd->re.rdrt_type);
-		// printf("name : %s\n", cmd->re.rdrt_name);
-		// printf("fd : %d\n", cmd->re.rdrt_in_fd);
-		// printf("type : %d\n", cmd->re.rdrt_in_type);
-		// printf("name : %s\n", cmd->re.rdrt_in_name);
-
 		if (cmd->sible)
 			cmd = cmd->sible;
 		else
