@@ -51,7 +51,23 @@ char	*env_controller(char *args, char **en)
 	return (ft_strdup(cpy_arg));
 }
 
-int		call_env(t_nd *nd, char **en)
+// int		call_env(t_nd *nd, char **en)
+// {
+// 	char 	*tmp;
+// 	int		arg_count;
+
+// 	arg_count = -1;
+// 	while (nd->args[++arg_count])
+// 	{
+// 		tmp = env_controller(nd->args[arg_count], en);
+// 		free(nd->args[arg_count]);
+// 		nd->args[arg_count] = ft_strdup(tmp);
+// 		free(tmp);
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
+
+int	token_changer(t_nd *nd, char **en)
 {
 	char 	*tmp;
 	int		arg_count;
@@ -64,29 +80,5 @@ int		call_env(t_nd *nd, char **en)
 		nd->args[arg_count] = ft_strdup(tmp);
 		free(tmp);
 	}
-	return (EXIT_SUCCESS);
-}
-
-int		make_mini_tok(t_nd *nd, char **en)
-{
-	// char	*tmp;
-	// t_nd	*tmp_nd;
-	// int		i;
-
-	// i = -1;
-	// tmp_nd = nd;
-	// while (nd)
-	// {
-	// 	tmp = ft_strdup(tmp_nd->args[0]);
-	// 	free(tmp_nd->args[0]);
-	// 	free(tmp_nd->args);
-	// 	tmp_nd->args = split_qoute(tmp, SEP);
-	// 	free(tmp);
-	// 	if (tmp_nd->sible)
-	// 		tmp_nd = tmp_nd->sible;
-	// 	else
-	// 		break;
-	// }
-	call_env(nd, en);
 	return (EXIT_SUCCESS);
 }
