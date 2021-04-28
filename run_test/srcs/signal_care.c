@@ -4,7 +4,7 @@
 void	*signal_ctlc(int	signo)
 {
 	if (exit_code == 0)
-		write(1, "\b\b  \nminishell test> ", ft_strlen("\b\b  \nminishell test> "));
+		write(1, "\b\b  \nminishell test>  ", ft_strlen("\b\b  \nminishell test>   "));
 	return (0);
 }
 

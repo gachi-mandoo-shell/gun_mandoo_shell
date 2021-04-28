@@ -2,9 +2,10 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int main(void)
+int	ft_getch(void)
 {
-	char c[2];
+	char c;
+	int rt;
 	struct termios term;
 
 	tcgetattr(STDIN_FILENO, &term);
@@ -14,9 +15,43 @@ int main(void)
 	term.c_cc[VTIME] = 0;       //버퍼 비우는 시간 (timeout)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
-	c[1] = 0;
-	while (read(0, c, 1) > 0)
+	rt = read(0, &c, sizeof(c));
+	if (rt < 0)
+		return(-1);
+	else
+		return ((int)c);
+		// if ((int)c[0] == 27)
+		// {
+		// 	read(0, c, 1);
+		// 	if ((int)c[0] == 91)
+		// 	{
+		// 		read(0, c, 1);
+		// 		if ((int)c[0] == 65)
+		// 			printf("up key\n");
+		// 	}
+		// }
+}
+
+int main(void)
+{
+	int c;
+
+	c = 1;
+	while (c > 0)
 	{
-		printf("input: %s\n", c);
+		c = ft_getch();
+		if (c == 27)
+		{
+			c = ft_getch();
+			if (c == 91)
+			{
+				c = ft_getch();
+				if (c == 65)
+					printf("up\n");
+				if (c == 66)
+					printf("down\n");
+			}
+		}
 	}
+
 }

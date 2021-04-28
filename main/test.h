@@ -7,6 +7,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <errno.h>
+# include <termios.h>
 
 # define BLT_NUM 2
 
