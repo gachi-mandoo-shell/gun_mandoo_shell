@@ -93,12 +93,14 @@ char	*get_ch()
 	char	*tmp;
 	char	*rt;
 	struct termios term;
+	struct termios back;
 	// tmp	= (char *)malloc(sizeof(char) * 1);
 	// tmp[0] = 0;
 	c[1] = 0;
 	rt = 0;
 
 	tcgetattr(STDIN_FILENO, &term);
+	tcgetattr(STDIN_FILENO, &back);
 	term.c_lflag &= ~ICANON;    
 	term.c_lflag &= ~ECHO;      
 	term.c_cc[VMIN] = 1; 
@@ -120,6 +122,9 @@ char	*get_ch()
 		if (c[0] == '\n')
 			break ;
 	}
+
+	tcsetattr(STDIN_FILENO, TCSANOW, &back);
+
 	return (rt);
 }
 
@@ -143,12 +148,13 @@ int	start_shell(char **en, char *av)
 	signal(SIGQUIT, (void*)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
 	{
-		if (exit_code == 0)
-			write(1, "minishell test> ", ft_strlen("minishell test> "));
+		if (exit_code == 0 || exit_code == 1)
+			write(1, "minishell test>  ", ft_strlen("minishell test>  "));
 		else
 			exit_code = 0;
 		// line = read_line();
 		line = get_ch();
+
 		//line = ft_strdup("");
 		if (*line && line_check(line) && synerror_checker(line, ';') >= 0)
 		{
