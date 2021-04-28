@@ -87,17 +87,31 @@ int	line_check(char *line)
 	return (1);
 }
 
-char	*get_ch()
+void	delete_char(int size)
+{
+	char	alt[size * 2];
+	int 	i;
+
+	i = -1;
+	printf("%d\n", size);
+	while (++i < size)
+		alt[i] = '\b';
+	while (i < size * 2)
+		alt[i++] = ' ';
+	write(1, alt, size * 2);
+	write(1, alt, size);
+}
+
+char	*get_ch(t_hist	**nd)
 {
 	char	c[2];
 	char	*tmp;
-	char	*rt;
 	struct termios term;
 	struct termios back;
-	// tmp	= (char *)malloc(sizeof(char) * 1);
-	// tmp[0] = 0;
+	t_hist	*tmp_his;
+
+
 	c[1] = 0;
-	rt = 0;
 
 	tcgetattr(STDIN_FILENO, &term);
 	tcgetattr(STDIN_FILENO, &back);
@@ -106,46 +120,70 @@ char	*get_ch()
 	term.c_cc[VMIN] = 1; 
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
 	while (read(0, c, 1) > 0)
 	{
-		if (!rt)
-			rt = ft_strdup(c);
+		if ((int)c[0] == 27)
+		{
+			read(0, c, 1);
+			if ((int)c[0] == 91)
+			{
+				read(0, c, 1);
+				if ((int)c[0] == 65)
+				{
+					if ((*nd)->content)
+						delete_char(ft_strlen((*nd)->content));
+					if ((*nd)->prev)
+					{
+						write(1, (*nd)->prev->content, ft_strlen((*nd)->prev->content));
+						(*nd) = (*nd)->prev;	
+					}
+				}
+			}
+		}
 		else
 		{
-			tmp = ft_strdup(rt);
-			free(rt);
-			rt = ft_strjoin(tmp, c);
-			free(tmp);
+			write(1, c, 1);
+			if (c[0] == '\n')
+				break ;
+			if (!(*nd)->content)
+				(*nd)->content = ft_strdup(c);
+			else
+			{
+				c[1] = 0;
+				tmp = (*nd)->content;
+				(*nd)->content = ft_strjoin(tmp, c);
+				free(tmp);
+			}
+			// delete_char(nd, ft_strlen(nd->content));
+			// write(1, nd->content, ft_strlen(nd->content));
 		}
-		write(1, c, 1);
-		if (c[0] == '\n')
-			break ;
+		// delete_char(nd, ft_strlen(nd->content));
+		// write(1, nd->content, ft_strlen(nd->content));
+		//printf("\n[[%s]]\n", nd->content);
 	}
-
 	tcsetattr(STDIN_FILENO, TCSANOW, &back);
-
-	return (rt);
+	// printf("\n\n\n\n");
+	// print_list_2(nd);
+	// printf("\n[[%s]]\n", nd->content);
+	return ((*nd)->content);
 }
 
 int	start_shell(char **en, char *av)
 {
 	int		status;
 	char	*line;
-	char	hist[PATH_MAX][PATH_MAX];
 	t_nd	*coms;
-	// int		i;
-	// i = -1;
-	// while (++i < PATH_MAX)
-	// 	ft_memset(hist[i], 0, PATH_MAX);
+	t_hist	*history;
+
 	status = EXIT_SUCCESS;
 	start_write();
-	// i = 0;ㄴ
-
+	// history = history_init();
+	history = 0;
 	signal(SIGINT, (void*)signal_ctlc);
-	// signal(SIGTERM, (void*)signal_ctld);
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGQUIT, (void*)signal_ctlslash);
+
+	
 	while (status == EXIT_SUCCESS)
 	{
 		if (exit_code == 0 || exit_code == 1)
@@ -153,16 +191,19 @@ int	start_shell(char **en, char *av)
 		else
 			exit_code = 0;
 		// line = read_line();
-		line = get_ch();
-
-		//line = ft_strdup("");
+		// history->next = history_init();
+		// history->next->prev = history;
+		// line = get_ch(history->next);
+		history = history_add(history);
+		// printf("\n[[%p]]\n", history);
+		line = get_ch(&history);
+		
 		if (*line && line_check(line) && synerror_checker(line, ';') >= 0)
 		{
 			coms = big_cutter(line);
-			free(line);
 			status = run_cmd(coms->child, en, av);
 		}
-		// printf("status : %d\n", status);
+		// history = history->next;
 	}
 	return (0);
 }

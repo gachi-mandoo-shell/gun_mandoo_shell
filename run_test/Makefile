@@ -25,6 +25,8 @@ $(LIBFT) :
 	@make -C $(LIB_DIR)
 	@cp $(LIB_DIR)/$(LIBFT) .
 
+re : fclean all
+
 clean :
 	@rm -rf $(NAME)
 	@make -C $(LIB_DIR) clean

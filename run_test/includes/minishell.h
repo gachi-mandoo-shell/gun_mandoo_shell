@@ -29,6 +29,14 @@
 # define STDIN		0
 
 int 			exit_code;
+
+typedef struct 	s_hist
+{
+	char			*content;
+	struct s_hist	*next;
+	struct s_hist	*prev;
+} t_hist;
+
 typedef struct s_red
 {
 	int		rdrt_type;
@@ -105,6 +113,9 @@ void	*signal_ctlslash(int	signo);
 void	*signal_child_ctld(int	signo);
 void	*signal_child_ctlslash(int	signo);
 void	*signal_child_ctlc(int signo);
+t_hist	*history_add(t_hist *nd);
+t_hist	*history_init();
 
+void	print_list_2(t_hist *com);
 
 #endif

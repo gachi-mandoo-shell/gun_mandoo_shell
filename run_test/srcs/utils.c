@@ -73,6 +73,22 @@ void	print_list(t_nd *com)
 	}
 }
 
+
+void	print_list_2(t_hist *com)
+{
+	t_hist *tmp;
+
+	tmp = com;
+	while (tmp)
+	{
+		printf("[%s]<-", tmp->content);
+		if (tmp->prev)	
+			tmp = tmp->prev;
+		else
+			break;
+	}
+}
+
 int	matrix_line_num(char **matrix)
 {
 	int		i;
