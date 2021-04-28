@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 21:44:53 by skim              #+#    #+#              #
-#    Updated: 2021/04/10 17:51:57 by skim             ###   ########.fr        #
+#    Updated: 2021/04/27 19:21:18 by spark            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = gcc -g
 CFLAGS = -Wall -Werror -Wextra
 
 INC_DIR = includes
-GNL_DIR = ./GetNextLine
+# GNL_DIR = ./GetNextLine
 LIB_DIR = ./libft
 SRCS_DIR = ./srcs
 
@@ -31,7 +31,7 @@ TEST_SRCS = $(wildcard test*_*.c)
 all : $(NAME)
 
 $(NAME) : $(LIBFT) $(GNL)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(GNL_DIR)/$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) -I$(MLX_DIR) \
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) -I$(MLX_DIR) \
 	-L./ -lgnl -L./ -lft -o $(NAME) $(SRCS)
 
 $(LIBFT) :

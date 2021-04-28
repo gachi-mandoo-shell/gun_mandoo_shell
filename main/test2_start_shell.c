@@ -106,6 +106,24 @@ t_nd	*parse(char *str, char *charset)
 	return	mother;
 }
 
+char	*get_ch()
+{
+	char	c;
+	char	*tmp;
+	char	*tmp2;
+
+	tmp	= (char *)malloc(sizeof(char) * 1);
+	tmp[0] = 0;
+	while (read(0, &c, sizeof(c)) > 0)
+	{
+		if(tmp[0] == 0)
+			tmp[0] = c;
+		else
+			tmp2 = ft_strjoin(tmp, c); 
+	}
+	return (tmp2);
+}
+
 int		start_shell(char **en, char *av)
 {
 	int		status;
@@ -117,7 +135,7 @@ int		start_shell(char **en, char *av)
 	while (status)
 	{
 		write(1, "minishell test> ", ft_strlen("minishell test> "));
-		line = read_line();
+		line = get_ch;
 		coms = parse(line, ";");
 		status = run_cmd(coms, en, av);
 	}

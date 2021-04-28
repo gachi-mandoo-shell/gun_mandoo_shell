@@ -135,7 +135,7 @@ int	start_shell(char **en, char *av)
 	// 	ft_memset(hist[i], 0, PATH_MAX);
 	status = EXIT_SUCCESS;
 	start_write();
-	// i = 0;
+	// i = 0;ㄴ
 
 	signal(SIGINT, (void*)signal_ctlc);
 	// signal(SIGTERM, (void*)signal_ctld);
