@@ -18,7 +18,6 @@ t_hist	*history_add(t_hist *nd)
 
 	if (nd == 0)
 	{
-		printf("\nfirst!\n");
 		tmp = (t_hist*)malloc(sizeof(t_hist) * 1);
 		tmp->content = 0;
 		tmp->next = 0;
