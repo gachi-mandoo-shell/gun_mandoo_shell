@@ -8,7 +8,7 @@ t_hist	*history_init()
 	tmp->content = 0;
 	tmp->next = 0;
 	tmp->prev = 0;
-
+	
 	return (tmp);
 }
 
@@ -22,6 +22,7 @@ t_hist	*history_add(t_hist *nd)
 		tmp->content = 0;
 		tmp->next = 0;
 		tmp->prev = 0;
+		tmp->count = 0;
 	}
 	else
 	{
@@ -31,6 +32,7 @@ t_hist	*history_add(t_hist *nd)
 		tmp->next = 0;
 		nd->next = tmp;
 		tmp->prev = nd;
+		tmp->count = nd->count + 1;
 	}
 
 	return (tmp);
