@@ -119,4 +119,7 @@ t_hist	*history_init();
 
 void	print_list_2(t_hist *com);
 
+char	*get_ch(t_hist	*nd);
+int		is_redirect(char *str);
+
 #endif

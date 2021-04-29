@@ -7,11 +7,15 @@ int	redirect_count(char *arg)
 	int	q_f;
 	int	i;
 	int	count;
+	int	red_pos;
 
 	i = -1;
 	qq_f = 1;
 	q_f = 1;
 	count = 1;
+	red_pos = -1;
+	if (is_redirect(arg))
+		return (1);
 	while (arg[++i])
 	{
 		if (arg[i] == '\'')
@@ -22,11 +26,14 @@ int	redirect_count(char *arg)
 		{
 			if (arg[i + 1] == '>')
 				i++;
-			if (arg[i + 1])
-				count++;
+			red_pos = i;
+			// if (arg[i + 1])
 			count++;
+			// count++;
 		}
 	}
+	if ((red_pos >= 0) && (red_pos != i - 1) &&  (arg[0] != '>' && arg[0] != '<'))
+		count++;
 	return (count);
 }
 

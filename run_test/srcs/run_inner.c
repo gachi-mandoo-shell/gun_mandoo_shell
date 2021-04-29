@@ -21,11 +21,15 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 			if (com->re.rdrt_type > 0)
 				dup2(com->re.rdrt_fd, STDOUT);
 			if (com->re.rdrt_in_type > 0)
-				dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
+			{
+				if (com->prev && com->prev->type == TYPE_C_P)
+					dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
+				else
+					dup2(com->re.rdrt_in_fd, STDIN);
+			}
 		}
 		if (run_com)
 			rt = execve(run_com, com->args, en);
-		// printf("\nexceve rt is %d!\n\n",rt);
 		if (rt == -1)
 			printf("%s: %s\n", run_com, strerror(errno));
 		exit(rt);
@@ -39,6 +43,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
+	printf("\nexceve rt is %d!\n\n",rt);
 	return (EXIT_SUCCESS);
 }
 
