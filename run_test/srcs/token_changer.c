@@ -71,14 +71,22 @@ int	token_changer(t_nd *nd, char **en)
 {
 	char 	*tmp;
 	int		arg_count;
+	t_nd	*anc;
 
-	arg_count = -1;
-	while (nd->args[++arg_count])
+	while (nd)
 	{
-		tmp = env_controller(nd->args[arg_count], en);
-		free(nd->args[arg_count]);
-		nd->args[arg_count] = ft_strdup(tmp);
-		free(tmp);
+		arg_count = -1;
+		while (nd->args[++arg_count])
+		{
+			tmp = env_controller(nd->args[arg_count], en);
+			free(nd->args[arg_count]);
+			nd->args[arg_count] = ft_strdup(tmp);
+			free(tmp);
+		}
+		if (nd->sible)
+			nd = nd->sible;
+		else
+			break;
 	}
 	return (EXIT_SUCCESS);
 }
