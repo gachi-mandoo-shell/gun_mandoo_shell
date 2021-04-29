@@ -93,20 +93,24 @@ void	delete_char(int size)
 	int 	i;
 
 	i = -1;
+	
 	while (++i < size)
 		alt[i] = '\b';
 	while (i < size * 2)
 		alt[i++] = ' ';
 	write(1, alt, size * 2);
 	write(1, alt, size);
+	// printf("size is : %d\n", size);
 }
 
 char	*get_ch(t_hist	*nd)
 {
 	char	c[2];
 	char	*tmp;
+	char	*tmp_back;
 	struct termios term;
 	struct termios back;
+	char	fake_db[nd->count + 1][PATH_MAX];
 	t_hist	*anc;
 
 
@@ -119,6 +123,7 @@ char	*get_ch(t_hist	*nd)
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	anc = nd;
+	ft_memset(fake_db, 0, sizeof(fake_db));
 	while (read(0, c, 1) > 0)
 	{
 		if ((int)c[0] == 27)
@@ -150,14 +155,33 @@ char	*get_ch(t_hist	*nd)
 				}
 			}
 		}
+		else if ((int)c[0] == 127)
+		{
+			if (nd->content && *(nd->content))
+			{
+				delete_char(ft_strlen(nd->content));
+				tmp_back = ft_strndup(nd->content, ft_strlen(nd->content) - 1);
+				free(nd->content);
+				nd->content = tmp_back;
+				write(1, nd->content, ft_strlen(nd->content));
+			}
+		}
 		else
 		{
 			write(1, c, 1);
 			if (anc != nd)
 			{
-				free(anc->content);
-				anc->content = ft_strdup(nd->content);
-				nd = anc;
+				if (c[0] == '\n')
+				{
+					free(anc->content);
+					anc->content = ft_strdup(nd->content);
+					nd = anc;
+				}
+				else
+				{
+					if (fake_db[nd->count][0] == 0)
+						ft_strlcpy(fake_db[nd->count], nd->content, ft_strlen(nd->content) + 1);
+				}
 			}
 			if (c[0] == '\n')
 				break ;
@@ -172,6 +196,19 @@ char	*get_ch(t_hist	*nd)
 			}
 		}
 	}
+	while (anc)
+	{
+		if (fake_db[anc->count][0])
+		{
+			free(anc->content);
+			anc->content = ft_strdup(fake_db[anc->count]);
+		}
+		if (anc->prev)
+			anc = anc->prev;
+		else
+			break;
+	}
+
 	tcsetattr(STDIN_FILENO, TCSANOW, &back);
 	return (nd->content);
 }

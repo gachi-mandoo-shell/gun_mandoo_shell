@@ -35,6 +35,7 @@ typedef struct 	s_hist
 	char			*content;
 	struct s_hist	*next;
 	struct s_hist	*prev;
+	int				count;
 } t_hist;
 
 typedef struct s_red
