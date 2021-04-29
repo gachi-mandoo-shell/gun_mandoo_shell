@@ -8,13 +8,13 @@ void	*signal_ctlc(int	signo)
 	return (0);
 }
 
-void	*signal_ctld(int	signo)
-{
-	printf("\n\nWow!! ctl + D !!  HOHOHOHOHOHOHOHOHOHOHOOO!!!!!!!\n\n");
-	// if (exit_code == 0)
-	// 	write(1, "\b\b  \nminishell !!!!> ", ft_strlen("\b\b  \nminishell test> "));
-	return (0);
-}
+// void	*signal_ctld(int	signo)
+// {
+// 	printf("\n\nWow!! ctl + D !!  HOHOHOHOHOHOHOHOHOHOHOOO!!!!!!!\n\n");
+// 	// if (exit_code == 0)
+// 	// 	write(1, "\b\b  \nminishell !!!!> ", ft_strlen("\b\b  \nminishell test> "));
+// 	return (0);
+// }
 
 void	*signal_ctlslash(int	signo)
 {
