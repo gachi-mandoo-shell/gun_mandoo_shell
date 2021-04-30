@@ -106,7 +106,7 @@ int	start_shell(char **en, char *av)
 	
 	while (status == EXIT_SUCCESS)
 	{
-		printf("\nexit code is %d!\n\n",exit_code);
+		// printf("\nexit code is %d!\n\n",exit_code);
 		if (exit_code == 0 || exit_code == 1)
 			write(1, "minishell test> ", ft_strlen("minishell test> "));
 		else
