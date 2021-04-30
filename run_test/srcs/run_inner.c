@@ -31,8 +31,11 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		if (run_com)
 			rt = execve(run_com, com->args, en);
 		if (rt == -1)
+		{
 			printf("%s: %s\n", run_com, strerror(errno));
-		exit(rt);
+			exit(rt);
+		}
+		exit(1);
 	}
 	else if (pid > 0)
 	{
@@ -43,7 +46,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
-	printf("\nexceve rt is %d!\n\n",rt);
+	printf("\nexit_code is %d!\n\n",exit_code);
 	return (EXIT_SUCCESS);
 }
 
