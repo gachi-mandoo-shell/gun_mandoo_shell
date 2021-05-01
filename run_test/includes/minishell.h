@@ -12,7 +12,7 @@
 # include <signal.h>
 # include <termios.h>
 
-# define BLT_NUM 6
+# define BLT_NUM 7
 # define SEP " \t\n\r\a\""
 
 # define TYPE_NONE	-1
@@ -100,6 +100,7 @@ int		cmd_cd(t_nd *com, char ***en, char *av);
 int		cmd_pwd(t_nd *com, char ***en, char *av);
 int		cmd_unset(t_nd *com, char ***en, char *av);
 int		cmd_export(t_nd *com, char ***en, char *av);
+int		cmd_echo(t_nd *com, char ***en, char *av);
 char	*find_env(char *key, char **en);
 char	*find_env_val(char *key, char **en);
 

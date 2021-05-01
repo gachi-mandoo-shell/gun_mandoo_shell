@@ -10,6 +10,7 @@ char	*blt_str(int i)
 	blt_str[3] = "cd";
 	blt_str[4] = "unset";
 	blt_str[5] = "export";
+	blt_str[6] = "echo";
 	blt_str[BLT_NUM] = NULL;
 	return (blt_str[i]);
 }
@@ -24,6 +25,7 @@ int	(*blt_func(int i))(t_nd *cmd, char ***en, char *av)
 	blt_fuck[3] = &cmd_cd;
 	blt_fuck[4] = &cmd_unset;
 	blt_fuck[5] = &cmd_export;
+	blt_fuck[6] = &cmd_echo;
 	return (blt_fuck[i]);
 }
 
