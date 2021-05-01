@@ -107,10 +107,8 @@ int	start_shell(char ***en, char *av)
 	while (status == EXIT_SUCCESS)
 	{
 		// printf("\nexit code is %d!\n\n",exit_code);
-		if (exit_code == 0 || exit_code == 1)
+		if (exit_code != 130 && exit_code != 131)
 			write(1, "minishell test> ", ft_strlen("minishell test> "));
-		else
-			exit_code = 0;
 
 		history = history_add(history);
 		line = get_ch(history);

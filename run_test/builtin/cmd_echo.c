@@ -32,11 +32,6 @@ int		cmd_echo(t_nd *com, char ***en, char *av)
 		if (com->args[i + 1])
 			write(1, " ", 1);
 	}
-	
-	
-	// 스플릿쿼트랑 이엔브이컨트롤러 보기
-	
-
 	if (is_n != -1)
 		printf("\n");
 	return (EXIT_SUCCESS);

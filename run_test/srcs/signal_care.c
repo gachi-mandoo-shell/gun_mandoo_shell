@@ -3,7 +3,7 @@
 
 void	*signal_ctlc(int	signo)
 {
-	if (exit_code == 0)
+	// if (exit_code != 130)
 		write(1, "\b\b  \nminishell test>  ", ft_strlen("\b\b  \nminishell test>   "));
 	return (0);
 }
@@ -18,7 +18,7 @@ void	*signal_ctlc(int	signo)
 
 void	*signal_ctlslash(int	signo)
 {
-	if (exit_code == 0)
+	// if (exit_code != 131)
 		write(1, "\b\b  \nminishell test> ", ft_strlen("\b\b  \nminishell test> "));
 	return (0);
 }
