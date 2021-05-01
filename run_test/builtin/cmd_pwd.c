@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		cmd_pwd(t_nd *com, char **en, char *av)
+int		cmd_pwd(t_nd *com, char ***en, char *av)
 {
 	char	pwd[PATH_MAX];
 

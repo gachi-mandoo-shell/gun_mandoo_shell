@@ -34,5 +34,5 @@ int		main(int ac, char *av[], char *en[])
 
 	exit_code = 0;
 	init_env(&env, en);
-	rt = start_shell(env, av[0]);
+	rt = start_shell(&env, av[0]);
 }

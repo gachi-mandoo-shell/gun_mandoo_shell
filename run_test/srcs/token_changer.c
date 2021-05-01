@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	env_changer(char *args, int *arg_i, char *cpy_arg, char **en)
+int	env_changer(char *args, int *arg_i, char *cpy_arg, char ***en)
 {
 	char	key_tmp[PATH_MAX];
 	char	*key_val;
@@ -11,14 +11,14 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char **en)
 	k = 0;
 	while (!ft_strchr(" \t\n\r\a\"\'$", args[++(*arg_i)]))
 		key_tmp[k++] = args[(*arg_i)];
-	key_val = find_env_val(key_tmp, en);
+	key_val = find_env_val(key_tmp, *en);
 	strcat(cpy_arg, key_val);
 	cpy_i = ft_strlen(key_val);
 	free(key_val);
 	return (cpy_i);
 }
 
-char	*env_controller(char *args, char **en)
+char	*env_controller(char *args, char ***en)
 {
 	char	cpy_arg[PATH_MAX];
 	int		cpy_i;
@@ -67,7 +67,7 @@ char	*env_controller(char *args, char **en)
 // 	return (EXIT_SUCCESS);
 // }
 
-int	token_changer(t_nd *nd, char **en)
+int	token_changer(t_nd *nd, char ***en)
 {
 	char 	*tmp;
 	int		arg_count;
