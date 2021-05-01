@@ -103,6 +103,8 @@ int		cmd_export(t_nd *com, char ***en, char *av);
 int		cmd_echo(t_nd *com, char ***en, char *av);
 char	*find_env(char *key, char **en);
 char	*find_env_val(char *key, char **en);
+char	**add_env(char ***en, char *str);
+char	**update_env(char ***en, char *str, char *find_en);
 
 // util
 t_nd	*new_nd(char *name);

@@ -4,6 +4,7 @@
 int		cmd_echo(t_nd *com, char ***en, char *av)
 {
 	int		i;
+	int		j;
 	int		is_n;
 
 	i = 0;
@@ -13,10 +14,17 @@ int		cmd_echo(t_nd *com, char ***en, char *av)
 		printf("\n");
 		return (EXIT_SUCCESS);
 	}
-	if (!strcmp(com->args[1], "-n"))
+	j = 0;
+	if (com->args[1][j] == '-')
 	{
-		i = 1;
-		is_n = -1;
+		j++;
+		while (com->args[1][j] == 'n')
+			j++;
+		if (!(j == 1 || com->args[1][j]))
+		{
+			is_n = -1;
+			i++;
+		}
 	}
 	while (com->args[++i])
 	{
