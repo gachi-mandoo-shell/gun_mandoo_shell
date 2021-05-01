@@ -11,10 +11,16 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char ***en)
 	k = 0;
 	while (!ft_strchr(" \t\n\r\a\"\'$", args[++(*arg_i)]))
 		key_tmp[k++] = args[(*arg_i)];
+	if (ft_strchr("\'\"$", args[(*arg_i)]))
+		(*arg_i)--;
+	cpy_i = 0;
 	key_val = find_env_val(key_tmp, *en);
-	strcat(cpy_arg, key_val);
-	cpy_i = ft_strlen(key_val);
-	free(key_val);
+	if (key_val)
+	{
+		strcat(cpy_arg, key_val);
+		cpy_i = ft_strlen(key_val);
+		free(key_val);
+	}
 	return (cpy_i);
 }
 
@@ -39,14 +45,22 @@ char	*env_controller(char *args, char ***en)
 				if (args[arg_i] == '$')
 					cpy_i += env_changer(args, \
 					&arg_i, cpy_arg + cpy_i, en);
-				cpy_arg[cpy_i++] = args[arg_i];
+				else
+					cpy_arg[cpy_i++] = args[arg_i];
 			}
 		}
-		if (args[arg_i] == '$')
-			cpy_i += env_changer(args, \
-			&arg_i, cpy_arg + cpy_i, en);
 		if (!ft_strchr("\'\"$", args[arg_i]))
 			cpy_arg[cpy_i++] = args[arg_i];
+		if (args[arg_i] == '$')
+		{
+			cpy_i += env_changer(args, \
+			&arg_i, cpy_arg + cpy_i, en);
+			
+		}
+		// if (!ft_strchr("\'\"$", args[arg_i]))
+		// 	cpy_arg[cpy_i++] = args[arg_i];
+		// else if (args[arg_i] == '$')
+		// 	arg_i--;
 	}
 	return (ft_strdup(cpy_arg));
 }

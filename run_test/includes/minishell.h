@@ -13,7 +13,7 @@
 # include <termios.h>
 
 # define BLT_NUM 7
-# define SEP " \t\n\r\a\""
+# define SEP " \t\n\r\a"
 
 # define TYPE_NONE	-1
 # define TYPE_C_P 	1
