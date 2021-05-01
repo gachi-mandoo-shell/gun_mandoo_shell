@@ -9,6 +9,15 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char ***en)
 
 	ft_memset(key_tmp, 0, PATH_MAX);
 	k = 0;
+	if (args[(*arg_i) + 1] == '?')
+	{
+		(*arg_i)++;
+		key_val = ft_itoa(exit_code);
+		strcat(cpy_arg, key_val);
+		cpy_i = ft_strlen(key_val);
+		free(key_val);
+		return (cpy_i);
+	}
 	while (!ft_strchr(" \t\n\r\a\"\'$", args[++(*arg_i)]))
 		key_tmp[k++] = args[(*arg_i)];
 	if (ft_strchr("\'\"$", args[(*arg_i)]))
