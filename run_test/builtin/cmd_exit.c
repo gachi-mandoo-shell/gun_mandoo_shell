@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		cmd_exit(t_nd *com, char **en, char *name)
+int		cmd_exit(t_nd *com, char ***en, char *name)
 {
 	int		i;
 

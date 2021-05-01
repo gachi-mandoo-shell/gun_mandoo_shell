@@ -22,13 +22,15 @@ int main(void)
 	// printf("\n-> : %s\n", strerror(errno));
 
 	// rt = chdir("/Users/skim/Desktop/gun_mandoo_shell/test_skim/allow_test/test_dir");
-	rt = chdir("~");
+	rt = chdir("test");
 	printf("\nmove to another dir success! re is : %d\n", rt);
 	getcwd(tmp, 1024);
 	printf("\npwd is %s\n", tmp);
 
 	rt = chdir("../");
 	printf("\nmove to another dir success! re is : %d\n", rt);
+	getcwd(tmp, 1024);
+	printf("\npwd is %s\n", tmp);
 
 	return (0);
 }

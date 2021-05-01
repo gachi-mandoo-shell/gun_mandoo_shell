@@ -1,35 +1,42 @@
 
 #include "minishell.h"
 
-int		cmd_cd(t_nd *com, char **en, char *av)
+int		cmd_cd(t_nd *com, char ***en, char *av)
 {
 	char	tmp[PATH_MAX];
 	char	*tmp2;
 	int		rt;
 
 	getcwd(tmp, PATH_MAX);
-	rt = ft_strncmp(com->args[1], "~", ft_strlen(com->args[1]));
-	if (rt == 0 || !com->args[1])
-		rt = chdir(getenv("HOME")); // HOME 환경변수가 없어졌을때도 동작하게 할 것인가
-	// 예외 처리에 대해 더 연구하고 좀 더 정확하게 수정할 것
-	else if (ft_strnstr(com->args[1], tmp, ft_strlen(tmp)))
+	printf("\n-> %s\n", tmp);
+
+	if ((com->args[1]) && !strcmp(com->args[1], "~"))
+		rt = chdir(getenv("HOME"));
+	else if (!com->args[1])
 	{
-		rt = chdir(com->args[1]);
+		rt = chdir(find_env_val("HOME", *en));
+		rt = -2;
+	} 
+		
+		// unset으로 환경변수를 없앤 후에 어떻게 동작하는지 확인해볼것
+
+
+	else if (com->args[1][0] == '~')
+	{
+		tmp2 = ft_strjoin(getenv("HOME"), com->args[1] + 1);
+		rt = chdir(tmp2);
+		free(tmp2);
 	}
 	else
-	{
-		if (com->args[1][0] == '.' && com->args[1][1] == '/')
-			rt = chdir(com->args[1]);
-		else
-		{
-			tmp2 = ft_strjoin("./", com->args[1]);
-			rt = chdir(tmp2);
-			free(tmp2);
-		}
-	}
+		rt = chdir(com->args[1]);
 
 	if (rt < 0)
-		printf("%s: %s: %s\n",com->args[0], com->args[1], strerror(errno));
+	{
+		if (rt == -2)
+			printf("%s: %s: HOME not set\n", com->args[0], com->args[1]);
+		else
+			printf("%s: %s: %s\n",com->args[0], com->args[1], strerror(errno));
+	}
 	// else
 	// {
 	// 	// 환경변수에 추가해주는 함수 작업필요

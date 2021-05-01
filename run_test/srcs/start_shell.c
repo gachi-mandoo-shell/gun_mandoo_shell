@@ -42,7 +42,7 @@ char	*read_line(void)
 	return (line);
 }
 
-int		run_cmd(t_nd *coms, char **en, char *av)
+int		run_cmd(t_nd *coms, char ***en, char *av)
 {
 	t_nd	*anc;
 	int		rt;
@@ -65,7 +65,7 @@ int		run_cmd(t_nd *coms, char **en, char *av)
 	while (anc && rt == EXIT_SUCCESS)
 	{
 		token_changer(anc->child, en);
-		get_redirect(anc->child, en);
+		get_redirect(anc->child, *en);
 		rt = run(anc->child, en, av);
 		if (anc->sible)
 			anc = anc->sible;
@@ -89,7 +89,7 @@ int	line_check(char *line)
 
 
 
-int	start_shell(char **en, char *av)
+int	start_shell(char ***en, char *av)
 {
 	int		status;
 	char	*line;
@@ -111,6 +111,7 @@ int	start_shell(char **en, char *av)
 			write(1, "minishell test> ", ft_strlen("minishell test> "));
 		else
 			exit_code = 0;
+
 		history = history_add(history);
 		line = get_ch(history);
 		if (!line)
@@ -127,7 +128,8 @@ int	start_shell(char **en, char *av)
 				history = 0;
 			}
 		}
-		// line = ft_strdup("ls >test");
+
+		// line = ft_strdup("echo $PAGER");
 		if (line && *line && line_check(line) && synerror_checker(line, ';') >= 0)
 		{
 			coms = big_cutter(line);
@@ -136,5 +138,6 @@ int	start_shell(char **en, char *av)
 		// coms free
 	}
 	// history free
+	// cmd_unset(&en, )
 	return (0);
 }

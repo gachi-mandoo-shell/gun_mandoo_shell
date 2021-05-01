@@ -46,7 +46,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
-	printf("\nexit_code is %d!\n\n",exit_code);
+	// printf("\nexit_code is %d!\n\n",exit_code);
 	return (EXIT_SUCCESS);
 }
 

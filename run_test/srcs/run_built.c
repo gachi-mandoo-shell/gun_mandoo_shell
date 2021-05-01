@@ -8,22 +8,26 @@ char	*blt_str(int i)
 	blt_str[1] = "env";
 	blt_str[2] = "pwd";
 	blt_str[3] = "cd";
+	blt_str[4] = "unset";
+	blt_str[5] = "export";
 	blt_str[BLT_NUM] = NULL;
 	return (blt_str[i]);
 }
 
-int	(*blt_func(int i))(t_nd *cmd, char **en, char *av)
+int	(*blt_func(int i))(t_nd *cmd, char ***en, char *av)
 {
-	int		(*blt_fuck[BLT_NUM])(t_nd *cmd, char **en, char *av);
+	int		(*blt_fuck[BLT_NUM])(t_nd *cmd, char ***en, char *av);
 
 	blt_fuck[0] = &cmd_exit;
 	blt_fuck[1] = &cmd_env;
 	blt_fuck[2] = &cmd_pwd;
 	blt_fuck[3] = &cmd_cd;
+	blt_fuck[4] = &cmd_unset;
+	blt_fuck[5] = &cmd_export;
 	return (blt_fuck[i]);
 }
 
-int	builtin_run(t_nd *cmd, char **en, char *av, int i)
+int	builtin_run(t_nd *cmd, char ***en, char *av, int i)
 {
 	int 	rt;
 	int		cpy_out;
@@ -47,6 +51,9 @@ int	builtin_run(t_nd *cmd, char **en, char *av, int i)
 			// kill(pid, SIGINT);
 			// signal(SIGQUIT, (void*)signal_child_ctlslash);
 			rt = (*blt_func(i))(cmd, en, av);
+			// new_en = cmd_unset(sssss)
+			// *en = new_en;
+			// rt =
 			exit(rt);
 		}
 		else if (pid > 0)

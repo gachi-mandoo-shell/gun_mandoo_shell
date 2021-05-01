@@ -12,7 +12,7 @@
 # include <signal.h>
 # include <termios.h>
 
-# define BLT_NUM 4
+# define BLT_NUM 6
 # define SEP " \t\n\r\a\""
 
 # define TYPE_NONE	-1
@@ -67,7 +67,7 @@ typedef struct 	s_nd
 	t_red			re;
 }				t_nd;
 
-int		start_shell(char **en, char *av);
+int		start_shell(char ***en, char *av);
 int		synerror_checker(char *args, char a);
 int		synerror_redirect(char *arg);
 char	**split_quote(char *str, char *set);
@@ -78,26 +78,28 @@ t_nd	*big_cutter(char *str);
 int		lexer(t_nd *new, char *args);
 int		tokenizer(t_nd *nd);
 
-int		token_changer(t_nd *nd, char **en);
+int		token_changer(t_nd *nd, char ***en);
 int		get_redirect(t_nd *nd, char **en);
 
 
-int		run(t_nd *cmd, char **en, char *av);
+int		run(t_nd *cmd, char ***en, char *av);
 int		pipe_dup(t_nd *cmd);
 void	pipe_close(t_nd *cmd);
 
-int		builtin_run(t_nd *cmd, char **en, char *av, int i);
-int		(*blt_func(int i))(t_nd *cmd, char **en, char *av);
+int		builtin_run(t_nd *cmd, char ***en, char *av, int i);
+int		(*blt_func(int i))(t_nd *cmd, char ***en, char *av);
 char	*blt_str(int i);
 
 void	find_cmd(t_nd *com, char **en, char *av);
 int		execute_ps(char *run_com, t_nd *com, char **en, char *name);
 
 // built_in
-int		cmd_exit(t_nd *com, char **en, char *name);
-int		cmd_env(t_nd *com, char **en, char *av);
-int		cmd_cd(t_nd *com, char **en, char *av);
-int		cmd_pwd(t_nd *com, char **en, char *av);
+int		cmd_exit(t_nd *com, char ***en, char *name);
+int		cmd_env(t_nd *com, char ***en, char *av);
+int		cmd_cd(t_nd *com, char ***en, char *av);
+int		cmd_pwd(t_nd *com, char ***en, char *av);
+int		cmd_unset(t_nd *com, char ***en, char *av);
+int		cmd_export(t_nd *com, char ***en, char *av);
 char	*find_env(char *key, char **en);
 char	*find_env_val(char *key, char **en);
 

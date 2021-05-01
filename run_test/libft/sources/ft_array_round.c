@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:22:41 by hyunja            #+#    #+#             */
-/*   Updated: 2021/02/17 17:21:53 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/01 15:33:09 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	ft_array_round_3(char *str, int i)
 	}
 	else
 		str[i] = '\0';
+
 }
 
 static void	ft_array_round_2(t_libset *set, char *str, int pre, int i)
