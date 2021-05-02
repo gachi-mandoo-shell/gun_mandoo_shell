@@ -9,9 +9,9 @@ t_nd	*big_cutter(char *str)
 	t_nd	*tmp_nd2;
 
 	i = -1;
-	tmp = split_quote(str, ";");
 	if (!tmp)
 		return (NULL);
+	tmp = split_quote(str, ";");
 	mother = new_nd(str);
 	mother->pos.head = mother;
 	mother->pos.tail = mother;
@@ -31,17 +31,5 @@ t_nd	*big_cutter(char *str)
 		}
 	}
 	tmp_nd = mother;
-	// printf("{ %s }\n", tmp_nd->args[0]);
-	// while(tmp_nd->child)
-	// {
-	// 	tmp_nd = tmp_nd->child;
-	// 	while(tmp_nd->sible)
-	// 	{
-	// 		printf(" -> { %s }",tmp_nd->args[0]);
-	// 		tmp_nd = tmp_nd->sible;
-	// 	}
-	// 	printf(" -> { %s }",tmp_nd->args[0]);
-	// }
-	// printf("\n");
 	return (mother);
 }

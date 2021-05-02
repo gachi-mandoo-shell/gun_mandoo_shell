@@ -32,7 +32,7 @@ int	execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		if (rt == -1)
 		{
 			printf("%s: %s\n", run_com, strerror(errno));
-			exit(rt);
+			exit(errno);
 		}
 		exit(0);
 	}
@@ -44,13 +44,15 @@ int	execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
-	if (WIFSIGNALED(g_ex.exit_code))
+	printf("\n<<mother's exit_code is %d!>>\n\n", WEXITSTATUS(g_ex.exit_code));
+	if (WEXITSTATUS(g_ex.exit_code) == 13)
+		g_ex.exit_code = 126;
+	else if (WIFSIGNALED(g_ex.exit_code))
 		g_ex.exit_code = WTERMSIG(g_ex.exit_code) + 128;
 	else if (WEXITSTATUS(g_ex.exit_code) >= 255)
 		g_ex.exit_code = 1;
 	else
 		g_ex.exit_code = WEXITSTATUS(g_ex.exit_code);
-	// printf("\n<<mother's exit_code is %d!>>\n\n", g_ex.exit_code);
 	return (EXIT_SUCCESS);
 }
 
@@ -86,7 +88,10 @@ void	find_cmd(t_nd *com, char **en, char *av)
 	}
 	if (bash_path[i] == NULL)
 	{
-		printf("minishell: %s: command not found\n", com->args[0]);
+		if (com->args[0][0] == '/')
+			printf("minishell: %s: No such file or directory\n", com->args[0]);
+		else
+			printf("minishell: %s: command not found\n", com->args[0]);
 		g_ex.exit_code = 127;
 	}
 	i = -1;

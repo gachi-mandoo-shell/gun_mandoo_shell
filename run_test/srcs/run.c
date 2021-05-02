@@ -27,8 +27,8 @@ void	pipe_close(t_nd *cmd)
 int	run_div(t_nd *cmd, char ***en, char *av)
 {
 	struct stat	test;
-	int i;
-	int rt;
+	int			i;
+	int			rt;
 
 	i = -1;
 	rt = EXIT_SUCCESS;
@@ -47,7 +47,7 @@ int	run_div(t_nd *cmd, char ***en, char *av)
 
 int	run(t_nd *cmd, char ***en, char *av)
 {
-	int rt;
+	int	rt;
 
 	rt = EXIT_SUCCESS;
 	while (cmd && rt == EXIT_SUCCESS)
