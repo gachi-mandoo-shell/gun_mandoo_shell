@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		pipe_dup(t_nd *cmd)
+int	pipe_dup(t_nd *cmd)
 {
 	int		err_check;
 
@@ -24,13 +24,12 @@ void	pipe_close(t_nd *cmd)
 		close(cmd->prev->pipes[SIDE_OUT]);
 }
 
-int		run_div(t_nd *cmd, char ***en, char *av)
+int	run_div(t_nd *cmd, char ***en, char *av)
 {
 	struct stat	test;
 	int i;
 	int rt;
 
-	// signal(SIGINT, SIG_DFL);
 	i = -1;
 	rt = EXIT_SUCCESS;
 	if (cmd->args[0])
@@ -46,7 +45,7 @@ int		run_div(t_nd *cmd, char ***en, char *av)
 	return (rt);
 }
 
-int		run(t_nd *cmd, char ***en, char *av)
+int	run(t_nd *cmd, char ***en, char *av)
 {
 	int rt;
 

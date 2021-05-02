@@ -120,12 +120,9 @@ void	print_list(t_nd *com);
 int		matrix_line_num(char **matrix);
 
 // signal
-void	*signal_ctlc(int	signo);
-void	*signal_ctld(int	signo);
-void	*signal_ctlslash(int	signo);
-void	*signal_child_ctld(int	signo);
-void	*signal_child_ctlslash(int	signo);
-void	*signal_child_ctlc(int signo);
+void	*signal_ctlc(int signo);
+void	*signal_ctld(int signo);
+void	*signal_ctlslash(int signo);
 t_hist	*history_add(t_hist *nd);
 t_hist	*history_init();
 

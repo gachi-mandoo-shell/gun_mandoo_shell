@@ -31,7 +31,7 @@ int	(*blt_func(int i))(t_nd *cmd, char ***en, char *av)
 
 int	builtin_run(t_nd *cmd, char ***en, char *av, int i)
 {
-	int 	rt;
+	int		rt;
 	int		cpy_out;
 	int		cpy_in;
 	pid_t	pid;
@@ -47,15 +47,8 @@ int	builtin_run(t_nd *cmd, char ***en, char *av, int i)
 		pid = fork();
 		if (pid == 0)
 		{
-			// if (signal(SIGTERM, (void*)signal_child_ctld))
-
 			pipe_dup(cmd);
-			// kill(pid, SIGINT);
-			// signal(SIGQUIT, (void*)signal_child_ctlslash);
 			rt = (*blt_func(i))(cmd, en, av);
-			// new_en = cmd_unset(sssss)
-			// *en = new_en;
-			// rt =
 			exit(rt);
 		}
 		else if (pid > 0)

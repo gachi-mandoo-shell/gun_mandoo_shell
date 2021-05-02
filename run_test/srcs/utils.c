@@ -42,7 +42,7 @@ t_nd	*child_rewind(t_nd *coms)
 
 void	print_args(char **args)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (args[++i])
@@ -51,8 +51,8 @@ void	print_args(char **args)
 
 void	print_list(t_nd *com)
 {
-	t_nd *tmp_nd;
-	t_nd *tmp_nd2;
+	t_nd	*tmp_nd;
+	t_nd	*tmp_nd2;
 
 	tmp_nd = com;
 	tmp_nd2 = com;
@@ -64,28 +64,26 @@ void	print_list(t_nd *com)
 		tmp_nd = tmp_nd2;
 		printf("->");
 		print_list(tmp_nd2);
-		// printf("\n====================\n");
 	}
-	while(tmp_nd->sible)
+	while (tmp_nd->sible)
 	{
 		tmp_nd = tmp_nd->sible;
 		print_list(tmp_nd);
 	}
 }
 
-
 void	print_list_2(t_hist *com)
 {
-	t_hist *tmp;
+	t_hist	*tmp;
 
 	tmp = com;
 	while (tmp)
 	{
 		printf("[%s]<-", tmp->content);
-		if (tmp->prev)	
+		if (tmp->prev)
 			tmp = tmp->prev;
 		else
-			break;
+			break ;
 	}
 }
 

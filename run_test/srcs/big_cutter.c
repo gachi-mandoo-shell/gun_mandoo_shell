@@ -9,7 +9,6 @@ t_nd	*big_cutter(char *str)
 	t_nd	*tmp_nd2;
 
 	i = -1;
-
 	tmp = split_quote(str, ";");
 	if (!tmp)
 		return (NULL);
