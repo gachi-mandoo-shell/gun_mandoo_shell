@@ -12,7 +12,7 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char ***en)
 	if (args[(*arg_i) + 1] == '?')
 	{
 		(*arg_i)++;
-		key_val = ft_itoa(exit_code);
+		key_val = ft_itoa(g_ex.exit_code);
 		strcat(cpy_arg, key_val);
 		cpy_i = ft_strlen(key_val);
 		free(key_val);
@@ -64,7 +64,7 @@ char	*env_controller(char *args, char ***en)
 		{
 			cpy_i += env_changer(args, \
 			&arg_i, cpy_arg + cpy_i, en);
-			
+
 		}
 		// if (!ft_strchr("\'\"$", args[arg_i]))
 		// 	cpy_arg[cpy_i++] = args[arg_i];

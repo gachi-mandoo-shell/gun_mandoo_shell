@@ -28,7 +28,14 @@
 # define STDOUT		1
 # define STDIN		0
 
-int 		exit_code;
+typedef struct 	s_exit_code
+{
+	int		exit_code;
+	int		is_signaled;
+	pid_t	pid;
+} t_exit_code;
+
+t_exit_code	g_ex;
 
 typedef struct 	s_hist
 {

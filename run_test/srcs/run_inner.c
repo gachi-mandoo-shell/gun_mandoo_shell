@@ -2,7 +2,6 @@
 
 int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 {
-	pid_t	pid;
 	int		rt;
 
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
@@ -11,9 +10,9 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		dup2(com->re.rdrt_fd, com->pipes[SIDE_IN]);
 	if (com->re.rdrt_in_type > 0 && com->type == TYPE_C_P)
 		dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
-	exit_code = 0;
-	pid = fork();
-	if (pid == 0)
+	g_ex.exit_code = 0;
+	g_ex.pid = fork();
+	if (g_ex.pid == 0)
 	{
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_dup(com);
@@ -38,21 +37,24 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		}
 		exit(0);
 	}
-	else if (pid > 0)
+	else if (g_ex.pid > 0)
 	{
-		waitpid(pid, &exit_code, WUNTRACED);
+		waitpid(g_ex.pid, &g_ex.exit_code, WUNTRACED);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_close(com);
 		// printf("\n<<mother's exit_code is %d!>>\n\n",exit_code);
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
-	if (WIFSIGNALED(exit_code))
-		exit_code = WTERMSIG(exit_code) + 128;
-	else if (WEXITSTATUS(exit_code) == 255)
-		exit_code = 1;
+	if (WIFSIGNALED(g_ex.exit_code))
+	{
+		g_ex.exit_code = WTERMSIG(g_ex.exit_code) + 128;
+		g_ex.is_signaled = -1;
+	}
+	else if (WEXITSTATUS(g_ex.exit_code) == 255)
+		g_ex.exit_code = 1;
 	else
-		exit_code = WEXITSTATUS(exit_code);
+		g_ex.exit_code = WEXITSTATUS(g_ex.exit_code);
 	return (EXIT_SUCCESS);
 }
 

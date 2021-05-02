@@ -95,6 +95,7 @@ int	start_shell(char ***en, char *av)
 	char	*line;
 	t_nd	*coms;
 	t_hist	*history;
+	int		tmp_exitcode;
 
 	status = EXIT_SUCCESS;
 	start_write();
@@ -102,13 +103,15 @@ int	start_shell(char ***en, char *av)
 	signal(SIGINT, (void*)signal_ctlc);
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGQUIT, (void*)signal_ctlslash);
-
-	
 	while (status == EXIT_SUCCESS)
 	{
 		// printf("\nexit code is %d!\n\n",exit_code);
-		if (exit_code != 130 && exit_code != 131)
-			write(1, "minishell test> ", ft_strlen("minishell test> "));
+		// if ((ex.exit_code != 130 && exit_code != 131))
+		g_ex.is_signaled = 0;
+		if (g_ex.pid == 0)
+			write(1, "minishell test(start)> ", ft_strlen("minishell test(start)> "));
+
+		//ex.is_signaled = 0;
 
 		history = history_add(history);
 		line = get_ch(history);
@@ -133,6 +136,7 @@ int	start_shell(char ***en, char *av)
 			coms = big_cutter(line);
 			status = run_cmd(coms->child, en, av);
 		}
+		g_ex.pid = 0;
 		// coms free
 	}
 	// history free
