@@ -22,15 +22,15 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 	if ((com->args[1]) && !strcmp(com->args[1], "-"))
 	{
 		if (!oldpwd_key)
-			rt = -1;
+			rt = -2;
 		else
 			rt = chdir(oldpwd_val);
 	}
 	else if (!com->args[1])
 	{
 		rt = chdir(find_env_val("HOME", *en));
-		rt = -2;
-	} 
+		rt = -3;
+	}
 	else if (com->args[1][0] == '~')
 	{
 		tmp2 = ft_strjoin(getenv("HOME"), com->args[1] + 1);
@@ -39,15 +39,15 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 	}
 	else
 		rt = chdir(com->args[1]);
-
 	if (rt < 0)
 	{
-		if (rt == -1)
+		if (rt == -2)
 			printf("minishell: %s: OLDPWD not set\n", com->args[0]);
-		else if (rt == -2)
+		else if (rt == -3)
 			printf("minishell: %s: HOME not set\n", com->args[0]);
 		else
 			printf("%s: %s: %s\n",com->args[0], com->args[1], strerror(errno));
+		g_ex.exit_code = 1;
 	}
 	else
 	{
@@ -60,6 +60,7 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 		new_key = find_env("PWD", *en);
 		new_en = update_env(en, new, new_key);
 		(*en) = new_en;
+		g_ex.exit_code = 0;
 	}
 	return (EXIT_SUCCESS);
 }

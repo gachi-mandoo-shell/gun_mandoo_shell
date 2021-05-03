@@ -8,7 +8,7 @@ t_hist	*history_init()
 	tmp->content = 0;
 	tmp->next = 0;
 	tmp->prev = 0;
-	
+
 	return (tmp);
 }
 
@@ -26,7 +26,6 @@ t_hist	*history_add(t_hist *nd)
 	}
 	else
 	{
-		// printf("%s\n", nd->content);
 		tmp = (t_hist*)malloc(sizeof(t_hist) * 1);
 		tmp->content = 0;
 		tmp->next = 0;
@@ -37,10 +36,3 @@ t_hist	*history_add(t_hist *nd)
 
 	return (tmp);
 }
-
-// void	*history_add(t_hist *nd, char *con)
-// {
-// 	nd->content = ft_strdup("con");
-// 	nd->next = 0;
-// 	nd->prev = 0;
-// }

@@ -1,30 +1,42 @@
 #include "minishell.h"
 
+int	check_arg(char *str)
+{
+	if (ft_isdigit(str[0]) || ft_strchr(str, '='))
+	{
+		g_ex.exit_code = -1;
+		printf("minishell: unset: `%s': not a valid identifier\n", str);
+		return (0);
+	}
+	return (1);
+}
+
 int	cmd_unset(t_nd *com, char ***en, char *av)
 {
-	char *tmp;
-	char **new_en;
-	int i;
-	int	j;
+	char	*tmp;
+	char	**new_en;
+	int		i;
 
-	i = -1;
-	j = -1;
-	if (!com->args[1]) 
-		return (EXIT_SUCCESS);
-	tmp = find_env(com->args[1], *en);
-	if (!tmp)
-		return (EXIT_SUCCESS);
-	new_en = malloc(sizeof(char*) * (matrix_line_num(*en)));
-	if (!new_en)
-		return (EXIT_FAILURE);
-	while ((*en)[++i])
+	if (!com->args[1])
 	{
-		if ((*en)[i] != tmp)
-			new_en[++j] = ft_strdup((*en)[i]);
-		free((*en)[i]);
+		g_ex.exit_code = 0;
+		return (EXIT_SUCCESS);
 	}
-	free((*en)[i]);
-	new_en[++j] = 0;
-	(*en) = new_en;
-	return(EXIT_SUCCESS);
+	i = 0;
+	while (com->args[++i])
+	{
+		tmp = find_env(com->args[i], *en);
+		printf("%s\n", com->args[i]);
+		printf("%s\n", tmp);
+		if (tmp || check_arg(com->args[i]))
+		{
+			new_en = delete_env(en, tmp);
+			(*en) = new_en;
+		}
+	}
+	if (g_ex.exit_code < 0)
+		g_ex.exit_code = 1;
+	else
+		g_ex.exit_code = 0;
+	return (EXIT_SUCCESS);
 }

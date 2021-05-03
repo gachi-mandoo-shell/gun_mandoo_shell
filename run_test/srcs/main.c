@@ -20,18 +20,7 @@ int		main(int ac, char *av[], char *en[])
 {
 	char	**env;
 	char	rt;
-	// struct termios term;
-
-	//===============================
-
-	// tcgetattr(STDIN_FILENO, &term);
-	// term.c_lflag &= ~ICANON;
-	// term.c_lflag &= ~ECHO;
-	// term.c_cc[VMIN] = 1;
-	// term.c_cc[VTIME] = 0;
-	// tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	//===============================
-
+	
 	g_ex.exit_code = 0;
 	init_env(&env, en);
 	rt = start_shell(&env, av[0]);

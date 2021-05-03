@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
+int	execute_ps(char *run_com, t_nd *com, char **en, char *name)
 {
 	int		rt;
 
@@ -10,7 +10,6 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		dup2(com->re.rdrt_fd, com->pipes[SIDE_IN]);
 	if (com->re.rdrt_in_type > 0 && com->type == TYPE_C_P)
 		dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
-	g_ex.exit_code = 0;
 	g_ex.pid = fork();
 	if (g_ex.pid == 0)
 	{
@@ -33,7 +32,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		if (rt == -1)
 		{
 			printf("%s: %s\n", run_com, strerror(errno));
-			exit(rt);
+			exit(errno);
 		}
 		exit(0);
 	}
@@ -42,16 +41,15 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		waitpid(g_ex.pid, &g_ex.exit_code, WUNTRACED);
 		if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 			pipe_close(com);
-		// printf("\n<<mother's exit_code is %d!>>\n\n",exit_code);
 	}
 	else
 		write(1, "failed to fork", ft_strlen("failed to fork"));
-	if (WIFSIGNALED(g_ex.exit_code))
-	{
+	printf("\n<<mother's exit_code is %d!>>\n\n", WEXITSTATUS(g_ex.exit_code));
+	if (WEXITSTATUS(g_ex.exit_code) == 13)
+		g_ex.exit_code = 126;
+	else if (WIFSIGNALED(g_ex.exit_code))
 		g_ex.exit_code = WTERMSIG(g_ex.exit_code) + 128;
-		g_ex.is_signaled = -1;
-	}
-	else if (WEXITSTATUS(g_ex.exit_code) == 255)
+	else if (WEXITSTATUS(g_ex.exit_code) >= 255)
 		g_ex.exit_code = 1;
 	else
 		g_ex.exit_code = WEXITSTATUS(g_ex.exit_code);
@@ -89,7 +87,13 @@ void	find_cmd(t_nd *com, char **en, char *av)
 		}
 	}
 	if (bash_path[i] == NULL)
-		printf("%s: %s\n", com->args[0], strerror(errno));
+	{
+		if (com->args[0][0] == '/')
+			printf("minishell: %s: No such file or directory\n", com->args[0]);
+		else
+			printf("minishell: %s: command not found\n", com->args[0]);
+		g_ex.exit_code = 127;
+	}
 	i = -1;
 	while (bash_path[++i])
 		free(bash_path[i]);

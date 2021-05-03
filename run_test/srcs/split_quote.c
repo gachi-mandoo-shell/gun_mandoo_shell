@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		count_size(char *str, char *set)
+int	count_size(char *str, char *set)
 {
 	int		count;
 	int		i;
@@ -57,7 +57,7 @@ char	*sep(char **str, char *set)
 			if (ft_strchr(set, (*str)[i + 1]))
 				;
 			else
-				break;
+				break ;
 		}
 		i++;
 	}
@@ -69,8 +69,6 @@ char	*sep(char **str, char *set)
 	}
 	else
 	{
-		// if (ft_strchr(SEP, (*str)[i]))
-		// 	i++;
 		rt = ft_strndup(*str, i);
 		(*str) += i + 1;
 	}
@@ -95,4 +93,3 @@ char	**split_quote(char *str, char *set)
 	rt[i] = 0;
 	return (rt);
 }
-

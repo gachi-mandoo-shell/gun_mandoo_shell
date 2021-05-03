@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 int	redirect_count(char *arg)
 {
 	int	qq_f;
@@ -27,12 +26,11 @@ int	redirect_count(char *arg)
 			if (arg[i + 1] == '>')
 				i++;
 			red_pos = i;
-			// if (arg[i + 1])
 			count++;
-			// count++;
 		}
 	}
-	if ((red_pos >= 0) && (red_pos != i - 1) &&  (arg[0] != '>' && arg[0] != '<'))
+	if ((red_pos >= 0) && (red_pos != i - 1) && \
+	(arg[0] != '>' && arg[0] != '<'))
 		count++;
 	return (count);
 }

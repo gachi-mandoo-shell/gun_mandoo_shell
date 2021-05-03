@@ -34,5 +34,6 @@ int		cmd_echo(t_nd *com, char ***en, char *av)
 	}
 	if (is_n != -1)
 		printf("\n");
+	g_ex.exit_code = 0;
 	return (EXIT_SUCCESS);
 }

@@ -61,38 +61,15 @@ char	*env_controller(char *args, char ***en)
 		if (!ft_strchr("\'\"$", args[arg_i]))
 			cpy_arg[cpy_i++] = args[arg_i];
 		if (args[arg_i] == '$')
-		{
 			cpy_i += env_changer(args, \
 			&arg_i, cpy_arg + cpy_i, en);
-
-		}
-		// if (!ft_strchr("\'\"$", args[arg_i]))
-		// 	cpy_arg[cpy_i++] = args[arg_i];
-		// else if (args[arg_i] == '$')
-		// 	arg_i--;
 	}
 	return (ft_strdup(cpy_arg));
 }
 
-// int		call_env(t_nd *nd, char **en)
-// {
-// 	char 	*tmp;
-// 	int		arg_count;
-
-// 	arg_count = -1;
-// 	while (nd->args[++arg_count])
-// 	{
-// 		tmp = env_controller(nd->args[arg_count], en);
-// 		free(nd->args[arg_count]);
-// 		nd->args[arg_count] = ft_strdup(tmp);
-// 		free(tmp);
-// 	}
-// 	return (EXIT_SUCCESS);
-// }
-
 int	token_changer(t_nd *nd, char ***en)
 {
-	char 	*tmp;
+	char	*tmp;
 	int		arg_count;
 	t_nd	*anc;
 
@@ -109,7 +86,7 @@ int	token_changer(t_nd *nd, char ***en)
 		if (nd->sible)
 			nd = nd->sible;
 		else
-			break;
+			break ;
 	}
 	return (EXIT_SUCCESS);
 }

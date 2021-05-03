@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	delete_char(int size)
@@ -7,40 +6,42 @@ void	delete_char(int size)
 	int 	i;
 
 	i = -1;
-	
 	while (++i < size)
 		alt[i] = '\b';
 	while (i < size * 2)
 		alt[i++] = ' ';
 	write(1, alt, size * 2);
 	write(1, alt, size);
-	// printf("size is : %d\n", size);
 }
 
 char	*get_ch(t_hist	*nd)
 {
-	char	c[2];
-	char	*tmp;
-	char	*tmp_back;
-	struct termios term;
-	struct termios back;
-	char	fake_db[nd->count + 1][PATH_MAX];
-	t_hist	*anc;
-
+	char			c[2];
+	char			*tmp;
+	char			*tmp_back;
+	struct termios	term;
+	struct termios	back;
+	char			fake_db[nd->count + 1][PATH_MAX];
+	t_hist			*anc;
 
 	c[1] = 0;
 	tcgetattr(STDIN_FILENO, &term);
 	tcgetattr(STDIN_FILENO, &back);
-	term.c_lflag &= ~ICANON;    
-	term.c_lflag &= ~ECHO;      
-	term.c_cc[VMIN] = 1; 
+	term.c_lflag &= ~ICANON;
+	term.c_lflag &= ~ECHO;
+	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	anc = nd;
 	ft_memset(fake_db, 0, sizeof(fake_db));
 	while (read(0, c, 1) > 0)
 	{
-		if ((int)c[0] == 27)
+		if ((int)c[0] == 4)
+		{
+			printf("exit\n");
+			exit(0);
+		}
+		else if ((int)c[0] == 27)
 		{
 			read(0, c, 1);
 			if ((int)c[0] == 91)
@@ -53,7 +54,7 @@ char	*get_ch(t_hist	*nd)
 					if (nd->prev)
 					{
 						write(1, nd->prev->content, ft_strlen(nd->prev->content));
-						nd = nd->prev;	
+						nd = nd->prev;
 					}
 				}
 				else if ((int)c[0] == 66)
@@ -64,7 +65,7 @@ char	*get_ch(t_hist	*nd)
 					{
 						if (nd->next->content)
 							write(1, nd->next->content, ft_strlen(nd->next->content));
-						nd = nd->next;	
+						nd = nd->next;
 					}
 				}
 			}
@@ -120,9 +121,8 @@ char	*get_ch(t_hist	*nd)
 		if (anc->prev)
 			anc = anc->prev;
 		else
-			break;
+			break ;
 	}
-
 	tcsetattr(STDIN_FILENO, TCSANOW, &back);
 	return (nd->content);
 }

@@ -8,9 +8,11 @@ int		cmd_exit(t_nd *com, char ***en, char *name)
 	while (com->args[i])
 		i++;
 	printf("exit\n");
+	g_ex.exit_code = 0;
 	if (i > 2)
 	{
 		printf("exit: too many arguments\n");
+		g_ex.exit_code = 1;
 		return (EXIT_SUCCESS);
 	}
 	else

@@ -30,7 +30,6 @@ void	start_write(void)
 	printf("▒▒▒▒__▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓\n");
 	printf("▒▒▒__▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n");
 	printf("▒▒\n");
-
 }
 
 char	*read_line(void)
@@ -42,7 +41,7 @@ char	*read_line(void)
 	return (line);
 }
 
-int		run_cmd(t_nd *coms, char ***en, char *av)
+int	run_cmd(t_nd *coms, char ***en, char *av)
 {
 	t_nd	*anc;
 	int		rt;
@@ -53,7 +52,7 @@ int		run_cmd(t_nd *coms, char ***en, char *av)
 	anc = coms;
 	while (coms)
 	{
-		if(lexer(coms, coms->args[0]) == EXIT_FAILURE)
+		if (lexer(coms, coms->args[0]) == EXIT_FAILURE)
 			return (EXIT_SUCCESS);
 		if (tokenizer(coms->child) == EXIT_FAILURE)
 			return (EXIT_SUCCESS);
@@ -77,7 +76,7 @@ int		run_cmd(t_nd *coms, char ***en, char *av)
 
 int	line_check(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] && ft_strchr(SEP, line[i]))
@@ -86,8 +85,6 @@ int	line_check(char *line)
 		return (0);
 	return (1);
 }
-
-
 
 int	start_shell(char ***en, char *av)
 {
@@ -100,19 +97,12 @@ int	start_shell(char ***en, char *av)
 	status = EXIT_SUCCESS;
 	start_write();
 	history = 0;
-	signal(SIGINT, (void*)signal_ctlc);
-	signal(SIGTERM, SIG_IGN);
-	signal(SIGQUIT, (void*)signal_ctlslash);
+	signal(SIGINT, (void *)signal_ctlc);
+	signal(SIGQUIT, (void *)signal_ctlslash);
 	while (status == EXIT_SUCCESS)
 	{
-		// printf("\nexit code is %d!\n\n",exit_code);
-		// if ((ex.exit_code != 130 && exit_code != 131))
-		g_ex.is_signaled = 0;
 		if (g_ex.pid == 0)
-			write(1, "minishell test(start)> ", ft_strlen("minishell test(start)> "));
-
-		//ex.is_signaled = 0;
-
+			write(1, "minishell test> ", ft_strlen("minishell test> "));
 		history = history_add(history);
 		line = get_ch(history);
 		if (!line)
@@ -129,8 +119,6 @@ int	start_shell(char ***en, char *av)
 				history = 0;
 			}
 		}
-
-		// line = ft_strdup("echo $PAGER");
 		if (line && *line && line_check(line) && synerror_checker(line, ';') >= 0)
 		{
 			coms = big_cutter(line);
