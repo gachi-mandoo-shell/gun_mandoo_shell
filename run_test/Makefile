@@ -17,11 +17,11 @@ TEST_SRCS = $(wildcard $(SRCS_DIR)/*.c) $(wildcard $(BLT_DIR)/*.c)
 
 all : $(NAME)
 
-$(NAME) : $(LIBFT)
+$(NAME) : $(LIB_DIR)/$(LIBFT)
 	@$(CC) -I$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) \
-	-L ./ -lft -o $(NAME) $(TEST_SRCS)
+	-L ./$(LIB_DIR) -lft -o $(NAME) $(TEST_SRCS)
 
-$(LIBFT) :
+$(LIB_DIR)/$(LIBFT) :
 	@make -C $(LIB_DIR)
 	@cp $(LIB_DIR)/$(LIBFT) .
 
@@ -35,7 +35,7 @@ fclean : clean
 	@rm -rf $(LIBFT)
 	@make -C $(LIB_DIR) fclean
 
-test : $(LIBFT)
+test : $(LIB_DIR)/$(LIBFT)
 	@$(CC) -I$(INC_DIR) -I$(LIB_DIR)/$(INC_DIR) -L ./ -lft $(TEST_SRCS)
 	@./a.out
 	@rm a.out

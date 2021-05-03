@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 14:32:23 by hyunja            #+#    #+#             */
-/*   Updated: 2021/02/17 17:18:47 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/03 16:36:44 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,5 +209,6 @@ char									ft_array_round(t_libset *set, \
 										char *str, int pre);
 int										ft_ilencal(long long n);
 int										get_next_line(int fd, char **line);
+int										ft_strcmp(const char *s1, const char *s2);
 
 #endif

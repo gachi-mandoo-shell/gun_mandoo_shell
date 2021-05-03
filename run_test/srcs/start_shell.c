@@ -127,7 +127,5 @@ int	start_shell(char ***en, char *av)
 		g_ex.pid = 0;
 		// coms free
 	}
-	// history free
-	// cmd_unset(&en, )
 	return (0);
 }
