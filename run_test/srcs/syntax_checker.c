@@ -5,7 +5,7 @@ int	find_file_name(char *arg)
 	int	i;
 
 	i = 1;
-	while (ft_strchr(SEP, arg[i]))
+	while (arg[i] && ft_strchr(SEP, arg[i]))
 		i++;
 	if (arg[i] == '>' || arg[i] == '<' || !arg[i])
 		return (EXIT_FAILURE);
@@ -34,7 +34,11 @@ int	synerror_redirect(char *arg)
 			if (arg[i + 1] == '>')
 				i++;
 			if (find_file_name(&arg[i]) == EXIT_FAILURE)
+			{
+				g_ex.exit_code = 258;
+				printf("redirection : syntax error\n");
 				return (EXIT_FAILURE);
+			}
 		}
 	}
 	return (EXIT_SUCCESS);
@@ -74,9 +78,16 @@ int	synerror_checker(char *args, char a)
 			if (args[i] == a || (!args[i] && a == '|'))
 			{
 				printf("%c : syntax error\n", a);
+				g_ex.exit_code = 258;
 				return (-1);
 			}
 		}
+	}
+	if (qq_f == -1 || q_f == -1)
+	{
+		printf("minishell : quote error\n");
+		g_ex.exit_code = 258;
+		return (-1);
 	}
 	// else if (args[len] == '>')
 	// 	return (EXIT_FAILURE);

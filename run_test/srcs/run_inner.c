@@ -31,7 +31,10 @@ int	execute_ps(char *run_com, t_nd *com, char **en, char *name)
 			rt = execve(run_com, com->args, en);
 		if (rt == -1)
 		{
+			// printf("minishell: %s: Encounterd Some Error *_*!\n", run_com);
 			printf("%s: %s\n", run_com, strerror(errno));
+
+			// printf("minishell: %s: is a directory\n", run_com);
 			exit(errno);
 		}
 		exit(0);
@@ -88,10 +91,11 @@ void	find_cmd(t_nd *com, char **en, char *av)
 	}
 	if (bash_path[i] == NULL)
 	{
-		if (com->args[0][0] == '/')
+		if (com->args[0][0] == '/' || (com->args[0][0] == '.'))
 			printf("minishell: %s: No such file or directory\n", com->args[0]);
 		else
 			printf("minishell: %s: command not found\n", com->args[0]);
+		// printf("minishell: %s: Encounterd Some Error *_*!\n", com->args[0]);
 		g_ex.exit_code = 127;
 	}
 	i = -1;
