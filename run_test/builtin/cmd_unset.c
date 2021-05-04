@@ -26,8 +26,6 @@ int	cmd_unset(t_nd *com, char ***en, char *av)
 	while (com->args[++i])
 	{
 		tmp = find_env(com->args[i], *en);
-		printf("%s\n", com->args[i]);
-		printf("%s\n", tmp);
 		if (tmp || check_arg(com->args[i]))
 		{
 			new_en = delete_env(en, tmp);

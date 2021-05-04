@@ -1,20 +1,13 @@
 #include "minishell.h"
 
-// 초기형
-int		cmd_echo(t_nd *com, char ***en, char *av)
+int		cmd_echo_2(t_nd *com, char ***en, char *av)
 {
 	int		i;
 	int		j;
 	int		is_n;
 
-	i = 0;
-	is_n = 0;
-	if (!com->args[1])
-	{
-		printf("\n");
-		return (EXIT_SUCCESS);
-	}
 	j = 0;
+	i = 0;
 	if (com->args[1][j] == '-')
 	{
 		j++;
@@ -32,6 +25,19 @@ int		cmd_echo(t_nd *com, char ***en, char *av)
 		if (com->args[i + 1])
 			write(1, " ", 1);
 	}
+	return (is_n);
+}
+
+int		cmd_echo(t_nd *com, char ***en, char *av)
+{
+	int		is_n;
+
+	if (!com->args[1])
+	{
+		printf("\n");
+		return (EXIT_SUCCESS);
+	}
+	is_n = cmd_echo_2(com, en, av);
 	if (is_n != -1)
 		printf("\n");
 	g_ex.exit_code = 0;

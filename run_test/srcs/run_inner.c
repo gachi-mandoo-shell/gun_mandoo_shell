@@ -50,8 +50,10 @@ int	execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	// printf("\n<<mother's exit_code is %d!>>\n\n", WEXITSTATUS(g_ex.exit_code));
 	if (WEXITSTATUS(g_ex.exit_code) == 13)
 		g_ex.exit_code = 126;
+	
 	else if (WIFSIGNALED(g_ex.exit_code))
 		g_ex.exit_code = WTERMSIG(g_ex.exit_code) + 128;
+
 	else if (WEXITSTATUS(g_ex.exit_code) >= 255)
 		g_ex.exit_code = 1;
 	else

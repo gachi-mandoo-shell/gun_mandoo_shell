@@ -1,3 +1,5 @@
+
+
 #include "minishell.h"
 
 t_nd	*big_cutter(char *str)

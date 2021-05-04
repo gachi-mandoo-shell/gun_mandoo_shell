@@ -34,21 +34,21 @@ char	*check_equal(char *str, char **key, char **value, char *name)
 
 void	trans_env(char **en)
 {
-	int	i;
-	int	j;
-	int	num;
-	int	min;
+	int		i;
+	int		j;
+	int		num;
+	int		min;
 	char	*tmp;
 
 	num = matrix_line_num(en);
 	i = -1;
 	j = -1;
 	min = 0;
-	while(++i < num)
+	while (++i < num)
 	{
 		j = i;
 		min = i;
-		while(++j < num)
+		while (++j < num)
 		{
 			if (ft_strcmp(en[i], en[j]) >= 0)
 			{
@@ -65,9 +65,9 @@ void	trans_env(char **en)
 
 int	export_print(t_nd *com, char **en, char *av)
 {
-	int	i;
-	int j;
-	char **tmp_en;
+	int		i;
+	int		j;
+	char	**tmp_en;
 
 	i = -1;
 	tmp_en = malloc(sizeof(char*) * (matrix_line_num(en) + 1));
@@ -76,7 +76,6 @@ int	export_print(t_nd *com, char **en, char *av)
 	while (++i < matrix_line_num(en))
 		tmp_en[i] = ft_strdup(en[i]);
 	tmp_en[i] = 0;
-
 	i = -1;
 	trans_env(tmp_en);
 	while (en[++i])
