@@ -70,6 +70,7 @@ char	*sep(char **str, char *set)
 	else
 	{
 		rt = ft_strndup(*str, i);
+		
 		(*str) += i + 1;
 	}
 	return (rt);
