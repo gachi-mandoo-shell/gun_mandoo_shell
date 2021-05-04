@@ -13,7 +13,7 @@
 # include <termios.h>
 
 # define BLT_NUM 7
-# define SEP " \t\n\r\a"
+# define SEP "\t\n\r\a "
 
 # define TYPE_NONE	-1
 # define TYPE_C_P 	1
@@ -130,5 +130,6 @@ void	print_list_2(t_hist *com);
 
 char	*get_ch(t_hist	*nd);
 int		is_redirect(char *str);
+void	free_nd(t_nd *coms);
 
 #endif

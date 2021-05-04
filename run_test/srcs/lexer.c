@@ -48,7 +48,7 @@ int	lexer(t_nd *new, char *args)
 		if (i == 0)
 		{
 			anc->child = new_nd(tok_pipe[i]);
-			anc->child->prev = anc;
+			// anc->child->prev = anc;
 			anc = anc->child;
 		}
 		else

@@ -1,3 +1,5 @@
+
+
 #include "minishell.h"
 
 t_nd	*big_cutter(char *str)
@@ -20,7 +22,7 @@ t_nd	*big_cutter(char *str)
 		if (i == 0)
 		{
 			mother->child = new_nd(tmp[i]);
-			mother->child->prev = mother;
+			// mother->child->prev = mother;
 			tmp_nd = mother->child;
 		}
 		else

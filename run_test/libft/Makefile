@@ -1,5 +1,5 @@
 NAME = libft.a
-CC = gcc
+CC = gcc -g
 CFLAGS = -Wall -Wextra -Werror
 HDER = ./includes/libft.h
 RM = rm -f

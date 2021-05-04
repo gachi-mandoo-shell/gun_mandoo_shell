@@ -119,13 +119,15 @@ int	start_shell(char ***en, char *av)
 				history = 0;
 			}
 		}
+		// line = ft_strdup("ls");
 		if (line && *line && line_check(line) && synerror_checker(line, ';') >= 0)
 		{
 			coms = big_cutter(line);
 			status = run_cmd(coms->child, en, av);
+			//free_nd(coms);
 		}
 		g_ex.pid = 0;
-		// coms free
 	}
+	// free_hist(coms);
 	return (0);
 }
