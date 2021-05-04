@@ -124,7 +124,8 @@ int	start_shell(char ***en, char *av)
 		{
 			coms = big_cutter(line);
 			status = run_cmd(coms->child, en, av);
-			//free_nd(coms);
+			free_nd(coms);
+			// print_list(coms);
 		}
 		g_ex.pid = 0;
 	}
