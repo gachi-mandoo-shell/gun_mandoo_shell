@@ -46,6 +46,8 @@ char	*sep(char **str, char *set)
 	q_f = 1;
 	while (ft_strchr(set, (*str)[i]))
 		i++;
+	(*str) += i;
+	i = 0;
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '\"')

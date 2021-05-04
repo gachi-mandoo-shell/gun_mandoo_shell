@@ -9,12 +9,10 @@ void	free_nd_data(t_nd *coms)
 		free(coms->re.rdrt_name);
 	if (coms->re.rdrt_in_name)
 		free(coms->re.rdrt_in_name);
+	while (coms->args[++i])
+		free(coms->args[i]);
 	if (coms->args)
-	{
-		while (coms->args[++i])
-			free(coms->args[i]);
 		free(coms->args);
-	}
 }
 
 void	free_sible(t_nd *coms)
