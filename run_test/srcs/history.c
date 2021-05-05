@@ -1,17 +1,5 @@
 #include "minishell.h"
 
-t_hist	*history_init()
-{
-	t_hist	*tmp;
-
-	tmp = malloc(sizeof(tmp) * 1);
-	tmp->content = 0;
-	tmp->next = 0;
-	tmp->prev = 0;
-
-	return (tmp);
-}
-
 t_hist	*history_add(t_hist *nd)
 {
 	t_hist	*tmp;

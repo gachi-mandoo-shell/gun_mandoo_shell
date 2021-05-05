@@ -87,7 +87,7 @@ int		tokenizer(t_nd *nd);
 
 int		token_changer(t_nd *nd, char ***en);
 int		get_redirect(t_nd *nd, char **en);
-
+int		get_redirect_info(t_nd *nd, int arg_count, char **en);
 
 int		run(t_nd *cmd, char ***en, char *av);
 int		pipe_dup(t_nd *cmd);

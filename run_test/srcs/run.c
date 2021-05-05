@@ -57,7 +57,8 @@ int	run(t_nd *cmd, char ***en, char *av)
 			close(cmd->re.rdrt_fd);
 		if (cmd->type != TYPE_C_P && cmd->re.rdrt_in_type > 0)
 			close(cmd->re.rdrt_in_fd);
-		if (cmd->prev && cmd->prev->type == TYPE_C_P && cmd->prev->re.rdrt_in_type > 0)
+		if (cmd->prev && cmd->prev->type == \
+		TYPE_C_P && cmd->prev->re.rdrt_in_type > 0)
 			close(cmd->prev->re.rdrt_in_fd);
 		if (cmd->sible)
 			cmd = cmd->sible;

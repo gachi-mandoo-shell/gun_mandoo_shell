@@ -89,9 +89,5 @@ int	synerror_checker(char *args, char a)
 		g_ex.exit_code = 258;
 		return (-1);
 	}
-	// else if (args[len] == '>')
-	// 	return (EXIT_FAILURE);
-	// else if (args[len] == '<')
-	// 	return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -29,59 +29,69 @@ int	(*blt_func(int i))(t_nd *cmd, char ***en, char *av)
 	return (blt_fuck[i]);
 }
 
+void	builtin_pipe(t_nd *cmd, char ***en, char *av, int i)
+{
+	int	rt;
+
+	pipe(cmd->pipes);
+	if (cmd->re.rdrt_type > 0)
+		dup2(cmd->re.rdrt_fd, cmd->pipes[SIDE_IN]);
+	if (cmd->re.rdrt_in_type > 0)
+		dup2(cmd->re.rdrt_in_fd, cmd->pipes[SIDE_OUT]);
+	g_ex.pid = fork();
+	if (g_ex.pid == 0)
+	{
+		pipe_dup(cmd);
+		rt = (*blt_func(i))(cmd, en, av);
+		exit(rt);
+	}
+	else if (g_ex.pid > 0)
+	{
+		wait(0);
+		pipe_close(cmd);
+	}
+	else
+		write(1, "failed to fork", ft_strlen("failed to fork"));
+}
+
+int	builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
+{
+	int	rt;
+	int	cpy_out;
+	int	cpy_in;
+
+	if (cmd->re.rdrt_type > 0)
+	{
+		cpy_out = dup(STDOUT);
+		dup2(cmd->re.rdrt_fd, STDOUT);
+	}
+	if (cmd->re.rdrt_in_type > 0)
+	{
+		cpy_in = dup(STDIN);
+		dup2(cmd->re.rdrt_in_fd, STDIN);
+	}
+	rt = (*blt_func(i))(cmd, en, av);
+	if (cmd->re.rdrt_type > 0)
+	{
+		dup2(cpy_out, STDOUT);
+		//close(cpy_out);
+	}
+	if (cmd->re.rdrt_in_type > 0)
+	{
+		dup2(cpy_out, STDIN);
+		//close(cpy_in);
+	}
+	return (rt);
+}
+
 int	builtin_run(t_nd *cmd, char ***en, char *av, int i)
 {
 	int		rt;
-	int		cpy_out;
-	int		cpy_in;
-	pid_t	pid;
 
 	rt = EXIT_SUCCESS;
 	if (cmd->type == TYPE_C_P || (cmd->prev && cmd->prev->type == TYPE_C_P))
-	{
-		pipe(cmd->pipes);
-		if (cmd->re.rdrt_type > 0)
-			dup2(cmd->re.rdrt_fd, cmd->pipes[SIDE_IN]);
-		if (cmd->re.rdrt_in_type > 0)
-			dup2(cmd->re.rdrt_in_fd, cmd->pipes[SIDE_OUT]);
-		pid = fork();
-		if (pid == 0)
-		{
-			pipe_dup(cmd);
-			rt = (*blt_func(i))(cmd, en, av);
-			exit(rt);
-		}
-		else if (pid > 0)
-		{
-			wait(&pid);
-			pipe_close(cmd);
-		}
-		else
-			write(1, "failed to fork", ft_strlen("failed to fork"));
-	}
+		builtin_pipe(cmd, en, av, i);
 	else
-	{
-		if (cmd->re.rdrt_type > 0)
-		{
-			cpy_out = dup(STDOUT);
-			dup2(cmd->re.rdrt_fd, STDOUT);
-		}
-		if (cmd->re.rdrt_in_type > 0)
-		{
-			cpy_in = dup(STDIN);
-			dup2(cmd->re.rdrt_in_fd, STDIN);
-		}
-		rt = (*blt_func(i))(cmd, en, av);
-		if (cmd->re.rdrt_type > 0)
-		{
-			dup2(cpy_out, STDOUT);
-			close(cpy_out);
-		}
-		if (cmd->re.rdrt_in_type > 0)
-		{
-			dup2(cpy_out, STDIN);
-			close(cpy_in);
-		}
-	}
+		rt = builtin_non_pipe(cmd, en, av, i);
 	return (rt);
 }
