@@ -38,6 +38,7 @@ char	*get_ch(t_hist	*nd)
 	{
 		if ((int)c[0] == 4 && !nd->content)
 		{
+			free_hist(nd);
 			printf("exit\n");
 			exit(0);
 		}
@@ -92,6 +93,11 @@ char	*get_ch(t_hist	*nd)
 				{
 					free(anc->content);
 					anc->content = ft_strdup(nd->content);
+					if (fake_db[nd->count][0])
+					{
+						free(nd->content);
+						nd->content = ft_strdup(fake_db[nd->count]);
+					}
 					nd = anc;
 				}
 				else
@@ -113,19 +119,19 @@ char	*get_ch(t_hist	*nd)
 			}
 		}
 	}
-	while (anc)
-	{
-		// if (nd == anc && fake_db[anc->count][0])
-		if (fake_db[anc->count][0])
-		{
-			free(anc->content);
-			anc->content = ft_strdup(fake_db[anc->count]);
-		}
-		if (anc->prev)
-			anc = anc->prev;
-		else
-			break ;
-	}
+	// while (anc)
+	// {
+	// 	if (nd == anc && fake_db[anc->count][0])
+	// 	// if (fake_db[anc->count][0])
+	// 	{
+	// 		free(anc->content);
+	// 		anc->content = ft_strdup(fake_db[anc->count]);
+	// 	}
+	// 	if (anc->prev)
+	// 		anc = anc->prev;
+	// 	else
+	// 		break ;
+	// }
 	tcsetattr(STDIN_FILENO, TCSANOW, &back);
 	return (nd->content);
 }
