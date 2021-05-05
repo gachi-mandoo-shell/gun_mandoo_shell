@@ -15,7 +15,7 @@ char	*blt_str(int i)
 	return (blt_str[i]);
 }
 
-int	(*blt_func(int i))(t_nd *cmd, char ***en, char *av)
+int		(*g_blt_func(int i))(t_nd *cmd, char ***en, char *av)
 {
 	int		(*blt_fuck[BLT_NUM])(t_nd *cmd, char ***en, char *av);
 
@@ -42,7 +42,7 @@ void	builtin_pipe(t_nd *cmd, char ***en, char *av, int i)
 	if (g_ex.pid == 0)
 	{
 		pipe_dup(cmd);
-		rt = (*blt_func(i))(cmd, en, av);
+		rt = (*g_blt_func(i))(cmd, en, av);
 		exit(rt);
 	}
 	else if (g_ex.pid > 0)
@@ -54,7 +54,7 @@ void	builtin_pipe(t_nd *cmd, char ***en, char *av, int i)
 		write(1, "failed to fork", ft_strlen("failed to fork"));
 }
 
-int	builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
+int		builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
 {
 	int	rt;
 	int	cpy_out;
@@ -70,21 +70,15 @@ int	builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
 		cpy_in = dup(STDIN);
 		dup2(cmd->re.rdrt_in_fd, STDIN);
 	}
-	rt = (*blt_func(i))(cmd, en, av);
+	rt = (*g_blt_func(i))(cmd, en, av);
 	if (cmd->re.rdrt_type > 0)
-	{
 		dup2(cpy_out, STDOUT);
-		//close(cpy_out);
-	}
 	if (cmd->re.rdrt_in_type > 0)
-	{
 		dup2(cpy_out, STDIN);
-		//close(cpy_in);
-	}
 	return (rt);
 }
 
-int	builtin_run(t_nd *cmd, char ***en, char *av, int i)
+int		builtin_run(t_nd *cmd, char ***en, char *av, int i)
 {
 	int		rt;
 

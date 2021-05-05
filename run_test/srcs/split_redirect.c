@@ -1,38 +1,54 @@
 #include "minishell.h"
 
-int	redirect_count(char *arg)
+int		redirect_count_2(char *arg, int *count, int *red_pos)
 {
 	int	qq_f;
 	int	q_f;
 	int	i;
-	int	count;
-	int	red_pos;
 
 	i = -1;
 	qq_f = 1;
 	q_f = 1;
-	count = 1;
-	red_pos = -1;
-	if (is_redirect(arg))
-		return (1);
 	while (arg[++i])
 	{
-		if (arg[i] == '\'')
-			q_f *= -1;
-		else if (arg[i] == '\"')
-			qq_f *= -1;
+		check_quote(arg[i], &q_f, &qq_f);
 		if (q_f > 0 && qq_f > 0 && (arg[i] == '>' || arg[i] == '<'))
 		{
 			if (arg[i + 1] == '>')
 				i++;
-			red_pos = i;
-			count++;
+			(*red_pos) = i;
+			(*count)++;
 		}
 	}
+	return (i);
+}
+
+int		redirect_count(char *arg)
+{
+	int	i;
+	int	count;
+	int	red_pos;
+
+	count = 1;
+	red_pos = -1;
+	if (is_redirect(arg))
+		return (1);
+	i = redirect_count_2(arg, &count, &red_pos);
 	if ((red_pos >= 0) && (red_pos != i - 1) && \
 	(arg[0] != '>' && arg[0] != '<'))
 		count++;
 	return (count);
+}
+
+void	sep_redirect_2(char ***rt, int *size, char (*temp)[1024], int *j)
+{
+	if (ft_strlen(*temp) > 0)
+	{
+		(*rt)[*size] = ft_strdup(*temp);
+		ft_memset(*temp, 0, 1024);
+		j = 0;
+		(*size)++;
+	}
 }
 
 void	sep_redirect(char ***rt, int *size, char *arg)
@@ -48,36 +64,20 @@ void	sep_redirect(char ***rt, int *size, char *arg)
 	ft_memset(temp, 0, 1024);
 	while (*arg)
 	{
-		if (*arg == '\'')
-			q_f *= -1;
-		else if (*arg == '\"')
-			qq_f *= -1;
+		check_quote(*arg, &q_f, &qq_f);
 		if (q_f > 0 && qq_f > 0 && (*arg == '>' || *arg == '<'))
 		{
-			if (ft_strlen(temp) > 0)
-			{
-				(*rt)[*size] = ft_strdup(temp);
-				ft_memset(temp, 0, 1024);
-				j = 0;
-				(*size)++;
-			}
+			sep_redirect_2(rt, size, &temp, &j);
 			temp[j++] = *arg;
 			if (*(arg + 1) == '>')
 				temp[j++] = *(arg++);
-			(*rt)[*size] = ft_strdup(temp);
-			ft_memset(temp, 0, 1024);
-			j = 0;
-			(*size)++;
+			sep_redirect_2(rt, size, &temp, &j);
 		}
 		else
 			temp[j++] = *arg;
 		arg++;
 	}
-	if (ft_strlen(temp) > 0)
-	{
-		(*rt)[*size] = ft_strdup(temp);
-		(*size)++;
-	}
+	sep_redirect_2(rt, size, &temp, &j);
 }
 
 char	**split_redirect(char **b_arg)

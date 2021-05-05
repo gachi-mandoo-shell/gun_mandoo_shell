@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 int	get_redirect_type(t_nd *nd, int arg_count)
 {
 	if (nd->args[arg_count][1] == '>')
@@ -25,13 +24,13 @@ int	get_redirect_fd(int type, t_nd *nd, char **en)
 {
 	if (type == RE_TYPE_OUT)
 		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT |\
-		 O_TRUNC, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
+		O_TRUNC, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
 	else if (type == RE_TYPE_OOUT)
 		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT |\
-		 O_APPEND, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
+		O_APPEND, S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
 	else if (type == RE_TYPE_IN)
 		nd->re.rdrt_in_fd = open(nd->re.rdrt_in_name, O_RDONLY, S_IRUSR |\
-		 S_IWUSR | S_IROTH | S_IRGRP);
+		S_IWUSR | S_IROTH | S_IRGRP);
 	if (nd->re.rdrt_fd < 0 || nd->re.rdrt_in_fd < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

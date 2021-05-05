@@ -21,6 +21,5 @@ t_hist	*history_add(t_hist *nd)
 		tmp->prev = nd;
 		tmp->count = nd->count + 1;
 	}
-
 	return (tmp);
 }

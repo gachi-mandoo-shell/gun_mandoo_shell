@@ -1,18 +1,23 @@
 
 #include "minishell.h"
 
-void	cmd_cd_new(char **oldpwd_key, char **old, char ***en)
+void	cmd_pwd_update(char **o_key, char **o_val, char **old, char ***en)
 {
-	char tmp[PATH_MAX];
+	char	tmp[PATH_MAX];
 	char	**new_en;
 	char	*new;
 	char	*new_key;
 
+	(*o_val) = find_env_val("PWD", en);
+	(*old) = ft_strjoin("OLDPWD=", (*o_val));
+	free(*o_val);
+	(*o_key) = find_env("OLDPWD", en);
+	(*o_val) = find_env_val("OLDPWD", en);
 	new = ft_strjoin("PWD=", getcwd(tmp, PATH_MAX));
-	if (!*oldpwd_key)
+	if (!*o_key)
 		new_en = add_env(en, *old);
 	else
-		new_en = update_env(en, *old, *oldpwd_key);
+		new_en = update_env(en, *old, *o_key);
 	(*en) = new_en;
 	new_key = find_env("PWD", en);
 	new_en = update_env(en, new, new_key);
@@ -20,21 +25,21 @@ void	cmd_cd_new(char **oldpwd_key, char **old, char ***en)
 	g_ex.exit_code = 0;
 }
 
-void	cmd_cd_old(char **oldpwd_key, char **oldpwd_val, char **old, char ***en)
+void	cmd_cd_error(t_nd *com, int rt)
 {
-	(*oldpwd_val) = find_env_val("PWD", en);
-	(*old) = ft_strjoin("OLDPWD=", (*oldpwd_val));
-	free(oldpwd_val);
-	(*oldpwd_key) = find_env("OLDPWD", en);
-	(*oldpwd_val) = find_env_val("OLDPWD", en);
+	if (rt == -2)
+		printf("minishell: %s: OLDPWD not set\n", com->args[0]);
+	else if (rt == -3)
+		printf("minishell: %s: HOME not set\n", com->args[0]);
+	else
+		printf("%s: %s: %s\n", com->args[0], com->args[1], strerror(errno));
+	g_ex.exit_code = 1;
 }
 
 int		cmd_cd_2(t_nd *com, char **oldpwd_key, char **oldpwd_val, char ***en)
 {
 	char	*tmp2;
 	int		rt;
-	char	tmp[PATH_MAX];
-	char	*a;
 
 	if ((com->args[1]) && !ft_strcmp(com->args[1], "-"))
 	{
@@ -73,28 +78,15 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 		chdir(com->args[1]);
 		if (!getcwd(tmp, PATH_MAX))
 		{
-			printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			printf("cd: error retrieving current directory: getcwd: \
+			cannot access parent directories: No such file or directory\n");
 			return (EXIT_SUCCESS);
 		}
 	}
 	else
 		rt = cmd_cd_2(com, &oldpwd_key, &oldpwd_val, en);
 	if (rt < 0)
-	{
-		if (rt == -2)
-			printf("minishell: %s: OLDPWD not set\n", com->args[0]);
-		else if (rt == -3)
-			printf("minishell: %s: HOME not set\n", com->args[0]);
-		else
-			printf("%s: %s: %s\n", com->args[0], com->args[1], strerror(errno));
-		g_ex.exit_code = 1;
-	}
-	oldpwd_val = find_env_val("PWD", en);
-	old = ft_strjoin("OLDPWD=", oldpwd_val);
-	free(oldpwd_val);
-	oldpwd_key = find_env("OLDPWD", en);
-	oldpwd_val = find_env_val("OLDPWD", en);
-	//cmd_cd_old(&oldpwd_key, &oldpwd_val, &old, en);
-	cmd_cd_new(&oldpwd_key, &old, en);
+		cmd_cd_error(com, rt);
+	cmd_pwd_update(&oldpwd_key, &oldpwd_val, &old, en);
 	return (EXIT_SUCCESS);
 }

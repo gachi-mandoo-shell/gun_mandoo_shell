@@ -40,7 +40,7 @@ void	excute_fork(char *run_com, t_nd *com, char **en, char *name)
 	exit(0);
 }
 
-int	execute_ps(char *run_com, t_nd *com, char **en, char *name)
+int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 {
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe(com->pipes);
@@ -63,7 +63,7 @@ int	execute_ps(char *run_com, t_nd *com, char **en, char *name)
 	return (EXIT_SUCCESS);
 }
 
-int	find_cmd_path(char *bash_path, t_nd *com, char **en, char *av)
+int		find_cmd_path(char *bash_path, t_nd *com, char **en, char *av)
 {
 	struct stat	test;
 	char		temp_path[PATH_MAX];
