@@ -29,7 +29,7 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char ***en)
 	if (ft_strchr("\'\"$", args[(*arg_i)]))
 		(*arg_i)--;
 	cpy_i = 0;
-	key_val = find_env_val(key_tmp, *en);
+	key_val = find_env_val(key_tmp, en);
 	if (key_val)
 	{
 		ft_strcat(cpy_arg, key_val);

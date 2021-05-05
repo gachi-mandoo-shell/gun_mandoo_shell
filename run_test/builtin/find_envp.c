@@ -1,19 +1,19 @@
 #include "minishell.h"
 
-char	*find_env(char *key, char **en)
+char	*find_env(char *key, char ***en)
 {
 	int		i;
 
 	i = -1;
-	while (en[++i])
+	while ((*en)[++i])
 	{
-		if (!ft_strncmp(key, en[i], ft_strlen(key)))
-			return (en[i]);
+		if (!ft_strncmp(key, (*en)[i], ft_strlen(key)))
+			return ((*en)[i]);
 	}
 	return (0);
 }
 
-char	*find_env_val(char *key, char **en)
+char	*find_env_val(char *key, char ***en)
 {
 	int		i;
 	char	*tmp;

@@ -90,7 +90,7 @@ int		builtin_run(t_nd *cmd, char ***en, char *av, int i);
 int		(*blt_func(int i))(t_nd *cmd, char ***en, char *av);
 char	*blt_str(int i);
 
-void	find_cmd(t_nd *com, char **en, char *av);
+void	find_cmd(t_nd *com, char ***en, char *av);
 int		execute_ps(char *run_com, t_nd *com, char **en, char *name);
 
 // built_in
@@ -101,8 +101,8 @@ int		cmd_pwd(t_nd *com, char ***en, char *av);
 int		cmd_unset(t_nd *com, char ***en, char *av);
 int		cmd_export(t_nd *com, char ***en, char *av);
 int		cmd_echo(t_nd *com, char ***en, char *av);
-char	*find_env(char *key, char **en);
-char	*find_env_val(char *key, char **en);
+char	*find_env(char *key, char ***en);
+char	*find_env_val(char *key, char ***en);
 char	**add_env(char ***en, char *str);
 char	**update_env(char ***en, char *str, char *find_en);
 char	**delete_env(char ***en, char *find_en);

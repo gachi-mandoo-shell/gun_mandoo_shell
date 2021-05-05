@@ -102,7 +102,7 @@ int	start_shell(char ***en, char *av)
 	while (status == EXIT_SUCCESS)
 	{
 		if (g_ex.pid == 0)
-			write(1, "minishell test> ", ft_strlen("minishell test> "));
+			write(1, "gun_mandoo_shell > ", ft_strlen("gun_mandoo_shell > "));
 		history = history_add(history);
 		line = get_ch(history);
 		if (!line)
