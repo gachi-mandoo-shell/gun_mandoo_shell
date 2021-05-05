@@ -71,10 +71,10 @@ int	find_cmd_path(char *bash_path, t_nd *com, char **en, char *av)
 	if (com->args[0])
 	{
 		ft_memset(temp_path, '\0', PATH_MAX);
-		strcat(temp_path, bash_path);
+		ft_strcat(temp_path, bash_path);
 		if (com->args[0][0] != '/')
-			strcat(temp_path, "/");
-		strcat(temp_path, com->args[0]);
+			ft_strcat(temp_path, "/");
+		ft_strcat(temp_path, com->args[0]);
 		if (stat(temp_path, &test) != -1)
 		{
 			execute_ps(temp_path, com, en, av);

@@ -3,11 +3,11 @@
 
 # include "libft.h"
 # include <stdio.h>
-# include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
 # include <errno.h>
+# include <string.h>
 # include <sys/stat.h>
 # include <signal.h>
 # include <termios.h>
@@ -55,12 +55,6 @@ typedef struct s_red
 	int		rdrt_in_fd;
 } t_red;
 
-typedef struct 	s_info
-{
-	struct s_nd		*head;
-	struct s_nd		*tail;
-} t_info;
-
 typedef struct 	s_nd
 {
 	char			**args;
@@ -70,7 +64,6 @@ typedef struct 	s_nd
 	int				type;
 	int				pipes[2];
 
-	t_info			pos;
 	t_red			re;
 }				t_nd;
 

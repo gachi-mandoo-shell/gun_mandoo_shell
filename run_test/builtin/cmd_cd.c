@@ -24,7 +24,7 @@ int		cmd_cd_2(t_nd *com, char **oldpwd_key, char **oldpwd_val, char ***en)
 	char	*tmp2;
 	int		rt;
 
-	if ((com->args[1]) && !strcmp(com->args[1], "-"))
+	if ((com->args[1]) && !ft_strcmp(com->args[1], "-"))
 	{
 		if (!oldpwd_key)
 			rt = -2;

@@ -13,8 +13,6 @@ t_nd	*big_cutter(char *str)
 		return (NULL);
 	tmp = split_quote(str, ";");
 	mother = new_nd(str);
-	mother->pos.head = mother;
-	mother->pos.tail = mother;
 	while (tmp[++i])
 	{
 		if (i == 0)
