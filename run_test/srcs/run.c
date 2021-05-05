@@ -41,7 +41,7 @@ int	run_div(t_nd *cmd, char ***en, char *av)
 	if (stat(cmd->args[0], &test) != -1)
 		execute_ps(cmd->args[0], cmd, *en, av);
 	else
-		find_cmd(cmd, *en, av);
+		find_cmd(cmd, en, av);
 	return (rt);
 }
 

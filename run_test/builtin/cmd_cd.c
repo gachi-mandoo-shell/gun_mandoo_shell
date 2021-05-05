@@ -1,8 +1,9 @@
 
 #include "minishell.h"
 
-void	cmd_cd_3(char tmp[PATH_MAX], char **oldpwd_key, char **old, char ***en)
+void	cmd_cd_new(char **oldpwd_key, char **old, char ***en)
 {
+	char tmp[PATH_MAX];
 	char	**new_en;
 	char	*new;
 	char	*new_key;
@@ -13,16 +14,27 @@ void	cmd_cd_3(char tmp[PATH_MAX], char **oldpwd_key, char **old, char ***en)
 	else
 		new_en = update_env(en, *old, *oldpwd_key);
 	(*en) = new_en;
-	new_key = find_env("PWD", *en);
+	new_key = find_env("PWD", en);
 	new_en = update_env(en, new, new_key);
 	(*en) = new_en;
 	g_ex.exit_code = 0;
+}
+
+void	cmd_cd_old(char **oldpwd_key, char **oldpwd_val, char **old, char ***en)
+{
+	(*oldpwd_val) = find_env_val("PWD", en);
+	(*old) = ft_strjoin("OLDPWD=", (*oldpwd_val));
+	free(oldpwd_val);
+	(*oldpwd_key) = find_env("OLDPWD", en);
+	(*oldpwd_val) = find_env_val("OLDPWD", en);
 }
 
 int		cmd_cd_2(t_nd *com, char **oldpwd_key, char **oldpwd_val, char ***en)
 {
 	char	*tmp2;
 	int		rt;
+	char	tmp[PATH_MAX];
+	char	*a;
 
 	if ((com->args[1]) && !ft_strcmp(com->args[1], "-"))
 	{
@@ -33,7 +45,7 @@ int		cmd_cd_2(t_nd *com, char **oldpwd_key, char **oldpwd_val, char ***en)
 	}
 	else if (!com->args[1])
 	{
-		rt = chdir(find_env_val("HOME", *en));
+		rt = chdir(find_env_val("HOME", en));
 		if (rt < 0)
 			rt = -3;
 	}
@@ -56,11 +68,17 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 	char	*old;
 	int		rt;
 
-	old = ft_strjoin("OLDPWD=", getcwd(tmp, PATH_MAX));
-	ft_memset(tmp, 0, PATH_MAX);
-	oldpwd_key = find_env("OLDPWD", *en);
-	oldpwd_val = find_env_val("OLDPWD", *en);
-	rt = cmd_cd_2(com, &oldpwd_key, &oldpwd_val, en);
+	if (!getcwd(tmp, PATH_MAX))
+	{
+		chdir(com->args[1]);
+		if (!getcwd(tmp, PATH_MAX))
+		{
+			printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			return (EXIT_SUCCESS);
+		}
+	}
+	else
+		rt = cmd_cd_2(com, &oldpwd_key, &oldpwd_val, en);
 	if (rt < 0)
 	{
 		if (rt == -2)
@@ -71,6 +89,12 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 			printf("%s: %s: %s\n", com->args[0], com->args[1], strerror(errno));
 		g_ex.exit_code = 1;
 	}
-	cmd_cd_3(tmp, &oldpwd_key, &old, en);
+	oldpwd_val = find_env_val("PWD", en);
+	old = ft_strjoin("OLDPWD=", oldpwd_val);
+	free(oldpwd_val);
+	oldpwd_key = find_env("OLDPWD", en);
+	oldpwd_val = find_env_val("OLDPWD", en);
+	//cmd_cd_old(&oldpwd_key, &oldpwd_val, &old, en);
+	cmd_cd_new(&oldpwd_key, &old, en);
 	return (EXIT_SUCCESS);
 }

@@ -113,7 +113,7 @@ int	cmd_export(t_nd *com, char ***en, char *av)
 	{
 		if (check_equal(com->args[i], &key, &value, com->args[i]) && value)
 		{
-			tmp = find_env(key, *en);
+			tmp = find_env(key, en);
 			if (!tmp)
 				new_en = add_env(en, com->args[i]);
 			else

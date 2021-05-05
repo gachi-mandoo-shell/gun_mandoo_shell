@@ -41,7 +41,7 @@ char	**update_env(char ***en, char *str, char *find_en)
 			new_en[++j] = ft_strdup((*en)[i]);
 		free((*en)[i]);
 	}
-	free((*en)[i]);
+	free(*en);
 	new_en[++j] = 0;
 	return (new_en);
 }

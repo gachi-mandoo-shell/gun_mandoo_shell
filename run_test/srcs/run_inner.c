@@ -89,7 +89,7 @@ int	find_cmd_path(char *bash_path, t_nd *com, char **en, char *av)
 	return (0);
 }
 
-void	find_cmd(t_nd *com, char **en, char *av)
+void	find_cmd(t_nd *com, char ***en, char *av)
 {
 	char		**bash_path;
 	int			i;
@@ -97,7 +97,7 @@ void	find_cmd(t_nd *com, char **en, char *av)
 	i = -1;
 	bash_path = split_quote(find_env_val("PATH", en), ":");
 	while (bash_path[++i])
-		if (find_cmd_path(bash_path[i], com, en, av))
+		if (find_cmd_path(bash_path[i], com, *en, av))
 			break ;
 	if (bash_path[i] == NULL)
 	{
