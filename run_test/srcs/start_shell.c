@@ -129,6 +129,6 @@ int	start_shell(char ***en, char *av)
 		}
 		g_ex.pid = 0;
 	}
-	// free_hist(coms);
+	free_hist(history);
 	return (0);
 }

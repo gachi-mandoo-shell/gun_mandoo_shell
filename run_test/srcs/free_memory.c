@@ -41,3 +41,25 @@ void	free_nd(t_nd *coms)
 		}
 	}
 }
+
+void	free_hist(t_hist *hist)
+{
+	t_hist	*tmp1;
+	t_hist	*tmp2;
+
+	tmp1 = hist;
+	tmp2 = 0;
+	while (tmp1)
+	{
+		if (tmp1->prev)
+			tmp2 = tmp1->prev;
+		if (tmp1->content)
+			free(tmp1->content);
+		free(tmp1);
+		if (tmp2)
+			tmp1 = tmp2;
+		else
+			break ;
+		tmp2 = 0;
+	}
+}

@@ -124,5 +124,6 @@ void	print_list_2(t_hist *com);
 char	*get_ch(t_hist	*nd);
 int		is_redirect(char *str);
 void	free_nd(t_nd *coms);
+void	free_hist(t_hist *hist);
 
 #endif
