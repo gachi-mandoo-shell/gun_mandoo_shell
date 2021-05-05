@@ -35,7 +35,7 @@ int	run_div(t_nd *cmd, char ***en, char *av)
 	if (cmd->args[0])
 	{
 		while (++i < BLT_NUM)
-			if (!(strcmp(cmd->args[0], blt_str(i))))
+			if (!(ft_strcmp(cmd->args[0], blt_str(i))))
 				return (builtin_run(cmd, en, av, i));
 	}
 	if (stat(cmd->args[0], &test) != -1)

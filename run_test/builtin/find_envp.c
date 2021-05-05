@@ -7,7 +7,7 @@ char	*find_env(char *key, char **en)
 	i = -1;
 	while (en[++i])
 	{
-		if (!strncmp(key, en[i], ft_strlen(key)))
+		if (!ft_strncmp(key, en[i], ft_strlen(key)))
 			return (en[i]);
 	}
 	return (0);

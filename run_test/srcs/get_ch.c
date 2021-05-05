@@ -36,11 +36,13 @@ char	*get_ch(t_hist	*nd)
 	ft_memset(fake_db, 0, sizeof(fake_db));
 	while (read(0, c, 1) > 0)
 	{
-		if ((int)c[0] == 4)
+		if ((int)c[0] == 4 && !nd->content)
 		{
 			printf("exit\n");
 			exit(0);
 		}
+		else if ((int)c[0] == 4 && nd->content)
+			;
 		else if ((int)c[0] == 27)
 		{
 			read(0, c, 1);
@@ -113,6 +115,7 @@ char	*get_ch(t_hist	*nd)
 	}
 	while (anc)
 	{
+		// if (nd == anc && fake_db[anc->count][0])
 		if (fake_db[anc->count][0])
 		{
 			free(anc->content);

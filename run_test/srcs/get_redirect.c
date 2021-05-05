@@ -2,7 +2,7 @@
 
 int	is_redirect(char *str)
 {
-	if (!strcmp(str, ">") || !strcmp(str, ">>") || !strcmp(str, "<"))
+	if (!ft_strcmp(str, ">") || !ft_strcmp(str, ">>") || !ft_strcmp(str, "<"))
 		return (1);
 	else
 		return (0);

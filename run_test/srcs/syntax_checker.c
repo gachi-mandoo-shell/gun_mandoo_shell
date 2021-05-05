@@ -67,9 +67,15 @@ int	synerror_checker(char *args, char a)
 	while (args[++i])
 	{
 		if (args[i] == '\"')
-			qq_f *= -1;
+		{
+			if (q_f > 0)
+				qq_f *= -1;
+		}
 		else if (args[i] == '\'')
-			q_f *= -1;
+		{
+			if (qq_f > 0)
+				q_f *= -1;
+		}
 		else if ((args[i] == a) && qq_f > 0 && q_f > 0)
 		{
 			i++;

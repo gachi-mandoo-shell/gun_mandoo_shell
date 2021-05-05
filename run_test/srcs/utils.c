@@ -19,8 +19,6 @@ t_nd	*new_nd(char *name)
 	tmp_nd->sible = 0;
 	tmp_nd->prev = 0;
 	tmp_nd->type = -1;
-	tmp_nd->pos.head = 0;
-	tmp_nd->pos.tail = 0;
 	tmp_nd->re.rdrt_type = 0;
 	tmp_nd->re.rdrt_fd = 0;
 	tmp_nd->re.rdrt_name = 0;
