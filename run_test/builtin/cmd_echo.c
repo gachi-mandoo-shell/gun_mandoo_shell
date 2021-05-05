@@ -1,29 +1,45 @@
 #include "minishell.h"
 
+int		check_n(char *str)
+{
+	int	j;
+
+	j = 0;
+	if (str[j] == '-')
+	{
+		j++;
+		while (str[j] == 'n')
+			j++;
+		if (!(j == 1 || str[j]))
+			return (-1);
+	}
+	return (1);
+}
+
 int		cmd_echo_2(t_nd *com, char ***en, char *av)
 {
 	int		i;
 	int		j;
 	int		is_n;
+	int		n_tmp;
 
 	j = 0;
-	i = 0;
-	if (com->args[1][j] == '-')
+	i = 1;
+	is_n = 1;
+	n_tmp = check_n(com->args[i]);
+	while (n_tmp < 0 && com->args[i])
 	{
-		j++;
-		while (com->args[1][j] == 'n')
-			j++;
-		if (!(j == 1 || com->args[1][j]))
-		{
-			is_n = -1;
-			i++;
-		}
+		i++;
+		if (com->args[i])
+			n_tmp = check_n(com->args[i]);
+		is_n = -1;
 	}
-	while (com->args[++i])
+	while (com->args[i])
 	{
 		write(1, com->args[i], ft_strlen(com->args[i]));
 		if (com->args[i + 1])
 			write(1, " ", 1);
+		i++;
 	}
 	return (is_n);
 }
