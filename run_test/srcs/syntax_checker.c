@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:17 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 01:50:17 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 03:53:42 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	synerror_qoute(char *s, int i, int *q_f, int *qq_f)
 		*qq_f *= -1;
 	else if (s[i] == '\'')
 	{
-		if (*qq_f > 0)
+		if (*qq_f > 0 && *q_f < 0)
+			*q_f *= -1;
+		else if (*qq_f > 0 && *q_f > 0 && (i == 0 || !is_bslash(s, i)))
 			*q_f *= -1;
 	}
 }
