@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:37:27 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 20:50:23 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 23:17:23 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	delete_char(int size)
 	char	alt[size * 2];
 	int		i;
 
-	// printf("\n!!!\n");
 	i = -1;
 	while (++i < size)
 		alt[i] = '\b';

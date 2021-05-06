@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 21:20:28 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 17:38:17 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 23:15:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	free_nd(t_nd *coms)
 	tmp = coms;
 	while (tmp->sible)
 		tmp = tmp->sible;
-	if (tmp->child)
-		free_nd(tmp->child);
 	while (tmp)
 	{
+		if (tmp->child)
+			free_nd(tmp->child);
 		nd_erase = tmp;
 		free_nd_data(nd_erase);
 		if (tmp->prev)

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 21:09:36 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 23:21:49 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,7 @@ void	find_cmd(t_nd *com, char ***en, char *av)
 	}
 	if (tmp && bash_path)
 	{
-		i = -1;
 		free(tmp);
-		while (bash_path[++i])
-			free(bash_path[i]);
-		free(bash_path);
+		free_matrix(&bash_path);
 	}
 }
