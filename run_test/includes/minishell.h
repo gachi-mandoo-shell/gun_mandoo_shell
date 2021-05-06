@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 17:56:54 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 19:18:30 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ void			start_write(void);
 int				run_cmd(t_nd *coms, char ***en, char *av);
 void			get_ch_up_down(t_hist **nd, char c[2], t_hist **anc);
 void			get_ch_erase(t_hist *nd);
-void			get_ch_ctld(t_hist *nd, char c[2]);
+void			get_ch_ctld(t_hist **anc, t_hist **nd, char c[2]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:37:27 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 17:37:29 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 19:20:18 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	delete_char(int size)
 	char	alt[size * 2];
 	int		i;
 
+	// printf("\n!!!\n");
 	i = -1;
 	while (++i < size)
 		alt[i] = '\b';
@@ -72,14 +73,21 @@ void	get_ch_erase(t_hist *nd)
 	}
 }
 
-void	get_ch_ctld(t_hist *nd, char c[2])
+void	get_ch_ctld(t_hist **anc, t_hist **nd, char c[2])
 {
-	if ((int)c[0] == 4 && !nd->content)
+	if (g_ex.is_signaled)
 	{
-		free_hist(nd);
-		printf("exit\n");
+		free((*anc)->content);
+		(*anc)->content = 0;
+		(*nd) = (*anc);
+		g_ex.is_signaled = 0;
+	}
+	if ((int)c[0] == 4 && !(*nd)->content)
+	{
+		free_hist(*nd);
+		write(2, "exit\n", 5);
 		exit(0);
 	}
-	else if ((int)c[0] == 4 && nd->content)
+	else if ((int)c[0] == 4 && (*nd)->content)
 		;
 }

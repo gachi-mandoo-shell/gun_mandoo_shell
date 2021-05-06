@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:38 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:30:20 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 19:15:05 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*get_ch(t_hist *nd)
 	ft_memset(fake_db, 0, sizeof(fake_db));
 	while (read(0, c, 1) > 0)
 	{
-		get_ch_ctld(nd, c);
+		get_ch_ctld(&anc, &nd, c);
 		if ((int)c[0] == 27)
 		{
 			read(0, c, 1);

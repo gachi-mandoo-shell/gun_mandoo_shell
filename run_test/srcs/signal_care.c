@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:05 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 17:49:13 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 19:19:12 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void	*signal_ctlc(int signo)
 {
 	if (g_ex.pid == 0)
-		write(1, "\b\b\ngun_mandoo_shell > ", \
-		ft_strlen("\b\b\ngun_mandoo_shell > "));
+	{
+		write(1, "\ngun_mandoo_shell > ", ft_strlen("\ngun_mandoo_shell > "));
+		g_ex.is_signaled = 1;
+	}
 	else if (g_ex.pid > 0)
 		printf("\n");
 	return (0);
