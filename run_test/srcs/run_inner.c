@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 17:31:13 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 18:02:05 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ void	execute_satus(void)
 		g_ex.exit_code = WEXITSTATUS(g_ex.exit_code);
 }
 
-void	excute_fork(char *run_com, t_nd *com, char **en, char *name)
+void	excute_fork(char *run_com, t_nd *com, char **en)
 {
-	int	rt;
-
-	rt = 0;
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe_dup(com);
 	if (com->type != TYPE_C_P)
@@ -44,16 +41,18 @@ void	excute_fork(char *run_com, t_nd *com, char **en, char *name)
 		}
 	}
 	if (run_com)
-		rt = execve(run_com, com->args, en);
-	if (rt == -1)
 	{
-		printf("%s: %s: %s\n", name, run_com, strerror(errno));
-		exit(errno);
+		if (execve(run_com, com->args, en) == -1)
+		{
+			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(2, "\n", 1);
+			exit(errno);
+		}
 	}
 	exit(0);
 }
 
-int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
+int		execute_ps(char *run_com, t_nd *com, char **en)
 {
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe(com->pipes);
@@ -63,7 +62,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 		dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
 	g_ex.pid = fork();
 	if (g_ex.pid == 0)
-		excute_fork(run_com, com, en, name);
+		excute_fork(run_com, com, en);
 	else if (g_ex.pid > 0)
 	{
 		waitpid(g_ex.pid, &g_ex.exit_code, WUNTRACED);
@@ -71,7 +70,7 @@ int		execute_ps(char *run_com, t_nd *com, char **en, char *name)
 			pipe_close(com);
 	}
 	else
-		write(1, "failed to fork", ft_strlen("failed to fork"));
+		write(2, "failed to fork", ft_strlen("failed to fork"));
 	execute_satus();
 	return (EXIT_SUCCESS);
 }
@@ -90,16 +89,17 @@ int		find_cmd_path(char *bash_path, t_nd *com, char **en, char *av)
 		ft_strcat(temp_path, com->args[0]);
 		if (stat(temp_path, &test) != -1)
 		{
-			execute_ps(temp_path, com, en, av);
+			execute_ps(temp_path, com, en);
 			return (1);
 		}
 	}
 	else
 	{
-		execute_ps(com->args[0], com, en, av);
+		execute_ps(com->args[0], com, en);
 		return (1);
 	}
 	return (0);
+	(void)av;
 }
 
 void	find_cmd(t_nd *com, char ***en, char *av)
@@ -117,9 +117,9 @@ void	find_cmd(t_nd *com, char ***en, char *av)
 	if (bash_path[i] == NULL)
 	{
 		if (com->args[0][0] == '/' || (com->args[0][0] == '.'))
-			printf("%s: %s: No such file or directory\n", av, com->args[0]);
+			write(2, "No such file or directory\n", 26);
 		else
-			printf("%s: %s: command not found\n", av, com->args[0]);
+			write(2, "command not found\n", ft_strlen("command not found\n"));
 		g_ex.exit_code = 127;
 	}
 	i = -1;

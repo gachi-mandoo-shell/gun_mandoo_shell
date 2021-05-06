@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:09 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:55:51 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 18:19:43 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ char	*check_equal(char *str, char **key, char **value, char *name)
 		free(*key);
 		if (*value)
 			free(*value);
-		printf("minishell: export: `%s': not a valid identifier\n", name);
+		write(2, "not a valid identifier\n", \
+		ft_strlen("not a valid identifier\n"));
 		g_ex.exit_code = -1;
 		return (0);
 	}
 	return (*key);
+	(void)name;
 }
 
 void	cmd_export_change(char ***en, char *arg, char **key, char **value)

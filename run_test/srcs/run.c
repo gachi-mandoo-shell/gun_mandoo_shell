@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:02 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:46:52 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 17:57:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		run_div(t_nd *cmd, char ***en, char *av)
 				return (builtin_run(cmd, en, av, i));
 	}
 	if (stat(cmd->args[0], &test) != -1)
-		execute_ps(cmd->args[0], cmd, *en, av);
+		execute_ps(cmd->args[0], cmd, *en);
 	else
 		find_cmd(cmd, en, av);
 	return (rt);

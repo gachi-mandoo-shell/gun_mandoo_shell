@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:54:51 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 17:56:54 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char			*blt_str(int i);
 int				(*g_blt_func(int i))(t_nd *cmd, char ***en, char *av);
 
 void			find_cmd(t_nd *com, char ***en, char *av);
-int				execute_ps(char *run_com, t_nd *com, char **en, char *name);
+int				execute_ps(char *run_com, t_nd *com, char **en);
 
 int				cmd_exit(t_nd *com, char ***en, char *name);
 int				cmd_env(t_nd *com, char ***en, char *av);
