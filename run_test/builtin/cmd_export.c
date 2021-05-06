@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:09 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:10 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:55:51 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		cmd_export(t_nd *com, char ***en, char *av)
 	i = 0;
 	if (!com->args[1])
 	{
-		export_print(com, *en, av);
+		export_print(*en);
 		return (EXIT_SUCCESS);
 	}
 	while (com->args[++i])
@@ -81,4 +81,5 @@ int		cmd_export(t_nd *com, char ***en, char *av)
 	else
 		g_ex.exit_code = 0;
 	return (EXIT_SUCCESS);
+	(void)av;
 }

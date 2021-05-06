@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:10:01 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 17:31:13 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	excute_fork(char *run_com, t_nd *com, char **en, char *name)
 {
 	int	rt;
 
+	rt = 0;
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe_dup(com);
 	if (com->type != TYPE_C_P)
@@ -104,10 +105,12 @@ int		find_cmd_path(char *bash_path, t_nd *com, char **en, char *av)
 void	find_cmd(t_nd *com, char ***en, char *av)
 {
 	char		**bash_path;
+	char		*tmp;
 	int			i;
 
 	i = -1;
-	bash_path = split_quote(find_env_val("PATH", en), ":");
+	tmp = find_env_val("PATH", en);
+	bash_path = split_quote(tmp, ":");
 	while (bash_path[++i])
 		if (find_cmd_path(bash_path[i], com, *en, av))
 			break ;
@@ -120,6 +123,7 @@ void	find_cmd(t_nd *com, char ***en, char *av)
 		g_ex.exit_code = 127;
 	}
 	i = -1;
+	free(tmp);
 	while (bash_path[++i])
 		free(bash_path[i]);
 	free(bash_path);

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:05 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:10:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:48:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*signal_ctlc(int signo)
 	else if (g_ex.pid > 0)
 		printf("\n");
 	return (0);
+	(void)signo;
 }
 
 void	*signal_ctlslash(int signo)
@@ -27,4 +28,5 @@ void	*signal_ctlslash(int signo)
 	if (g_ex.pid > 0)
 		write(1, "Quit: 3\n", ft_strlen("Quit: 3\n"));
 	return (0);
+	(void)signo;
 }

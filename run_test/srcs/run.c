@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:02 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:10:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:46:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		pipe_dup(t_nd *cmd)
 {
 	int		err_check;
 
+	err_check = 0;
 	if (cmd->type == TYPE_C_P)
 		err_check = dup2(cmd->pipes[SIDE_IN], STDOUT);
 	if (err_check < 0)

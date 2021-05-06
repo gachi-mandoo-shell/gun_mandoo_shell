@@ -6,19 +6,18 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:50 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:51 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 17:37:42 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	tokenizer(t_nd *nd)
+int		tokenizer(t_nd *nd)
 {
 	char	*tmp;
 	char	**before_arg;
 	int		i;
 
-	i = -1;
 	if (synerror_redirect(nd->args[0]))
 		return (EXIT_FAILURE);
 	while (nd)
@@ -29,19 +28,26 @@ int	tokenizer(t_nd *nd)
 		before_arg = split_quote(tmp, SEP);
 		nd->args = split_redirect(before_arg);
 		free(tmp);
+		i = 0;
+		while (before_arg[i])
+			free(before_arg[i++]);
+		free(before_arg);
 		if (nd->sible)
 			nd = nd->sible;
 		else
 			break ;
 	}
-	i = 0;
-	while (before_arg[i])
-		free(before_arg[i++]);
-	free(before_arg);
 	return (EXIT_SUCCESS);
 }
 
-int	lexer(t_nd *anc, char *args)
+void	lexer_2(t_nd **anc, char *tok_pipe)
+{
+	(*anc)->sible = new_nd(tok_pipe);
+	(*anc)->sible->prev = (*anc);
+	*anc = (*anc)->sible;
+}
+
+int		lexer(t_nd *anc, char *args)
 {
 	char	**tok_pipe;
 	int		i;
@@ -58,13 +64,11 @@ int	lexer(t_nd *anc, char *args)
 			anc = anc->child;
 		}
 		else
-		{
-			anc->sible = new_nd(tok_pipe[i]);
-			anc->sible->prev = anc;
-			anc = anc->sible;
-		}
+			lexer_2(&anc, tok_pipe[i]);
 		anc->type = TYPE_C_P;
+		free(tok_pipe[i]);
 	}
 	anc->type = TYPE_NONE;
+	free(tok_pipe);
 	return (EXIT_SUCCESS);
 }

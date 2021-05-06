@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:41 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:42 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:54:34 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_redirect_type(t_nd *nd, int arg_count)
 	return (-1);
 }
 
-int	get_redirect_fd(int type, t_nd *nd, char **en)
+int	get_redirect_fd(int type, t_nd *nd)
 {
 	if (type == RE_TYPE_OUT)
 		nd->re.rdrt_fd = open(nd->re.rdrt_name, O_RDWR | O_CREAT |\
@@ -48,7 +48,7 @@ int	get_redirect_fd(int type, t_nd *nd, char **en)
 	return (EXIT_SUCCESS);
 }
 
-int	get_redirect_info(t_nd *nd, int arg_count, char **en)
+int	get_redirect_info(t_nd *nd, int arg_count)
 {
 	int	type;
 
@@ -71,7 +71,7 @@ int	get_redirect_info(t_nd *nd, int arg_count, char **en)
 		nd->re.rdrt_name = ft_strdup(nd->args[arg_count + 1]);
 	free(nd->args[arg_count + 1]);
 	nd->args[arg_count + 1] = 0;
-	if (get_redirect_fd(type, nd, en) == EXIT_FAILURE)
+	if (get_redirect_fd(type, nd) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

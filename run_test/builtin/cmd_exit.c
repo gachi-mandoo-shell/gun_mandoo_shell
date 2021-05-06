@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:05 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:52:15 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ int		cmd_exit(t_nd *com, char ***en, char *name)
 	}
 	else
 		return (EXIT_FAILURE);
+	(void)en;
+	(void)name;
 }

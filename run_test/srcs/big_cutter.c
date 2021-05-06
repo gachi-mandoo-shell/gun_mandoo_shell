@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 21:12:43 by spark             #+#    #+#             */
-/*   Updated: 2021/05/05 22:29:18 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 17:25:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,19 @@ t_nd	*big_cutter(char *str)
 	int		i;
 	t_nd	*mother;
 	t_nd	*tmp_nd;
-	t_nd	*tmp_nd2;
 
 	i = -1;
+	tmp_nd = 0;
+	tmp = split_quote(str, ";");
 	if (!tmp)
 		return (NULL);
-	tmp = split_quote(str, ";");
 	mother = new_nd(str);
 	while (tmp[++i])
+	{
 		child_sible_devide(mother, tmp_nd, i, tmp);
+		free(tmp[i]);
+	}
+	free(tmp);
 	tmp_nd = mother;
 	return (mother);
 }

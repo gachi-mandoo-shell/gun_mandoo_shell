@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:06 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:07 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:53:25 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	export_print_2(char *tmp_en)
 	printf("\"\n");
 }
 
-int		export_print(t_nd *com, char **en, char *av)
+int		export_print(char **en)
 {
 	int		i;
 	int		num;

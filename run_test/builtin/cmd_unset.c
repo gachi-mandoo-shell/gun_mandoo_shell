@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:14 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:15 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:54:08 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ int	cmd_unset(t_nd *com, char ***en, char *av)
 	else
 		g_ex.exit_code = 0;
 	return (EXIT_SUCCESS);
+	(void)av;
 }

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:20 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:54:51 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int				env_except_qoute\
 int				env_changer(char *args, int *arg_i, char *cpy_arg, char ***en);
 
 int				get_redirect(t_nd *nd, char **en);
-int				get_redirect_info(t_nd *nd, int arg_count, char **en);
+int				get_redirect_info(t_nd *nd, int arg_count);
 
 int				run(t_nd *cmd, char ***en, char *av);
 int				pipe_dup(t_nd *cmd);
@@ -114,7 +114,7 @@ int				cmd_cd(t_nd *com, char ***en, char *av);
 int				cmd_pwd(t_nd *com, char ***en, char *av);
 int				cmd_unset(t_nd *com, char ***en, char *av);
 int				cmd_export(t_nd *com, char ***en, char *av);
-int				export_print(t_nd *com, char **en, char *av);
+int				export_print(char **en);
 int				cmd_echo(t_nd *com, char ***en, char *av);
 
 char			*find_env(char *key, char ***en);
@@ -141,5 +141,8 @@ void			free_nd(t_nd *coms);
 void			free_hist(t_hist *hist);
 void			start_write(void);
 int				run_cmd(t_nd *coms, char ***en, char *av);
+void			get_ch_up_down(t_hist **nd, char c[2], t_hist **anc);
+void			get_ch_erase(t_hist *nd);
+void			get_ch_ctld(t_hist *nd, char c[2]);
 
 #endif

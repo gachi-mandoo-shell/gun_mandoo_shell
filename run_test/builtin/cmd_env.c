@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:04 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:55:04 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ int		cmd_env(t_nd *com, char ***en, char *av)
 		printf("%s\n", (*en)[i]);
 	g_ex.exit_code = 0;
 	return (EXIT_SUCCESS);
+	(void)av;
 }

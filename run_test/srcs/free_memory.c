@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 21:20:28 by spark             #+#    #+#             */
-/*   Updated: 2021/05/05 23:18:26 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 17:38:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_nd(t_nd *coms)
 		{
 			tmp = tmp->prev;
 			free(nd_erase);
+			nd_erase = 0;
 		}
 		else
 		{

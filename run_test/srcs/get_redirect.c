@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:45 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:46 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:55:40 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	get_redirect(t_nd *nd, char **en)
 {
 	t_nd	*anc;
 	int		arg_count;
-	int		red_pos;
-	int		rt;
 
 	anc = nd;
 	while (anc)
@@ -75,7 +73,7 @@ int	get_redirect(t_nd *nd, char **en)
 		while (anc->args[++arg_count])
 		{
 			if (is_redirect(anc->args[arg_count]))
-				get_redirect_info(anc, arg_count++, en);
+				get_redirect_info(anc, arg_count++);
 		}
 		if (change_arg(anc, arg_count) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -85,4 +83,5 @@ int	get_redirect(t_nd *nd, char **en)
 			break ;
 	}
 	return (EXIT_SUCCESS);
+	(void)en;
 }
