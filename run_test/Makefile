@@ -23,7 +23,6 @@ $(NAME) : $(LIB_DIR)/$(LIBFT)
 
 $(LIB_DIR)/$(LIBFT) :
 	@make -C $(LIB_DIR)
-	@cp $(LIB_DIR)/$(LIBFT) .
 
 re : fclean all
 
