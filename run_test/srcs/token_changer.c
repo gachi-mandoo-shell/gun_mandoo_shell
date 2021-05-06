@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:24 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 02:17:13 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 03:16:54 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ char	*env_controller(char *args, char ***en)
 	while (args[++arg[0]])
 	{
 		env_controller_2(&bs_f, arg, cpy_arg, args);
-		if (bs_f > 0 && args[arg[0]] == '\"')
+		if (bs_f > 0 && args[arg[0]] == '"')
 		{
-			while (bs_f > 0 && args[arg[0]] == '\"' && !(args[++arg[0]] == '\"'))
+			while (bs_f > 0 && args[arg[0]] == '"' && !(args[++arg[0]] == '"'))
 				if (args[arg[0]] == '$')
 					arg[1] += env_except_qoute(args, &arg[0], cpy_arg + arg[1], en);
-				else if (args[arg[0]] == '\\' && ft_strchr("`\\\"$", args[arg[0] + 1]))
+				if (args[arg[0]] == '\\' && ft_strchr("`\\\"$", args[arg[0] + 1]))
 					cpy_arg[arg[1]++] = args[++arg[0]];
 				else
 					cpy_arg[arg[1]++] = args[arg[0]];
