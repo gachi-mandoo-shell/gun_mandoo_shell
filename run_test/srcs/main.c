@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:53 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 17:36:58 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 23:08:02 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ int		main(int ac, char *av[], char *en[])
 	rt = start_shell(&env, av[0]);
 	free_env(&env);
 	(void)ac;
+	system("leaks a.out");
 }

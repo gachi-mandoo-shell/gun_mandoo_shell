@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:12 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:10:13 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 22:54:31 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	sep_redirect_2(char ***rt, int *size, char (*temp)[1024], int *j)
 	{
 		(*rt)[*size] = ft_strdup(*temp);
 		ft_memset(*temp, 0, 1024);
-		j = 0;
+		(*j) = 0;
 		(*size)++;
 	}
 }
