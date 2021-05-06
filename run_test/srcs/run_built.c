@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:55 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 17:46:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 21:57:57 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,29 @@ void	builtin_pipe(t_nd *cmd, char ***en, char *av, int i)
 int		builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
 {
 	int	rt;
-	int	cpy_out;
-	int	cpy_in;
+	int	cpy[2];
 
 	if (cmd->re.rdrt_type > 0)
 	{
-		cpy_out = dup(STDOUT);
+		cpy[1] = dup(STDOUT);
 		dup2(cmd->re.rdrt_fd, STDOUT);
 	}
 	if (cmd->re.rdrt_in_type > 0)
 	{
-		cpy_in = dup(STDIN);
+		cpy[0] = dup(STDIN);
 		dup2(cmd->re.rdrt_in_fd, STDIN);
 	}
 	rt = (*g_blt_func(i))(cmd, en, av);
 	if (cmd->re.rdrt_type > 0)
-		dup2(cpy_out, STDOUT);
+	{
+		dup2(cpy[1], STDOUT);
+		close(cpy[1]);
+	}
 	if (cmd->re.rdrt_in_type > 0)
-		dup2(cpy_out, STDIN);
+	{
+		dup2(cpy[0], STDIN);
+		close(cpy[0]);
+	}
 	return (rt);
 }
 

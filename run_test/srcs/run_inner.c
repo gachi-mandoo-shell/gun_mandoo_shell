@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 18:02:05 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 21:09:36 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ void	find_cmd(t_nd *com, char ***en, char *av)
 	i = -1;
 	tmp = find_env_val("PATH", en);
 	bash_path = split_quote(tmp, ":");
-	while (bash_path[++i])
+	while (bash_path && bash_path[++i])
 		if (find_cmd_path(bash_path[i], com, *en, av))
 			break ;
-	if (bash_path[i] == NULL)
+	if (!bash_path || bash_path[i] == NULL)
 	{
 		if (com->args[0][0] == '/' || (com->args[0][0] == '.'))
 			write(2, "No such file or directory\n", 26);
@@ -122,9 +122,12 @@ void	find_cmd(t_nd *com, char ***en, char *av)
 			write(2, "command not found\n", ft_strlen("command not found\n"));
 		g_ex.exit_code = 127;
 	}
-	i = -1;
-	free(tmp);
-	while (bash_path[++i])
-		free(bash_path[i]);
-	free(bash_path);
+	if (tmp && bash_path)
+	{
+		i = -1;
+		free(tmp);
+		while (bash_path[++i])
+			free(bash_path[i]);
+		free(bash_path);
+	}
 }
