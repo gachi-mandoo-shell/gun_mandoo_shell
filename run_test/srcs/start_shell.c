@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 22:34:06 by spark             #+#    #+#             */
-/*   Updated: 2021/05/05 23:18:30 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:07:40 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ int		line_check(char *line)
 	return (1);
 }
 
-void	history_connecter(t_hist *history)
+void	history_connecter(t_hist **history)
 {
-	if (history->prev)
+	if ((*history)->prev)
 	{
-		history = history->prev;
-		free(history->next);
-		history->next = 0;
+		*history = (*history)->prev;
+		free((*history)->next);
+		(*history)->next = 0;
 	}
 	else
 	{
-		free(history);
-		history = 0;
+		free(*history);
+		*history = 0;
 	}
 }
 
@@ -46,7 +46,7 @@ void	basic_ready(t_hist **history, char **line)
 	*history = history_add(*history);
 	*line = get_ch(*history);
 	if (!(*line))
-		history_connecter(*history);
+		history_connecter(history);
 }
 
 int		start_shell(char ***en, char *av)
