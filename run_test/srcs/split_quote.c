@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	count_size(char *str, char *set)
+int		count_size(char *str, char *set)
 {
 	int		count;
 	int		i;
@@ -18,11 +18,8 @@ int	count_size(char *str, char *set)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '\"')
-			qq_f *= -1;
-		else if (str[i] == '\'')
-			q_f *= -1;
-		else if (ft_strchr(set, str[i]) && qq_f > 0 && q_f > 0)
+		check_quote(str[i], &q_f, &qq_f);
+		if (ft_strchr(set, str[i]) && qq_f > 0 && q_f > 0)
 		{
 			if (!ft_strchr(set, str[i + 1]))
 				count++;
@@ -32,33 +29,38 @@ int	count_size(char *str, char *set)
 	return (count);
 }
 
-char	*sep(char **str, char *set)
+int		sep_2(char **str, char *set, char **rt)
 {
-	char	*rt;
-	int		i;
-	int		qq_f;
-	int		q_f;
+	int	qq_f;
+	int	q_f;
+	int	i;
 
 	i = 0;
 	qq_f = 1;
 	q_f = 1;
-	while (ft_strchr(set, (*str)[i]))
-		i++;
-	(*str) += i;
-	i = 0;
 	while ((*str)[i])
 	{
-		if ((*str)[i] == '\"')
-			qq_f *= -1;
-		else if ((*str)[i] == '\'')
-			q_f *= -1;
+		check_quote((*str)[i], &q_f, &qq_f);
 		if (ft_strchr(set, (*str)[i]) && qq_f > 0 && q_f > 0)
 		{
-			rt = ft_strndup(*str, i);
+			(*rt) = ft_strndup(*str, i);
 			break ;
 		}
 		i++;
 	}
+	return (i);
+}
+
+char	*sep(char **str, char *set)
+{
+	char	*rt;
+	int		i;
+
+	i = 0;
+	while (ft_strchr(set, (*str)[i]))
+		i++;
+	(*str) += i;
+	i = sep_2(str, set, &rt);
 	if ((*str)[i] == 0)
 	{
 		rt = ft_strndup(*str, i);

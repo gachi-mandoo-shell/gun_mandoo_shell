@@ -8,11 +8,10 @@ int	is_redirect(char *str)
 		return (0);
 }
 
-int	change_arg(t_nd *nd, int arg_count)
+int	get_arg_size(t_nd *nd, int arg_count)
 {
-	char	**c_arg;
-	int		i;
-	int		count;
+	int	count;
+	int	i;
 
 	i = -1;
 	count = 0;
@@ -21,6 +20,16 @@ int	change_arg(t_nd *nd, int arg_count)
 		if (nd->args[i])
 			count++;
 	}
+	return (count);
+}
+
+int	change_arg(t_nd *nd, int arg_count)
+{
+	char	**c_arg;
+	int		i;
+	int		count;
+
+	count = get_arg_size(nd, arg_count);
 	c_arg = malloc(sizeof(char *) * (count + 1));
 	if (!c_arg)
 		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 18:17:21 by spark             #+#    #+#             */
-/*   Updated: 2021/05/03 16:42:20 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/05 21:09:32 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 {
 	int				max;
 	int				i;
-	unsigned char str1;
-	unsigned char str2;
+	unsigned char	str1;
+	unsigned char	str2;
 
 	i = -1;
 	if (ft_strlen(s1) > ft_strlen(s2))

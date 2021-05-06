@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	find_file_name(char *arg)
+int		find_file_name(char *arg)
 {
 	int	i;
 
@@ -12,7 +12,7 @@ int	find_file_name(char *arg)
 	return (EXIT_SUCCESS);
 }
 
-int	synerror_redirect(char *arg)
+int		synerror_redirect(char *arg)
 {
 	int	qq_f;
 	int	q_f;
@@ -25,10 +25,7 @@ int	synerror_redirect(char *arg)
 		return (EXIT_SUCCESS);
 	while (arg[++i])
 	{
-		if (arg[i] == '\'')
-			q_f *= -1;
-		else if (arg[i] == '\"')
-			qq_f *= -1;
+		check_quote(arg[i], &q_f, &qq_f);
 		if (q_f > 0 && qq_f > 0 && (arg[i] == '>' || arg[i] == '<'))
 		{
 			if (arg[i + 1] == '>')
@@ -44,7 +41,41 @@ int	synerror_redirect(char *arg)
 	return (EXIT_SUCCESS);
 }
 
-int	synerror_checker(char *args, char a)
+void	synerror_qoute(char c, int *q_f, int *qq_f)
+{
+	if (c == '\"')
+	{
+		if (*q_f > 0)
+			*qq_f *= -1;
+	}
+	else if (c == '\'')
+	{
+		if (*qq_f > 0)
+			*q_f *= -1;
+	}
+}
+
+int		synerror_checker_2(char *args, char a, int *q_f, int *qq_f)
+{
+	int	i;
+
+	i = -1;
+	while (args[++i])
+	{
+		synerror_qoute(args[i], q_f, qq_f);
+		if ((args[i] == a) && *qq_f > 0 && *q_f > 0)
+		{
+			i++;
+			while (args[i] == ' ')
+				i++;
+			if (args[i] == a || (!args[i] && a == '|'))
+				return (-1);
+		}
+	}
+	return (1);
+}
+
+int		synerror_checker(char *args, char a)
 {
 	int		len;
 	int		i;
@@ -58,36 +89,11 @@ int	synerror_checker(char *args, char a)
 		return (EXIT_SUCCESS);
 	while (args[i] && ft_strchr(SEP, args[i]))
 		i++;
-	if (args[i] == a)
+	if (args[i] == a || synerror_checker_2(args, a, &q_f, &qq_f) < 0)
 	{
+		g_ex.exit_code = 258;
 		printf("%c : syntax error\n", a);
 		return (-1);
-	}
-	i = -1;
-	while (args[++i])
-	{
-		if (args[i] == '\"')
-		{
-			if (q_f > 0)
-				qq_f *= -1;
-		}
-		else if (args[i] == '\'')
-		{
-			if (qq_f > 0)
-				q_f *= -1;
-		}
-		else if ((args[i] == a) && qq_f > 0 && q_f > 0)
-		{
-			i++;
-			while (args[i] == ' ')
-				i++;
-			if (args[i] == a || (!args[i] && a == '|'))
-			{
-				printf("%c : syntax error\n", a);
-				g_ex.exit_code = 258;
-				return (-1);
-			}
-		}
 	}
 	if (qq_f == -1 || q_f == -1)
 	{
