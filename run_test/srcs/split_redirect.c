@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:12 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 01:21:59 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 01:51:54 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,19 @@ void	sep_redirect_2(char ***rt, int *size, char (*temp)[1024], int *j)
 void	sep_redirect(char ***rt, int *size, char *arg)
 {
 	char	temp[1024];
-	int		qq_f;
-	int		q_f;
+	int		q[2];
 	int		j;
 	int		i;
 
 	i = -1;
 	j = 0;
-	qq_f = 1;
-	q_f = 1;
+	q[1] = 1;
+	q[0] = 1;
 	ft_memset(temp, 0, 1024);
 	while (arg[++i])
 	{
-		check_quote(arg, i, &q_f, &qq_f);
-		if (q_f > 0 && qq_f > 0 && (arg[i] == '>' || arg[i] == '<'))
+		check_quote(arg, i, &q[0], &q[1]);
+		if (q[0] > 0 && q[1] > 0 && (arg[i] == '>' || arg[i] == '<'))
 		{
 			sep_redirect_2(rt, size, &temp, &j);
 			temp[j++] = arg[i];
