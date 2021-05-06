@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:12 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:13 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:55:21 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,6 @@ int		cmd_pwd(t_nd *com, char ***en, char *av)
 	free(pwd);
 	g_ex.exit_code = 0;
 	return (EXIT_SUCCESS);
+	(void)av;
+	(void)com;
 }

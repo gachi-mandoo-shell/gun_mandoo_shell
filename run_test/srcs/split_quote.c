@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:08 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:10:09 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:48:28 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		count_size(char *str, char *set)
 	int		i;
 	int		qq_f;
 	int		q_f;
-	int		flag;
 
 	count = 1;
 	i = 0;

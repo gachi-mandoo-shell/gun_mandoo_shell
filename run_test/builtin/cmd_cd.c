@@ -6,10 +6,9 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:08:52 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:08:53 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:51:32 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -85,6 +84,7 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 	char	*old;
 	int		rt;
 
+	rt = 0;
 	if (!getcwd(tmp, PATH_MAX))
 	{
 		chdir(com->args[1]);
@@ -101,4 +101,5 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 		cmd_cd_error(com, rt);
 	cmd_pwd_update(&oldpwd_key, &oldpwd_val, &old, en);
 	return (EXIT_SUCCESS);
+	(void)av;
 }

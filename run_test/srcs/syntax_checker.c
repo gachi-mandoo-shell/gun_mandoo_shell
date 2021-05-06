@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:17 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:10:18 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:48:43 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int		synerror_checker_2(char *args, char a, int *q_f, int *qq_f)
 
 int		synerror_checker(char *args, char a)
 {
-	int		len;
 	int		i;
 	int		q_f;
 	int		qq_f;

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:08:56 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:08:57 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:51:58 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		check_n(char *str)
 	return (1);
 }
 
-int		cmd_echo_2(t_nd *com, char ***en, char *av)
+int		cmd_echo_2(t_nd *com)
 {
 	int		i;
 	int		j;
@@ -65,9 +65,11 @@ int		cmd_echo(t_nd *com, char ***en, char *av)
 		printf("\n");
 		return (EXIT_SUCCESS);
 	}
-	is_n = cmd_echo_2(com, en, av);
+	is_n = cmd_echo_2(com);
 	if (is_n != -1)
 		printf("\n");
 	g_ex.exit_code = 0;
 	return (EXIT_SUCCESS);
+	(void)en;
+	(void)av;
 }

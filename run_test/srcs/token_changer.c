@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:24 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:10:25 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 16:48:49 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		token_changer(t_nd *nd, char ***en)
 {
 	char	*tmp;
 	int		arg_count;
-	t_nd	*anc;
 
 	while (nd)
 	{
