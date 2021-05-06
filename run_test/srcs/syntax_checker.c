@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:17 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 18:22:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 01:21:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		synerror_redirect(char *arg)
 		return (EXIT_SUCCESS);
 	while (arg[++i])
 	{
-		check_quote(arg[i], &q_f, &qq_f);
+		check_quote(arg, i, &q_f, &qq_f);
 		if (q_f > 0 && qq_f > 0 && (arg[i] == '>' || arg[i] == '<'))
 		{
 			if (arg[i + 1] == '>')
@@ -53,14 +53,13 @@ int		synerror_redirect(char *arg)
 	return (EXIT_SUCCESS);
 }
 
-void	synerror_qoute(char c, int *q_f, int *qq_f)
+void	synerror_qoute(char *s, int i, int *q_f, int *qq_f)
 {
-	if (c == '\"')
+	if (s[i] == '\"' && (i == 0 || !is_bslash(s, i)))
 	{
-		if (*q_f > 0)
 			*qq_f *= -1;
 	}
-	else if (c == '\'')
+	else if (s[i] == '\'')
 	{
 		if (*qq_f > 0)
 			*q_f *= -1;
@@ -74,7 +73,7 @@ int		synerror_checker_2(char *args, char a, int *q_f, int *qq_f)
 	i = -1;
 	while (args[++i])
 	{
-		synerror_qoute(args[i], q_f, qq_f);
+		synerror_qoute(args, i, q_f, qq_f);
 		if ((args[i] == a) && *qq_f > 0 && *q_f > 0)
 		{
 			i++;

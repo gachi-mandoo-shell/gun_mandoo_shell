@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:12 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 22:54:31 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 01:21:59 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		redirect_count_2(char *arg, int *count, int *red_pos)
 	q_f = 1;
 	while (arg[++i])
 	{
-		check_quote(arg[i], &q_f, &qq_f);
+		check_quote(arg, i, &q_f, &qq_f);
 		if (q_f > 0 && qq_f > 0 && (arg[i] == '>' || arg[i] == '<'))
 		{
 			if (arg[i + 1] == '>')
@@ -69,25 +69,26 @@ void	sep_redirect(char ***rt, int *size, char *arg)
 	int		qq_f;
 	int		q_f;
 	int		j;
+	int		i;
 
+	i = -1;
 	j = 0;
 	qq_f = 1;
 	q_f = 1;
 	ft_memset(temp, 0, 1024);
-	while (*arg)
+	while (arg[++i])
 	{
-		check_quote(*arg, &q_f, &qq_f);
-		if (q_f > 0 && qq_f > 0 && (*arg == '>' || *arg == '<'))
+		check_quote(arg, i, &q_f, &qq_f);
+		if (q_f > 0 && qq_f > 0 && (arg[i] == '>' || arg[i] == '<'))
 		{
 			sep_redirect_2(rt, size, &temp, &j);
-			temp[j++] = *arg;
-			if (*(arg + 1) == '>')
-				temp[j++] = *(arg++);
+			temp[j++] = arg[i];
+			if (arg[i + 1] == '>')
+				temp[j++] = arg[++i];
 			sep_redirect_2(rt, size, &temp, &j);
 		}
 		else
-			temp[j++] = *arg;
-		arg++;
+			temp[j++] = arg[i];
 	}
 	sep_redirect_2(rt, size, &temp, &j);
 }

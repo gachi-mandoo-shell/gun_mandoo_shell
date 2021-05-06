@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 23:21:24 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 01:00:33 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ t_nd			*child_rewind(t_nd *coms);
 void			print_list(t_nd *com);
 
 int				matrix_line_num(char **matrix);
-void			check_quote(char c, int *q_f, int *qq_f);
+int				is_bslash(char *s, int i);
+void			check_quote(char *s, int i, int *q_f, int *qq_f);
 
 void			*signal_ctlc(int signo);
 void			*signal_ctlslash(int signo);
