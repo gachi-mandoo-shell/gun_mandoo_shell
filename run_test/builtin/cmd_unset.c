@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:14 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:54:08 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 18:18:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	check_arg(char *str)
 	if (ft_isdigit(str[0]) || ft_strchr(str, '='))
 	{
 		g_ex.exit_code = -1;
-		printf("minishell: unset: `%s': not a valid identifier\n", str);
+		write(2, "not a valid identifier\n", \
+		ft_strlen("not a valid identifier\n"));
 		return (0);
 	}
 	return (1);

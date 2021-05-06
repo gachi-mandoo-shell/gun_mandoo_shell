@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:17 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:48:43 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 18:22:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		synerror_redirect(char *arg)
 			if (find_file_name(&arg[i]) == EXIT_FAILURE)
 			{
 				g_ex.exit_code = 258;
-				printf("redirection : syntax error\n");
+				write(2, "redirection : syntax error\n", 27);
 				return (EXIT_FAILURE);
 			}
 		}
@@ -103,13 +103,13 @@ int		synerror_checker(char *args, char a)
 	if (args[i] == a || synerror_checker_2(args, a, &q_f, &qq_f) < 0)
 	{
 		g_ex.exit_code = 258;
-		printf("%c : syntax error\n", a);
+		write(2, "syntax error\n", ft_strlen("syntax error\n"));
 		return (-1);
 	}
 	if (qq_f == -1 || q_f == -1)
 	{
-		printf("minishell : quote error\n");
-		g_ex.exit_code = 258;
+		write(2, "quote error\n", ft_strlen("quote error\n"));
+		g_ex.exit_code = 42;
 		return (-1);
 	}
 	return (EXIT_SUCCESS);

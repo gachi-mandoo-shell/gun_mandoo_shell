@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:08:52 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:51:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 18:19:32 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,16 @@ void	cmd_pwd_update(char **o_key, char **o_val, char **old, char ***en)
 void	cmd_cd_error(t_nd *com, int rt)
 {
 	if (rt == -2)
-		printf("minishell: %s: OLDPWD not set\n", com->args[0]);
+		write(2, "OLDPWD not set\n", ft_strlen("OLDPWD not set\n"));
 	else if (rt == -3)
-		printf("minishell: %s: HOME not set\n", com->args[0]);
+		write(2, "HOME not set\n", ft_strlen("HOME not set\n"));
 	else
-		printf("%s: %s: %s\n", com->args[0], com->args[1], strerror(errno));
+	{
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 1);
+	}
 	g_ex.exit_code = 1;
+	(void)com;
 }
 
 int		cmd_cd_2(t_nd *com, char **oldpwd_key, char **oldpwd_val, char ***en)
@@ -90,8 +94,9 @@ int		cmd_cd(t_nd *com, char ***en, char *av)
 		chdir(com->args[1]);
 		if (!getcwd(tmp, PATH_MAX))
 		{
-			printf("cd: error retrieving current directory: getcwd: \
-			cannot access parent directories: No such file or directory\n");
+			write(2, "cd: error retrieving current directory: getcwd: \
+			cannot access parent directories: No such file or directory\n",\
+			108);
 			return (EXIT_SUCCESS);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:55 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:09:56 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/06 17:46:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	builtin_pipe(t_nd *cmd, char ***en, char *av, int i)
 		pipe_close(cmd);
 	}
 	else
-		write(1, "failed to fork", ft_strlen("failed to fork"));
+		write(2, "failed to fork", ft_strlen("failed to fork"));
 }
 
 int		builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
