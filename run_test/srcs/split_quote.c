@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:08 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 23:08:50 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 01:21:24 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		count_size(char *str, char *set)
 		return (0);
 	while (str[i])
 	{
-		check_quote(str[i], &q_f, &qq_f);
+		check_quote(str, i, &q_f, &qq_f);
 		if (ft_strchr(set, str[i]) && qq_f > 0 && q_f > 0)
 		{
 			if (!ft_strchr(set, str[i + 1]))
@@ -51,7 +51,7 @@ int		sep_2(char **str, char *set, char **rt)
 	q_f = 1;
 	while ((*str)[i])
 	{
-		check_quote((*str)[i], &q_f, &qq_f);
+		check_quote((*str), i, &q_f, &qq_f);
 		if (ft_strchr(set, (*str)[i]) && qq_f > 0 && q_f > 0)
 		{
 			(*rt) = ft_strndup(*str, i);

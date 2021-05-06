@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:24 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:48:49 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 00:33:219 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,34 @@ char	*env_controller(char *args, char ***en)
 	char	cpy_arg[PATH_MAX];
 	int		cpy_i;
 	int		arg_i;
+	int		bs_f;
 
 	env_init(&cpy_i, &arg_i, &cpy_arg);
 	while (args[++arg_i])
 	{
-		if (args[arg_i] == '\'')
+		bs_f = 1;
+		if (bs_f > 0 && args[arg_i] == '\\')
+		{
+			bs_f *= -1;
+			arg_i++;
+		}
+		if (bs_f > 0 && args[arg_i] == '\'')
 			while (args[++arg_i] != '\'')
 				cpy_arg[cpy_i++] = args[arg_i];
-		if (args[arg_i] == '\"')
+		if (bs_f > 0 && args[arg_i] == '\"')
 		{
-			while (args[++arg_i] != '\"')
+			while (!(args[++arg_i] == '\"'))
 				if (args[arg_i] == '$')
 					cpy_i += env_except_qoute(args, \
 					&arg_i, cpy_arg + cpy_i, en);
+				else if (args[arg_i] == '\\' && (args[arg_i + 1] == '`' || args[arg_i + 1] == '\\' || args[arg_i + 1] == '\"' || args[arg_i + 1] == '$'))
+					cpy_arg[cpy_i++] = args[++arg_i];
 				else
 					cpy_arg[cpy_i++] = args[arg_i];
 		}
-		if (!ft_strchr("\'\"$", args[arg_i]))
+		if (!ft_strchr("\'\"$", args[arg_i]) || bs_f < 0)
 			cpy_arg[cpy_i++] = args[arg_i];
-		if (args[arg_i] == '$')
+		if (bs_f > 0 && args[arg_i] == '$')
 			cpy_i += env_except_none(args, &arg_i, cpy_arg + cpy_i, en);
 	}
 	return (ft_strdup(cpy_arg));
