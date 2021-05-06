@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:17 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 01:21:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/07 01:50:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ int		synerror_redirect(char *arg)
 void	synerror_qoute(char *s, int i, int *q_f, int *qq_f)
 {
 	if (s[i] == '\"' && (i == 0 || !is_bslash(s, i)))
-	{
-			*qq_f *= -1;
-	}
+		*qq_f *= -1;
 	else if (s[i] == '\'')
 	{
 		if (*qq_f > 0)
