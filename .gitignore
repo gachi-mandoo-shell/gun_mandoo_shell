@@ -84,5 +84,8 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+.gitignore
+.vscode
+.github
 
 # End of https://www.toptal.com/developers/gitignore/api/c,macos
