@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_inner.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/08 17:08:46 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/08 21:01:02 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	excute_fork(char *run_com, t_nd *com, char **en)
 			ft_putendl_fd(strerror(errno), 2);
 		exit(errno);
 	}
-	exit(0);
+	exit(errno);
 }
 
 int		execute_ps(char *run_com, t_nd *com, char **en)
