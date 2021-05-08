@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 06:03:01 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/08 17:08:46 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,11 @@ void	excute_fork(char *run_com, t_nd *com, char **en)
 {
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe_dup(com);
-	if (com->type != TYPE_C_P)
-	{
-		if (com->re.rdrt_type > 0)
-			dup2(com->re.rdrt_fd, STDOUT);
-		if (com->re.rdrt_in_type > 0)
-		{
-			if (com->prev && com->prev->type == TYPE_C_P)
-				dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
-			else
-				dup2(com->re.rdrt_in_fd, STDIN);
-		}
-	}
+		dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
+	if (com->re.rdrt_type > 0 && com->type != TYPE_C_P)
+		dup2(com->re.rdrt_fd, STDOUT);
+	if (com->re.rdrt_in_type > 0)
+		dup2(com->re.rdrt_in_fd, STDIN);
 	if (run_com && execve(run_com, com->args, en) == -1)
 	{
 		if (errno == ENOENT)
@@ -57,8 +50,8 @@ int		execute_ps(char *run_com, t_nd *com, char **en)
 		pipe(com->pipes);
 	if (com->re.rdrt_type > 0 && com->type == TYPE_C_P)
 		dup2(com->re.rdrt_fd, com->pipes[SIDE_IN]);
-	if (com->re.rdrt_in_type > 0 && com->type == TYPE_C_P)
-		dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
+	if (com->re.rdrt_in_type > 0 && (com->prev && com->prev->type == TYPE_C_P))
+		dup2(com->re.rdrt_in_fd, com->prev->pipes[SIDE_OUT]);
 	g_ex.pid = fork();
 	if (g_ex.pid == 0)
 		excute_fork(run_com, com, en);
