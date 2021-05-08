@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_inner.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/08 17:08:46 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/08 23:58:57 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	execute_satus(void)
 		g_ex.exit_code = 126;
 	else if (WIFSIGNALED(g_ex.exit_code))
 		g_ex.exit_code = WTERMSIG(g_ex.exit_code) + 128;
-	else if (WEXITSTATUS(g_ex.exit_code) >= 255)
+	else if (WEXITSTATUS(g_ex.exit_code) > 255)
 		g_ex.exit_code = 1;
 	else
 		g_ex.exit_code = WEXITSTATUS(g_ex.exit_code);
@@ -28,7 +28,7 @@ void	excute_fork(char *run_com, t_nd *com, char **en)
 {
 	if (com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P))
 		pipe_dup(com);
-		dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
+	dup2(com->re.rdrt_in_fd, com->pipes[SIDE_OUT]);
 	if (com->re.rdrt_type > 0 && com->type != TYPE_C_P)
 		dup2(com->re.rdrt_fd, STDOUT);
 	if (com->re.rdrt_in_type > 0)
@@ -41,7 +41,7 @@ void	excute_fork(char *run_com, t_nd *com, char **en)
 			ft_putendl_fd(strerror(errno), 2);
 		exit(errno);
 	}
-	exit(0);
+	exit(errno);
 }
 
 int		execute_ps(char *run_com, t_nd *com, char **en)
