@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:24 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 05:07:26 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/08 17:45:15 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ void	env_qq(char *args, char *cpy_arg, int arg[2], char ***en)
 {
 	int	bs_f;
 
-	++arg[0];
 	bs_f = 1;
-	while (bs_f > 0 && args[arg[0]] != '"')
+	while (bs_f > 0 && args[++arg[0]] != '"')
 	{
 		if (bs_f > 0 && args[arg[0]] == '\\')
 		{
@@ -42,7 +41,6 @@ void	env_qq(char *args, char *cpy_arg, int arg[2], char ***en)
 		else
 			cpy_arg[arg[1]++] = args[arg[0]];
 		bs_f = 1;
-		arg[0]++;
 	}
 }
 

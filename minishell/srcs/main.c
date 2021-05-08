@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:53 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 09:04:52 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/08 18:07:32 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int		main(int ac, char *av[], char *en[])
 	init_env(&env, en);
 	rt = start_shell(&env, av[0]);
 	free_env(&env);
+	exit(g_ex.exit_code);
 	(void)ac;
 }
