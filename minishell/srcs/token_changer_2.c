@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:22 by spark             #+#    #+#             */
-/*   Updated: 2021/05/08 18:04:54 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/09 21:59:11 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	env_changer(char *args, int *arg_i, char *cpy_arg, char ***en)
 		return (1);
 	if (args[(*arg_i) + 1] == '?')
 		return (env_changer_exit_code(arg_i, cpy_arg));
-	while (!ft_strchr(" \\\t\n\r\a\"\'$", args[++(*arg_i)]))
+	while (!ft_strchr(" \\\t\n\r\a\"\'$/", args[++(*arg_i)]))
 		key_tmp[k++] = args[(*arg_i)];
 	if (args[(*arg_i)])
 		(*arg_i)--;
