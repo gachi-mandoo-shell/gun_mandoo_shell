@@ -6,7 +6,7 @@
 /*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:14 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 07:31:21 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/09 17:14:28 by skim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	cmd_unset(t_nd *com, char ***en, char *av)
 	while (com->args[++i])
 	{
 		tmp = find_env(com->args[i], en);
-		if (tmp && check_arg(com->args[i]))
+		if (check_arg(com->args[i]) && tmp)
 		{
 			new_en = delete_env(en, tmp);
 			(*en) = new_en;
