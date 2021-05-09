@@ -3,49 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:09 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 08:26:01 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/09 15:37:51 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_key_val(char *str, char **key, char **value)
+int		get_key_val(char *str, char **key, char **value)
 {
 	int	i;
 
 	i = -1;
 	while (str[++i])
-	{
 		if (str[i] == '=')
 			break ;
+	if (i > 0 && i < (int)(ft_strlen(str)))
+	{
+		*key = ft_strndup(str, i);
+		*value = ft_strdup(str + i + 1);
+		return (1);
 	}
-	if (!str[i] && i != 1)
-		i--;
-	(*key) = ft_strndup(str, i);
-	if (!str[i])
-		(*value) = 0;
+	else if (i == 0)
+		return (-1);
 	else
-		(*value) = ft_strdup(str + i + 1);
+		return (-2);
 }
 
-char	*check_equal(char *str, char **key, char **value, char *name)
+int		check_equal(char *str, char **key, char **value)
 {
-	get_key_val(str, key, value);
-	if (!(*key)[0] || ft_isdigit((*key)[0]))
+	int		rt;
+
+	if (!(ft_isalpha(str[0]) || (str[0] == '_')))
 	{
-		free(*key);
-		if (*value)
-			free(*value);
-		write(2, "not a valid identifier\n", \
-		ft_strlen("not a valid identifier\n"));
+		ft_putendl_fd("not a valid identifier", 2);
 		g_ex.exit_code = -1;
 		return (0);
 	}
-	return (*key);
-	(void)name;
+	rt = get_key_val(str, key, value);
+	if (rt < 0)
+	{
+		if (rt == -1)
+		{
+			ft_putendl_fd("not a valid identifier", 2);
+			g_ex.exit_code = -1;
+		}
+		return (0);
+	}
+	return (1);
 }
 
 void	cmd_export_change(char ***en, char *arg, char **key, char **value)
@@ -77,10 +84,8 @@ int		cmd_export(t_nd *com, char ***en, char *av)
 	}
 	while (com->args[++i])
 	{
-		if (check_equal(com->args[i], &key, &value, com->args[i]) && value)
+		if (check_equal(com->args[i], &key, &value))
 			cmd_export_change(en, com->args[i], &key, &value);
-		else
-			free(key);
 	}
 	if (g_ex.exit_code < 0)
 		g_ex.exit_code = 1;
