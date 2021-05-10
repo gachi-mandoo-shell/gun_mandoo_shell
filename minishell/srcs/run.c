@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:02 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 05:37:10 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/10 12:57:38 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		check_red_name(t_nd *cmd)
+{
+	if (cmd->re.rdrt_type > 0)
+	{
+		if (!cmd->re.rdrt_name || !cmd->re.rdrt_name[0])
+		{
+			ft_putendl_fd("ambiguous redirect", 2);
+			g_ex.exit_code = 1;
+			return (-1);
+		}
+	}
+	if (cmd->re.rdrt_in_type > 0)
+	{
+		if (!cmd->re.rdrt_in_name || !cmd->re.rdrt_in_name[0])
+		{
+			ft_putendl_fd("ambiguous redirect", 2);
+			g_ex.exit_code = 1;
+			return (-1);
+		}
+	}
+	if (cmd->re.rdrt_fd < 0 || cmd->re.rdrt_in_fd < 0)
+	{
+		g_ex.exit_code = 1;
+		return (-1);
+	}
+	return (1);
+}
 
 int		pipe_dup(t_nd *cmd)
 {

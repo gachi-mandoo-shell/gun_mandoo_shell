@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:55 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 21:57:57 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 12:10:42 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,15 @@ void	builtin_pipe(t_nd *cmd, char ***en, char *av, int i)
 	if (g_ex.pid == 0)
 	{
 		pipe_dup(cmd);
-		rt = (*g_blt_func(i))(cmd, en, av);
-		exit(rt);
+		if (check_red_name(cmd) > 0)
+			rt = (*g_blt_func(i))(cmd, en, av);
+		exit(g_ex.exit_code);
 	}
 	else if (g_ex.pid > 0)
 	{
-		wait(0);
+		waitpid(g_ex.pid, &g_ex.exit_code, WUNTRACED);
 		pipe_close(cmd);
+		execute_satus();
 	}
 	else
 		write(2, "failed to fork", ft_strlen("failed to fork"));
@@ -71,6 +73,7 @@ int		builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
 	int	rt;
 	int	cpy[2];
 
+	rt = EXIT_SUCCESS;
 	if (cmd->re.rdrt_type > 0)
 	{
 		cpy[1] = dup(STDOUT);
@@ -81,7 +84,8 @@ int		builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
 		cpy[0] = dup(STDIN);
 		dup2(cmd->re.rdrt_in_fd, STDIN);
 	}
-	rt = (*g_blt_func(i))(cmd, en, av);
+	if (check_red_name(cmd) > 0)
+		rt = (*g_blt_func(i))(cmd, en, av);
 	if (cmd->re.rdrt_type > 0)
 	{
 		dup2(cpy[1], STDOUT);

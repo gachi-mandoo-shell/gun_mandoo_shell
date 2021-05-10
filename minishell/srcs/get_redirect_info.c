@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:41 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 16:54:34 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 12:54:07 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,17 @@ int	get_redirect_fd(int type, t_nd *nd)
 	else if (type == RE_TYPE_IN)
 		nd->re.rdrt_in_fd = open(nd->re.rdrt_in_name, O_RDONLY, S_IRUSR |\
 		S_IWUSR | S_IROTH | S_IRGRP);
-	if (nd->re.rdrt_fd < 0 || nd->re.rdrt_in_fd < 0)
+	if (nd->re.rdrt_fd < 0)
+	{
+		close(nd->re.rdrt_fd);
 		return (EXIT_FAILURE);
+	}
+	else if (nd->re.rdrt_in_fd < 0)
+	{
+		ft_putendl_fd("No such file or directory", 2);
+		close(nd->re.rdrt_in_fd);
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 

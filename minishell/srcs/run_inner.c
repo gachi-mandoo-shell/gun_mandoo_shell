@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:00 by spark             #+#    #+#             */
-/*   Updated: 2021/05/08 23:58:57 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 12:33:43 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	excute_fork(char *run_com, t_nd *com, char **en)
 		dup2(com->re.rdrt_fd, STDOUT);
 	if (com->re.rdrt_in_type > 0)
 		dup2(com->re.rdrt_in_fd, STDIN);
+	if (run_com && check_red_name(com) < 0)
+		exit(g_ex.exit_code);
 	if (run_com && execve(run_com, com->args, en) == -1)
 	{
 		if (errno == ENOENT)
