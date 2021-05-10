@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:10:05 by spark             #+#    #+#             */
-/*   Updated: 2021/05/06 19:19:12 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 13:16:20 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*signal_ctlc(int signo)
 		g_ex.is_signaled = 1;
 	}
 	else if (g_ex.pid > 0)
-		printf("\n");
+		write(1, "\n", 1);
 	return (0);
 	(void)signo;
 }

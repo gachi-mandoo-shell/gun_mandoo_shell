@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:55 by spark             #+#    #+#             */
-/*   Updated: 2021/05/10 12:10:42 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 13:12:19 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,9 @@ int		builtin_non_pipe(t_nd *cmd, char ***en, char *av, int i)
 	if (check_red_name(cmd) > 0)
 		rt = (*g_blt_func(i))(cmd, en, av);
 	if (cmd->re.rdrt_type > 0)
-	{
-		dup2(cpy[1], STDOUT);
-		close(cpy[1]);
-	}
+		make_dup(&cpy[1], STDOUT);
 	if (cmd->re.rdrt_in_type > 0)
-	{
-		dup2(cpy[0], STDIN);
-		close(cpy[0]);
-	}
+		make_dup(&cpy[0], STDIN);
 	return (rt);
 }
 

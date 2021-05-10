@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by spark             #+#    #+#             */
-/*   Updated: 2021/05/10 12:10:11 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 13:07:29 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ int				cmd_pwd_update(char **o_key, char **o_val, \
 								char **old, char ***en);
 void			cmd_cd_error(t_nd *com, int rt);
 void			execute_satus(void);
+void			make_dup(int *fd, int type);
 
 #endif
