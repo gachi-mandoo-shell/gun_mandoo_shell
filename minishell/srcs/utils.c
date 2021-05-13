@@ -6,11 +6,17 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 23:01:44 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 01:52:17 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 13:07:11 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	make_dup(int *fd, int type)
+{
+	dup2(*fd, type);
+	close(*fd);
+}
 
 void	free_matrix(char ***matrix)
 {

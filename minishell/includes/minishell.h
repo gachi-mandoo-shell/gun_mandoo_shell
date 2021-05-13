@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skim <skim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by spark             #+#    #+#             */
-/*   Updated: 2021/05/07 08:44:54 by skim             ###   ########.fr       */
+/*   Updated: 2021/05/10 13:07:29 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int				get_redirect(t_nd *nd, char **en);
 int				get_redirect_info(t_nd *nd, int arg_count);
 
 int				run(t_nd *cmd, char ***en, char *av);
+int				check_red_name(t_nd *cmd);
 int				pipe_dup(t_nd *cmd);
 void			pipe_close(t_nd *cmd);
 
@@ -149,5 +150,7 @@ void			free_matrix(char ***matrix);
 int				cmd_pwd_update(char **o_key, char **o_val, \
 								char **old, char ***en);
 void			cmd_cd_error(t_nd *com, int rt);
+void			execute_satus(void);
+void			make_dup(int *fd, int type);
 
 #endif

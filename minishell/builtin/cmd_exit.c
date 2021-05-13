@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:05 by spark             #+#    #+#             */
-/*   Updated: 2021/05/08 23:56:58 by spark            ###   ########.fr       */
+/*   Updated: 2021/05/10 11:44:33 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int		cmd_exit(t_nd *com, char ***en, char *name)
 
 	i = 0;
 	j = -1;
-	write(2, "exit\n", ft_strlen("exit\n"));
+	if (!(com->type == TYPE_C_P || (com->prev && com->prev->type == TYPE_C_P)))
+		write(2, "exit\n", ft_strlen("exit\n"));
 	while (com->args[i])
 		i++;
 	if (i != 1)
